@@ -1,18 +1,33 @@
 function Parser(){
-	// Class for file parsing, process the uploaded json file.
-	
 	/*
+		Class for file parsing, to process the uploaded json file and extract parameters. 
+
 		Attributes:
-		* parameters: a dictionary storing the parameters for algorthms
-		* ...
+		* files: a file object storing the uploaded json files.
+		* parameters: a dictionary storing the parameters parsed from the json file.
+		
 
 		Methods:
-		* parse: to parse the json file and to construct [parameters]  
+		* parse: being called when file is uploaded to construct the attributes.
 		* ...
 	*/
-
-	var parameters = new Array();
-	this.parse(){
-
+	this.parameters = new Array();
+	this.files = "";
+	this.parse = function (files){
+		this.files = files;
+		var file = files[0];
+		var reader = new FileReader();
+		reader.readAsText(file);
+		reader.onload = function(){
+			Parser.parameters = JSON.parse(this.result);
+		}
+		alert("Parameters uploaded sucessfully!");
 	}
+}
+
+Parser = new Parser();
+
+
+function test(){
+	console.log(Parser.parameters);
 }
