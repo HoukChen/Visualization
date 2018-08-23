@@ -1,6 +1,17 @@
-<script src="FileParser.js"></script>
-<script src="Algorithms/placement.js"></script>
-<script src="ResultWriter.js"></script>
+<head>
+    <meta charset="utf-8">
+    <script src="FileParser.js"></script>
+	<script src="Algorithms/placement.js"></script>
+	<script src="ResultWriter.js"></script>
+	<script src="Echarts/echarts.js"></script>
+	<script src="Echarts/echarts-gl.js"></script>
+	<script src="Visualization/placement.js"></script>
+</head>
+
+
 <input type="file" onchange="Parser.parse(this.files)">
 <button onclick="Placer.run()">Run Placement</button>
 <button onclick="Writer.write()">Write Result</button>
+
+<button onclick="Vplacer.echartShower()">Echart Show</button>
+<div id="result" style="width: 500px;height:300px;"></div>
