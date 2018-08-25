@@ -22,7 +22,7 @@
 		"VMCore": 20,
 		"VMMemory": 64,
 		"VMStorage": 800,
-		"VMQuantity": 19,
+		"VMQuantity": 5,
 		"AntiAffinity": "FALSE",
 		"PolicyLevel": "host",
 		"MaxNum": 1,
@@ -36,11 +36,54 @@
 		"VMCore": 8,
 		"VMMemory": 36,
 		"VMStorage": 400,
-		"VMQuantity": 19,
+		"VMQuantity": 5,
 		"AntiAffinity": "FALSE",
 		"PolicyLevel": "host",
 		"MaxNum": 1,
 		"AntiAffinityGroup": [],
 		"AffinityNUMA": "TRUE"
-	}]
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 16,
+		"VMMemory": 64,
+		"VMStorage": 800,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 12,
+		"VMMemory": 56,
+		"VMStorage": 600,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 18,
+		"VMMemory": 72,
+		"VMStorage": 1000,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	}
+	]
 }

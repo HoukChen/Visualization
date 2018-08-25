@@ -5,11 +5,15 @@ function Vplacer(){
 		Attributes:
 		*... 
 		Methods:
-		* dataProcessor: generate data suitable for echart from the original result.
-		* echartShower: show the placement result by echart.
+		* pmConf: generate configuration data suitable for [pmShower].
+		* pmShower: show the placement result of a given pm by echart.
+		* globalConf: generate configuration data suitable for [globalShower].
+		* numShower: show the number of vms of all pms by echart.
+		* utilShower: show the resuorce utilization of all pms by echart.
+		* globalShower: main function for [numShower] and [utilShower].
 	*/
 
-	this.dataProcessor = function(index){
+	this.pmConf = function(index){
 		var pm = Placer.pmRecord[index];
 		var vmlist = pm['VMList'];
 		var series = new Array();
@@ -36,27 +40,37 @@ function Vplacer(){
 			legend.push('虚拟机'+String(vmindex));
 			console.log(legend);
 		}
-		var echartParam = {
+		var echartConf = {
 			series: series,
 			legend: {data: legend},
 			pm: pm
 		};
-		return echartParam;
+		return echartConf;
 	}
 
-	this.echartShower = function(){
-		var param = this.dataProcessor(1);
-		var vmlist = param.pm['VMList'];
-		var pm = param.pm;
-		var myChart = echarts.init(document.getElementById('result'), 'light');
+	this.pmShower = function(){
+		var pmindex = document.getElementById("choice").value;
+		console.log(parseInt(pmindex));
+		var conf = this.pmConf(parseInt(pmindex));
+		var vmlist = conf.pm['VMList'];
+		var pm = conf.pm;
+		echarts.dispose(document.getElementById("pmresult"));
+		var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
 		var option = {
 			title: {text:'物理机资源分布图'},
-			legend: param.legend,
+			legend: conf.legend,
 			xAxis: {
 				type: 'value',
+				axisTick: {show: false},
+				axisLine: {show: false},
 				axisLabel:{formatter:function(value){return (String(value*100)+' %')}}
 			},
-			yAxis: {type: 'category', data: ['核心数','内存大小','存储容量']},
+			yAxis: {
+				type: 'category', 
+				axisTick: {show: false},
+				axisLine: {show: false},
+				data: ['核心数','内存大小','存储容量']
+			},
 			tooltip: {
 				trigger: 'axis',
 				axisPointer: {type: 'shadow'},
@@ -64,6 +78,7 @@ function Vplacer(){
 					var content = params[0].name+'信息: <br/>';
 					var pmResource = '';
 					var pmRatio = '';
+					console.log(params);
 					for (var index=0; index<params.length; index++){
 						content += ('* ' + params[index].seriesName + ': ');
 						if (params[index].name == '核心数'){
@@ -86,9 +101,119 @@ function Vplacer(){
 					return content;
 				}
 			},
-			series: param.series
+			series: conf.series
 		};
-		myChart.setOption(option);
+		pmChart.setOption(option);
+	}
+
+	this.globalConf = function(){
+		var pm = Placer.pmRecord;
+		var dataAxis = new Array();
+		var num = new Array();
+		var util = new Array();
+		for (var pmindex=0; pmindex<pm.length; pmindex++){
+			dataAxis.push(pmindex);
+			num.push(pm[pmindex]['VMList'].length);
+
+			var uCPU = 1 - pm[pmindex].RestCore/pm[pmindex].PMParam.Core;
+			var uMEM = 1 - pm[pmindex].RestMemory/pm[pmindex].PMParam.MEM;
+			var uSTO = 1 - pm[pmindex].RestStorage/pm[pmindex].PMParam.Storage;
+			util.push((uCPU+uMEM+uSTO)/3);
+		}
+		var echartConf = {
+			dataAxis: dataAxis,
+			num: num,
+			util: util
+		};
+		return echartConf;
+
+	}
+
+	this.numShower = function(){
+		var conf = this.globalConf();
+		var globalChart = echarts.init(document.getElementById('gresult1'), 'light');
+		var option = {
+			title: {text:'所有物理机上虚拟机数量图'},
+			xAxis: {
+				data: conf.dataAxis,
+				axisTick: {show: false},
+				axisLine: {show: false}
+			},
+			yAxis: {
+				axisTick: {show: false},
+				axisLine: {show: false}
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'},
+				formatter: function(params){
+					return params[0].data;
+				}
+			},
+			dataZoom: [{type:'inside'}],
+			series: [
+				{
+					type: 'bar',
+					data:  conf.num
+
+				}
+			]
+		};
+		var zoomSize = 8;
+		globalChart.on('click', function (params) {
+			globalChart.dispatchAction({
+				type: 'dataZoom',
+				startValue: conf.dataAxis[Math.max(params.dataIndex-zoomSize/2, 0)],
+				endValue: conf.dataAxis[Math.min(params.dataIndex+zoomSize/2, conf.data.length-1)]
+			});
+		});
+		globalChart.setOption(option);
+	}
+
+	this.utilShower = function(){
+		var conf = this.globalConf();
+		var globalChart = echarts.init(document.getElementById('gresult2'), 'light');
+		var option = {
+			title: {text:'所有物理机资源利用率图'},
+			xAxis: {
+				data: conf.dataAxis,
+				axisTick: {show: false},
+				axisLine: {show: false}
+			},
+			yAxis: {
+				axisTick: {show: false},
+				axisLine: {show: false}
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'},
+				formatter: function(params){
+					var content = (String((params[0].data*100).toFixed(2))+' %');
+					return content;
+				}
+			},
+			dataZoom: [{type:'inside'}],
+			series: [
+				{
+					type: 'bar',
+					data:  conf.util
+				}
+			]
+		};
+		var zoomSize = 8;
+		globalChart.on('click', function (params) {
+			globalChart.dispatchAction({
+				type: 'dataZoom',
+				startValue: conf.dataAxis[Math.max(params.dataIndex-zoomSize/2, 0)],
+				endValue: conf.dataAxis[Math.min(params.dataIndex+zoomSize/2, conf.num.length-1)]
+			});
+		});
+		globalChart.setOption(option);
+	}
+
+	this.globalShower = function(){
+		this.numShower();
+		this.utilShower();
 	}
 } 
 
