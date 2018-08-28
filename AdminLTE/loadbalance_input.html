@@ -21,6 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="dist/css/MyCSS.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -109,17 +110,57 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="treeview">
+         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>CloudRANCU</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="placement_input.html">放置算法</a></li>
-            <li><a href="loadbalance_input.html">负载均衡算法</a></li>
-			<li><a href="adjustment_input.html">动态调整算法</a></li>
-			<li><a href="showall_input.html">统一展示</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 放置算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="placement_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="placement.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 负载均衡算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="loadbalance_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="loadbalance.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 动态调整算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="adjustment_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="adjustment.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 统一展示
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="showall_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="showall.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
 		
@@ -130,7 +171,17 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-			<li><a href="baseband_input.html">多模基带资源管理算法</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 多模基带资源管理算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="baseband_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="baseband.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -143,14 +194,13 @@ desired effect
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+	
       <h1>
-        Page Header
-        <small>Optional description</small>
+		<b>
+        负载均衡算法参数输入（上传）
+		</b>
+        <small></small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -159,8 +209,335 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+	<ul class="nav nav-tabs">
+        <li class="active"><a href="#fa-icons" data-toggle="tab" aria-expanded="true">输入参数</a></li>
+        <li class=""><a href="#glyphicons" data-toggle="tab" aria-expanded="false">上传文件</a></li>
+    </ul>
+	<div class="tab-content">
+              <!-- Font Awesome Icons -->
+        <div class="tab-pane active" id="fa-icons">
+			<h3><b>虚拟机资源参数</b></h3>
+                <div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>虚拟机个数：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">用户类（User）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control" >
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">小区类（Neighbor）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数据类（Data）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					
+				</div>
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>虚拟机能力：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">虚拟机能力（Capacity）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+								<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>虚拟机容量：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">虚拟机容量（Memory）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+					<!-- /.box-body -->
+				</div>
+                
+			<h3><b>任务参数</b></h3>
+                <div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>用户类：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					
+				</div>
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>小区类：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>	
+				</div>
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>数据类：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				
+					<!-- /.box-body -->
+				</div>
+                <div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>任务到来时间限制：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">时间限制：</h4>
+						</div>
+						<div class="col-xs-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div>           
+			
+		</div>
+		<h3><b>系统参数</b></h3>
+        <div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title"><b>负载均衡周期：</b></h3>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-1">
+						<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+						<h4 class="mytitle1">均衡周期：</h4>
+					</div>
+					<div class="col-xs-3">
+						<input type="text" class="form-control">
+					</div>
+				</div>
+			</div> 
+            <div class="box-header with-border">
+			</div>
+			<div class="box-header with-border">
+				<h3 class="box-title"><b>均衡因子阈值：</b></h3>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-1">
+						<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+						<h4 class="mytitle1">阈值：</h4>
+					</div>
+					<div class="col-xs-3">
+						<input type="text" class="form-control">
+					</div>
+				</div>
+			</div> 
+		</div>
+		<div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-danger">Cancel</button>
+        </div>
+	</div>
+		
+              <!-- /#fa-icons -->
 
+              <!-- glyphicons-->
+        <div class="tab-pane" id="glyphicons">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+				  <h3 class="box-title">File input</h3>
+				</div>
+				<!-- /.box-header -->
+				<!-- form start -->
+				<form role="form">
+				  <div class="box-body">
+					<div class="form-group">
+					  <label for="exampleInputFile">File input</label>
+					  <input type="file" id="exampleInputFile">
+
+					  <p class="help-block">please upload the file.</p>
+					</div>
+					<div class="form-group">
+						<label>上传文件说明</label>
+						<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+					</div>
+				  </div>
+				  <!-- /.box-body -->
+
+				  <div class="box-footer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				  </div>
+				</form>
+			</div>
+                
+        </div>
+              <!-- /#ion-icons -->
+
+    </div>
     </section>
+	
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

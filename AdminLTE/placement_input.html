@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CloudRan | Starter</title>
+  <title>CloudRan | Placement</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -21,6 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+	<link rel="stylesheet" href="dist/css/MyCSS.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -116,10 +117,50 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="placement_input.html">放置算法</a></li>
-            <li><a href="loadbalance_input.html">负载均衡算法</a></li>
-			<li><a href="adjustment_input.html">动态调整算法</a></li>
-			<li><a href="showall_input.html">统一展示</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 放置算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="placement_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="placement.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 负载均衡算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="loadbalance_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="loadbalance.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 动态调整算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="adjustment_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="adjustment.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 统一展示
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="showall_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="showall.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
 		
@@ -130,7 +171,17 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-			<li><a href="baseband_input.html">多模基带资源管理算法</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 多模基带资源管理算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="baseband_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="baseband.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -143,18 +194,448 @@ desired effect
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
+       <h1>
+		<b>
+        放置算法参数输入（上传）
+		</b>
+        <small></small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#pg1" data-toggle="tab" aria-expanded="true">输入参数</a></li>
+			<li class=""><a href="#pg2" data-toggle="tab" aria-expanded="false">上传文件</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="pg1">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>添加物理机：</b></h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-xs-1">
+								<label>类型</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>NUMA</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>核心</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>线程</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>内存</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>硬盘</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>数量</label>
+								<input type="text" class="form-control" >
+							</div>
+						</div>
+					</div>
+					
+					<div class="box-body">
+						<button type="submit" class="btn btn-primary">添加</button>
+						<button type="button" class="btn btn-danger">取消</button>
+					</div>
+					<div class="box">
+						<div class="box-header">
+						  <h3 class="box-title">物理机列表</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<div class="row">
+									<div class="col-sm-6"></div><div class="col-sm-6"></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+											<thead>
+											<tr role="row">
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">类型</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >NUMA</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >核心</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">线程</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >内存</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >硬盘</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >数量</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+											</tr>
+											
+											</thead>
+											<tbody>
+											<tr role="row" class="odd">
+											  <td>G</td>
+											  <td>F</td>
+											  <td>W</td>
+											  <td>1.7</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td><a>删除</a></td>
+											</tr>
+											<tr role="row" class="even">
+											  <td>Gecko</td>
+											  <td>F</td>
+											  <td>W</td>
+											  <td>1.7</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td><a>删除</a></td>
+											</tr>
+											
+											</tbody>
+											<tfoot>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								<!--
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
+									</div>
+									<div class="col-sm-7">
+										<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+											<ul class="pagination">
+												<li class="paginate_button previous disabled" id="example2_previous">
+													<a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+												</li>
+												<li class="paginate_button active">
+													<a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
+												</li>
+												</li><li class="paginate_button next" id="example2_next">
+													<a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								-->
+							</div>
+						</div>
+            <!-- /.box-body -->
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+							<!--a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="tab-pane" id="pg2">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+					  <h3 class="box-title">File input</h3>
+					</div>
+					<!-- /.box-header -->
+					<!-- form start -->
+					<form role="form">
+					  <div class="box-body">
+						<div class="form-group">
+						  <label for="exampleInputFile">File input</label>
+						  <input type="file" id="exampleInputFile">
+
+						  <p class="help-block">please upload the file.</p>
+						</div>
+						<div class="form-group">
+							<label>上传文件说明</label>
+							<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+						</div>
+					  </div>
+					  <!-- /.box-body -->
+
+					  <div class="box-footer">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					  </div>
+					</form>
+				</div>
+			</div>
+			<div class="tab-pane" id="pg3">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>添加虚拟机：</b></h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-xs-1">
+								<label>VNF类型</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>类型</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>优先级</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>vCPU</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>内存</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>存储</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>数量</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>自反亲和</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>策略级别</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>最大数量</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>亲和性</label>
+								<input type="text" class="form-control" >
+							</div>
+						</div>
+						<div class = "row">
+							<div class="col-xs-1">
+								<label>group</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>enforce</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1"></div>
+							<div class="col-xs-1"></div>
+						</div>
+					</div>
+					
+					<div class="box-body">
+						<button type="submit" class="btn btn-primary">添加</button>
+						<button type="button" class="btn btn-danger">取消</button>
+					</div>
+					<div class="box">
+						<div class="box-header">
+						  <h3 class="box-title">虚拟机列表</h3>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+								<div class="row">
+									<div class="col-sm-6"></div><div class="col-sm-6"></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+											<thead>
+											<tr role="row">
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">VNF类型</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >类型</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >优先级</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">vCPU</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >内存</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >存储</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >数量</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >自反亲和</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >策略级别</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >最大数量</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >亲和性</th>
+											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
+											</tr>
+											
+											</thead>
+											<tbody>
+											<tr role="row" class="odd">
+											  <td>G</td>
+											  <td>F</td>
+											  <td>W</td>
+											  <td>1.7</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td><a>删除</a></td>
+											</tr>
+											<tr role="row" class="even">
+											  <td>Gecko</td>
+											  <td>F</td>
+											  <td>W</td>
+											  <td>1.7</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td>A</td>
+											  <td><a>删除</a></td>
+											</tr>
+											
+											</tbody>
+											<tfoot>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								<!--
+								<div class="row">
+									<div class="col-sm-5">
+										<div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
+									</div>
+									<div class="col-sm-7">
+										<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
+											<ul class="pagination">
+												<li class="paginate_button previous disabled" id="example2_previous">
+													<a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
+												</li>
+												<li class="paginate_button active">
+													<a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
+												</li>
+												<li class="paginate_button ">
+													<a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
+												</li>
+												</li><li class="paginate_button next" id="example2_next">
+													<a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								-->
+							</div>
+						</div>
+            <!-- /.box-body -->
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#pg4" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+							<a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="tab-pane" id="pg4">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>系统参数设置：</b></h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-xs-1">
+								<label>预留核NO</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>预留核NL</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-1">
+								<label>预留内存NO</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>预留内存NL</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>预留硬盘</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>冗余比</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>集群单板数</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>存储类型</label>
+								<input type="text" class="form-control" >
+							</div>
+							<div class="col-xs-1">
+								<label>磁阵数量</label>
+								<input type="text" class="form-control" >
+							</div>
+						</div>
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#pg5" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+							<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="pg5">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>参数设置完成</b></h3>
+					</div>
+					<div class="box-body">
+						<button type="submit" class="btn btn-primary">返回修改</button>
+						<button type="button" class="btn btn-danger">开始计算</button>
+					</div>
+					<div class="box-body">
+						<p> </p>
+						<p> </p>
+						<h3 class="box-title">目前已经计算：</h3>
+						<p></p>
+						<div class="progress">
+							<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+								<span class="sr-only">40% Complete (success)</span>
+							</div>
+						</div>
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp显示结果图&nbsp</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
       <!--------------------------
         | Your Page Content Here |

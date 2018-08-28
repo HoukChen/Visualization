@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CloudRan | Starter</title>
+  <title>CloudRan | Adjustment</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-
+	    <link rel="stylesheet" href="dist/css/MyCSS.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -116,10 +116,50 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="placement_input.html">放置算法</a></li>
-            <li><a href="loadbalance_input.html">负载均衡算法</a></li>
-			<li><a href="adjustment_input.html">动态调整算法</a></li>
-			<li><a href="showall_input.html">统一展示</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 放置算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="placement_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="placement.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 负载均衡算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="loadbalance_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="loadbalance.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 动态调整算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="adjustment_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="adjustment.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 统一展示
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="showall_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="showall.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
 		
@@ -130,7 +170,17 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-			<li><a href="baseband_input.html">多模基带资源管理算法</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 多模基带资源管理算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="baseband_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="baseband.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -142,24 +192,200 @@ desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
+		<section class="content-header">
+		  <h1>
+			Page Header
+			<small>Optional description</small>
+		  </h1>
+		  <ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+			<li class="active">Here</li>
+		  </ol>
+		</section>
+
+		<!-- Main content -->
+		<section class="content container-fluid">
+
+		  <!--------------------------
+			| Your Page Content Here |
+			-------------------------->
+			<section class="content container-fluid">
+
+		  <!--------------------------
+			| Your Page Content Here |
+			-------------------------->
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#fa-icons" data-toggle="tab" aria-expanded="true">输入参数</a></li>
+			<li class=""><a href="#glyphicons" data-toggle="tab" aria-expanded="false">上传文件</a></li>
+		</ul>
+		<div class="tab-content">
+				  <!-- Font Awesome Icons -->
+			<div class="tab-pane active" id="fa-icons">
+				<h3><b>虚拟机资源参数</b></h3>
+					<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>虚拟机规格：</b></h3>
+					</div>
+					<div class="box-body">
+						
+						<div class="row">
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+								<input type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="box-header with-border">
+					</div>
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>虚拟机数量：</b></h3>
+					</div>
+					<div class="box-body">
+						
+						<div class="row">
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+								<input type="text" class="form-control">
+							</div>
+							<div class="col-xs-3">
+								<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+								<input type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+					
+					
+						<!-- /.box-body -->
+			</div>
+					
+
+			<h3><b>任务参数</b></h3>
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>最大任务量：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div> 
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>任务量波动范围：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-3">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div> 
+			</div>
+			<h3><b>算法选择参数</b></h3>
+			<div class="box box-primary">
+			<div class="box-header with-border">
+					<h3 class="box-title"><b>预测算法选择：</b></h3>
+				</div>
+			<div class="row">
+				<div class="col-xs-3">
+				<div class="form-group">
+					  <select class="form-control">
+						<option>线性回归</option>
+						<option>支持向量回归</option>
+						<option>决策树回归</option>
+						<option>最近邻回归</option>
+					  </select>
+				 </div>
+				 </div>
+				 </div>
+			</div>
+			<div class="box-footer">
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+								<!--a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+						</div>
+					</div>
+			</div>
+		</div>
+		 <div class="tab-pane" id="pg3">
+			<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>参数设置完成</b></h3>
+					</div>
+					<div class="box-body">
+						<button type="submit" class="btn btn-primary">返回修改</button>
+						<button type="button" class="btn btn-danger">开始计算</button>
+					</div>
+					<div class="box-body">
+						<p> </p>
+						<p> </p>
+						<h3 class="box-title">目前已经计算：</h3>
+						<p></p>
+						<div class="progress">
+							<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+								<span class="sr-only">40% Complete (success)</span>
+							</div>
+						</div>
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp显示结果图&nbsp</a>
+						</div>
+					</div>
+			</div>
+		 </div>
+              <!-- /#fa-icons -->
+
+              <!-- glyphicons-->
+        <div class="tab-pane" id="glyphicons">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+				  <h3 class="box-title">File input</h3>
+				</div>
+				<!-- /.box-header -->
+				<!-- form start -->
+				<form role="form">
+				  <div class="box-body">
+					<div class="form-group">
+					  <label for="exampleInputFile">File input</label>
+					  <input type="file" id="exampleInputFile">
+
+					  <p class="help-block">please upload the file.</p>
+					</div>
+					<div class="form-group">
+						<label>上传文件说明</label>
+						<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+					</div>
+				  </div>
+				  <!-- /.box-body -->
+
+				  <div class="box-footer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				  </div>
+				</form>
+			</div>
+                
+        </div>
+              <!-- /#ion-icons -->
+
+    </div>
     </section>
-
-    <!-- Main content -->
-    <section class="content container-fluid">
-
-      <!--------------------------
-        | Your Page Content Here |
-        -------------------------->
-
     </section>
     <!-- /.content -->
   </div>
