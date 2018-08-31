@@ -9,6 +9,7 @@ function Writer(){
 		* write: save the placement result as json files and download it
 	*/
 	this.write = function(){
+		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
 		var result = {
 			"vmRecord":Placer.vmRecord,
 			"pmRecord":Placer.pmRecord,

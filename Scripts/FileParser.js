@@ -20,14 +20,12 @@ function Parser(){
 		reader.readAsText(file);
 		reader.onload = function(){
 			Parser.parameters = JSON.parse(this.result);
+			var parameters = JSON.parse(this.result);
+			sessionStorage.setItem("Parser", JSON.stringify(parameters));
+
 		}
 		alert("Parameters uploaded sucessfully!");
 	}
 }
 
 Parser = new Parser();
-
-
-function test(){
-	console.log(Parser.parameters);
-}

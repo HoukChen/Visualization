@@ -21,7 +21,9 @@ function Placement(){
 	this.pmRecord = new Array();
 
 	this.setParam = function(){
-		this.paramDic = Parser.parameters;
+		this.paramDic = JSON.parse(sessionStorage.getItem("Parser"));
+		console.log("hello,here");
+		console.log(this.paramDic);
 		var vmdic = this.paramDic.VMResource;
 		for (var i=0; i<vmdic.length; i++){
 			var tmpdic = {
@@ -100,6 +102,16 @@ function Placement(){
 	this.run = function(){
 		this.setParam();
 		this.place();
+
+		var parameters = {
+			paramDic: this.paramDic,
+			vmParam: this.vmParam,
+			pmParam: this.pmParam,
+			vmRecord: this.vmRecord,
+			pmRecord: this.pmRecord
+		};
+
+		sessionStorage.setItem("Placer", JSON.stringify(parameters));
 		alert("Placement finish!");
 	}
 }

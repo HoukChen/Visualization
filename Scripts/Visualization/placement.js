@@ -14,6 +14,7 @@ function Vplacer(){
 	*/
 
 	this.pmConf = function(index){
+		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
 		var pm = Placer.pmRecord[index];
 		var vmlist = pm['VMList'];
 		var series = new Array();
@@ -107,6 +108,7 @@ function Vplacer(){
 	}
 
 	this.globalConf = function(){
+		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
 		var pm = Placer.pmRecord;
 		var dataAxis = new Array();
 		var num = new Array();

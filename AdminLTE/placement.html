@@ -32,6 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="../Scripts/ResultWriter.js"></script>
+  <script src="../Scripts/Echarts/echarts.js"></script>
+  <script src="../Scripts/Echarts/echarts-gl.js"></script>
+  <script src="../Scripts/Visualization/placement.js"></script>    
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -209,6 +213,23 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+        <button onclick="Writer.write()">下载结果</button>
+
+
+        <select id="choice" onchange="Vplacer.pmShower()">
+          <option value ="0">物理机0</option>
+          <option value ="1">物理机1</option>
+          <option value="2">物理机2</option>
+          <option value="3">物理机3</option>
+          <option value ="4">物理机4</option>
+          <option value ="5">物理机5</option>
+          <option value="6">物理机6</option>
+          <option value="7">物理机7</option>
+        </select>
+        <button onclick="Vplacer.globalShower()">展示全局统计图</button>
+        <div id="pmresult" style="width: 500px;height:300px;"></div>
+        <div id="gresult1" style="width: 500px;height:300px;"></div>
+        <div id="gresult2" style="width: 500px;height:300px;"></div>
 
     </section>
     <!-- /.content -->
