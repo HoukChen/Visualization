@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CloudRan | Starter</title>
+  <title>CloudRan | Loadbalance</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -17,6 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/MyCSS.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
@@ -30,6 +31,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <![endif]-->
 
   <!-- Google Font -->
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -183,7 +193,6 @@ desired effect
             </li>
           </ul>
         </li>
-        </li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -210,12 +219,269 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+		<p>Test</p>
+		
+		<!--div id="container" style="position: relative; float:left;height: 500px; width : 52%"></div-->
+		<div id="container" class = "box1"></div>
+		<div id="container2" class = "box2"></div>
+		<div id="container3" class = "box3"></div>
+       <script type="text/javascript">
+var dom1 = document.getElementById("container");
+var myChart1 = echarts.init(dom1);
+var app = {};
+option = null;
+option = {
+    title: {
+        text: '算法与对比算法性能比较'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['WRR','LBF','WLC']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['1000','2000','3000','4000','5000','6000','7000','8000','9000']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'WRR',
+            type:'line',
+            stack: '总量',
+            data:[0.3, 0.48, 0.78, 1.15, 1.5, 1.9, 2.4 , 2.78 , 3.23]
+        },
+        {
+            name:'LBF',
+            type:'line',
+            stack: '总量',
+            data:[0.38, 0.43, 0.5, 0.82, 1.02, 1.1, 1.23 , 1.37 , 1.44]
+        },
+        {
+            name:'WLC',
+            type:'line',
+            stack: '总量',
+            data:[0.38, 0.45, 0.54, 1.01, 1.23, 1.49, 1.80 , 2.20 , 2.60]
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart1.setOption(option, true);
+}
 
+
+
+var dom3 = document.getElementById("container2");
+var myChart3 = echarts.init(dom3);
+option = {
+	title: {
+		text: '系统负载动态显示'
+	}
+}
+option_inter1 = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#283b56'
+            }
+        }
+    },
+    legend: {
+        data: ['numbers']
+    },
+    dataZoom: {
+        show: false,
+        start: 0,
+        end: 100
+    },
+    xAxis: [{
+        type: 'category',
+        boundaryGap: true,
+        data: []
+    }],
+    yAxis: [{
+        type: 'value',
+        scale: true,
+        name: 'k',
+        //max: 30,
+        min: 0,
+        boundaryGap: [0.2, 0.2]
+    }],
+    series: [{
+            name: 'numbers',
+            type: 'line',
+            data: []
+			}
+    ]
+	}
+
+	setInterval(function() {
+		axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+		var numbers_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+		var data_inter_numbers = option_inter1.series[0].data;
+		if (data_inter_numbers.length <= 20) {
+			data_inter_numbers.push(numbers_data);
+			option_inter1.xAxis[0].data.push(axisData);
+		} else {
+			data_inter_numbers.shift();
+			data_inter_numbers.push(numbers_data);
+			option_inter1.xAxis[0].data.shift();
+			option_inter1.xAxis[0].data.push(axisData);
+		}
+		myChart3.setOption(option_inter1);
+	}, 500);
+
+	var data_inter_numbers = option_inter1.series[0].data;
+
+	var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+	var numbers_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+
+	data_inter_numbers.push(numbers_data);
+
+	option_inter1.xAxis[0].data.push(axisData);
+	if (option && typeof option === "object") {
+		myChart3.setOption(option, true);
+	}
+
+
+
+
+var dom = document.getElementById("container3");
+	var myChart2 = echarts.init(dom);
+	option = {
+		title: {
+			text: '到来任务数随时间动态显示'
+		}
+	}
+	option_inter = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#283b56'
+            }
+        }
+    },
+    legend: {
+        data: ['user','data','neighbor']
+    },
+    dataZoom: {
+        show: false,
+        start: 0,
+        end: 100
+    },
+    xAxis: [{
+        type: 'category',
+        boundaryGap: true,
+        data: []
+    }],
+    yAxis: [{
+        type: 'value',
+        scale: true,
+        name: 'k',
+        //max: 30,
+        min: 0,
+        boundaryGap: [0.2, 0.2]
+    }],
+    series: [{
+            name: 'user',
+            type: 'line',
+            data: []
+        },
+        {
+            name: 'data',
+            type: 'line',
+            data: []
+        },
+		{
+			name: 'neighbor',
+            type: 'line',
+            data: []
+		}
+    ]
+	}
+	var temp_data = [1,2,3,3,5,5,6,6,8,3,2,5,7,4];
+	var temp_num = 0;
+	setInterval(function() {
+		axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+		temp_num += 1;
+		var user_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+		var data_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+		var neighbor_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+		var data_inter_user = option_inter.series[0].data;
+		var data_inter_data = option_inter.series[1].data;
+		var data_inter_neighbor = option_inter.series[2].data;
+		if (data_inter_user.length <= 20) {
+			data_inter_user.push(user_data);
+			data_inter_data.push(data_data);
+			data_inter_neighbor.push(neighbor_data);
+			option_inter.xAxis[0].data.push(axisData);
+		} else {
+			data_inter_user.shift();
+			data_inter_user.push(user_data);
+			
+			data_inter_data.shift();
+			data_inter_data.push(data_data);
+			
+			data_inter_neighbor.shift();
+			data_inter_neighbor.push(neighbor_data);
+			option_inter.xAxis[0].data.shift();
+			option_inter.xAxis[0].data.push(axisData);
+		}
+		myChart2.setOption(option_inter);
+	}, 500);
+
+	var data_inter_user = option_inter.series[0].data;
+	var data_inter_data = option_inter.series[1].data;
+	var data_inter_neighbor = option_inter.series[2].data;
+	var axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+	var user_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+	var data_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+	var neighbor_data = (Math.random() * 10 + 5).toFixed(1) - 0;
+	data_inter_user.push(user_data);
+	data_inter_data.push(data_data);
+	data_inter_neighbor.push(neighbor_data);
+	option_inter.xAxis[0].data.push(axisData);
+	if (option && typeof option === "object") {
+		myChart2.setOption(option, true);
+	}
+
+
+window.onresize = function(){
+	window.addEventListener("resize", function () {
+
+          myChart1.resize();
+		  myChart3.resize();
+		  myChart2.resize();
+
+    });
+    //myChart1.resize();    //若有多个图表变动，可多写
+}
+       </script>         
+		
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
