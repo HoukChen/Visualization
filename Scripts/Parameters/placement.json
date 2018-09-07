@@ -1,0 +1,102 @@
+{
+	"CPU0OccupiedCoreNum": 2,
+	"CPU1OccupiedCoreNum": 0,
+	"CPU0OccupiedMEM": 11,
+	"CPU1OccupiedMEM": 4,
+	"CloudOSOccupiedDisk": 150,
+	"BladeRedundancyRatio": 7,
+	"ManagerBladeNum": 3,
+	"DiskType": "DiskArray",
+	"BladeType": "CH121-V5",
+	"DiskArrayNum": 2,
+	"PMResource": [{
+		"Category": "E900",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 28,
+		"vCPUOfCore": 2,
+		"MEM": 256,
+		"Storage": 2048,
+		"PMNumber": 4},
+		{
+		"Category": "E900",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 28,
+		"vCPUOfCore": 2,
+		"MEM": 256,
+		"Storage": 2048,
+		"PMNumber": 4
+		}
+		
+	],
+	"VMResource": [{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 20,
+		"VMMemory": 64,
+		"VMStorage": 800,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 8,
+		"VMMemory": 36,
+		"VMStorage": 400,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 16,
+		"VMMemory": 64,
+		"VMStorage": 800,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 12,
+		"VMMemory": 56,
+		"VMStorage": 600,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 18,
+		"VMMemory": 72,
+		"VMStorage": 1000,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	}
+	]
+}

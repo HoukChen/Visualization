@@ -33,6 +33,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="../Scripts/FileParser.js"></script>
+  <script src="../Scripts/Algorithms/placement.js"></script>
+  <script src="../Scripts/PageLogic/placement_logic.js"></script>
+  
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -218,38 +222,38 @@ desired effect
 						<div class="row">
 							<div class="col-xs-1">
 								<label>类型</label>
-								<input type="text" class="form-control">
+								<input id="pmType" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
 								<label>NUMA</label>
-								<input type="text" class="form-control">
+								<input id="pmNuma" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
 								<label>核心</label>
-								<input type="text" class="form-control" >
+								<input id="pmKernel" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>线程</label>
-								<input type="text" class="form-control" >
+								<input id="pmThread" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>内存</label>
-								<input type="text" class="form-control" >
+								<input id="pmMemory" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>硬盘</label>
-								<input type="text" class="form-control" >
+								<input id="pmDisk" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>数量</label>
-								<input type="text" class="form-control" >
+								<input id="pmNum" type="text" class="form-control" >
 							</div>
 						</div>
 					</div>
 					
 					<div class="box-body">
-						<button type="submit" class="btn btn-primary">添加</button>
-						<button type="button" class="btn btn-danger">取消</button>
+						<button type="submit" class="btn btn-primary" onclick = "addPm()">添加</button>
+						<button type="button" class="btn btn-danger" onclick = "clearRow()">取消</button>
 					</div>
 					<div class="box">
 						<div class="box-header">
@@ -263,7 +267,7 @@ desired effect
 								</div>
 								<div class="row">
 									<div class="col-sm-12">
-										<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+										<table id="pmTable" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 											<thead>
 											<tr role="row">
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">类型</th>
@@ -275,30 +279,8 @@ desired effect
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >数量</th>
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
 											</tr>
-											
 											</thead>
 											<tbody>
-											<tr role="row" class="odd">
-											  <td>G</td>
-											  <td>F</td>
-											  <td>W</td>
-											  <td>1.7</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td><a>删除</a></td>
-											</tr>
-											<tr role="row" class="even">
-											  <td>Gecko</td>
-											  <td>F</td>
-											  <td>W</td>
-											  <td>1.7</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td><a>删除</a></td>
-											</tr>
-											
 											</tbody>
 											<tfoot>
 											</tfoot>
@@ -340,6 +322,13 @@ desired effect
 						</div>
             <!-- /.box-body -->
 					</div>
+					<script>
+					/*
+						function test(){
+							alert('test');
+						}
+						*/
+					</script>
 					<div class = "box-footer">
 						<div class= "next-step">
 							<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
@@ -359,7 +348,7 @@ desired effect
 					  <div class="box-body">
 						<div class="form-group">
 						  <label for="exampleInputFile">File input</label>
-						  <input type="file" id="exampleInputFile">
+						  <input type="file" id="exampleInputFile" onchange="Parser.parse(this.files)">
 
 						  <p class="help-block">please upload the file.</p>
 						</div>
@@ -369,9 +358,10 @@ desired effect
 						</div>
 					  </div>
 					  <!-- /.box-body -->
-
 					  <div class="box-footer">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<a href = "#pg1" data-toggle="tab" aria-expanded="false">
+							<button type="button" onclick = "loadPage()" class="btn btn-primary">Submit</button>
+						</a>
 					  </div>
 					</form>
 				</div>
@@ -385,57 +375,57 @@ desired effect
 						<div class="row">
 							<div class="col-xs-1">
 								<label>VNF类型</label>
-								<input type="text" class="form-control">
+								<input id="vnfType" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
 								<label>类型</label>
-								<input type="text" class="form-control">
+								<input id="vmType" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
 								<label>优先级</label>
-								<input type="text" class="form-control" >
+								<input id="vmPr" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>vCPU</label>
-								<input type="text" class="form-control" >
+								<input id="vCPU" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>内存</label>
-								<input type="text" class="form-control" >
+								<input id="vmRam" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>存储</label>
-								<input type="text" class="form-control" >
+								<input id="vmRom" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>数量</label>
-								<input type="text" class="form-control" >
+								<input id="vmNum" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>自反亲和</label>
-								<input type="text" class="form-control" >
+								<input id="vmZf" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>策略级别</label>
-								<input type="text" class="form-control" >
+								<input id="vmCtglevel" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>最大数量</label>
-								<input type="text" class="form-control" >
+								<input id="vmMaxnum" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>亲和性</label>
-								<input type="text" class="form-control" >
+								<input id="vmQh" type="text" class="form-control" >
 							</div>
 						</div>
 						<div class = "row">
 							<div class="col-xs-1">
 								<label>group</label>
-								<input type="text" class="form-control" >
+								<input id="vmGrp" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>enforce</label>
-								<input type="text" class="form-control" >
+								<input id="vmEfc" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1"></div>
 							<div class="col-xs-1"></div>
@@ -443,8 +433,8 @@ desired effect
 					</div>
 					
 					<div class="box-body">
-						<button type="submit" class="btn btn-primary">添加</button>
-						<button type="button" class="btn btn-danger">取消</button>
+						<button type="submit" onclick="addVm()" class="btn btn-primary">添加</button>
+						<button type="button" onclick="clearRow()" class="btn btn-danger">取消</button>
 					</div>
 					<div class="box">
 						<div class="box-header">
@@ -458,7 +448,7 @@ desired effect
 								</div>
 								<div class="row">
 									<div class="col-sm-12">
-										<table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+										<table id="vmTable" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
 											<thead>
 											<tr role="row">
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">VNF类型</th>
@@ -474,37 +464,8 @@ desired effect
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >亲和性</th>
 											<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >操作</th>
 											</tr>
-											
 											</thead>
 											<tbody>
-											<tr role="row" class="odd">
-											  <td>G</td>
-											  <td>F</td>
-											  <td>W</td>
-											  <td>1.7</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td><a>删除</a></td>
-											</tr>
-											<tr role="row" class="even">
-											  <td>Gecko</td>
-											  <td>F</td>
-											  <td>W</td>
-											  <td>1.7</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td>A</td>
-											  <td><a>删除</a></td>
-											</tr>
 											
 											</tbody>
 											<tfoot>
@@ -563,40 +524,40 @@ desired effect
 					<div class="box-body">
 						<div class="row">
 							<div class="col-xs-1">
-								<label>预留核NO</label>
-								<input type="text" class="form-control">
+								<label>预留核N0</label>
+								<input id="rN0" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
-								<label>预留核NL</label>
-								<input type="text" class="form-control">
+								<label>预留核N1</label>
+								<input id="rN1" type="text" class="form-control">
 							</div>
 							<div class="col-xs-1">
-								<label>预留内存NO</label>
-								<input type="text" class="form-control" >
+								<label>预留内存N0</label>
+								<input id="rMemn0" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
-								<label>预留内存NL</label>
-								<input type="text" class="form-control" >
+								<label>预留内存N1</label>
+								<input id="rMemn1" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>预留硬盘</label>
-								<input type="text" class="form-control" >
+								<input id="rDisk" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>冗余比</label>
-								<input type="text" class="form-control" >
+								<input id="redundancy" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>集群单板数</label>
-								<input type="text" class="form-control" >
+								<input id="bladeNum" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>存储类型</label>
-								<input type="text" class="form-control" >
+								<input id="stType" type="text" class="form-control" >
 							</div>
 							<div class="col-xs-1">
 								<label>磁阵数量</label>
-								<input type="text" class="form-control" >
+								<input id="mgNum" type="text" class="form-control" >
 							</div>
 						</div>
 					</div>
@@ -614,8 +575,10 @@ desired effect
 						<h3 class="box-title"><b>参数设置完成</b></h3>
 					</div>
 					<div class="box-body">
-						<button type="submit" class="btn btn-primary">返回修改</button>
-						<button type="button" class="btn btn-danger">开始计算</button>
+						<a href = "#pg1" data-toggle="tab" aria-expanded="false">
+							<button type="button" class="btn btn-primary" data-toggle="tab" aria-expanded="false">返回修改</button>
+						</a>
+						<button type="button" class="btn btn-danger" onclick="calculate()">开始计算</button>
 					</div>
 					<div class="box-body">
 						<p> </p>
@@ -630,7 +593,7 @@ desired effect
 					</div>
 					<div class = "box-footer">
 						<div class= "next-step">
-							<a href = "#" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp显示结果图&nbsp</a>
+							<a href = "placement.html" class = "a-next">&nbsp显示结果图&nbsp</a>
 						</div>
 					</div>
 				</div>

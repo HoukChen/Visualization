@@ -1,0 +1,30 @@
+<head>
+    <meta charset="utf-8">
+    <script src="FileParser.js"></script>
+	<script src="Algorithms/placement.js"></script>
+	<script src="ResultWriter.js"></script>
+	<script src="Echarts/echarts.js"></script>
+	<script src="Echarts/echarts-gl.js"></script>
+	<script src="Visualization/placement.js"></script>
+</head>
+
+
+<input type="file" onchange="Parser.parse(this.files)">
+<button onclick="Placer.run()">运行算法</button>
+<button onclick="Writer.write()">下载结果</button>
+
+
+<select id="choice" onchange="Vplacer.pmShower()">
+	<option value ="0">物理机0</option>
+	<option value ="1">物理机1</option>
+	<option value="2">物理机2</option>
+	<option value="3">物理机3</option>
+	<option value ="4">物理机4</option>
+	<option value ="5">物理机5</option>
+	<option value="6">物理机6</option>
+	<option value="7">物理机7</option>
+</select>
+<button onclick="Vplacer.globalShower()">展示全局统计图</button>
+<div id="pmresult" style="width: 500px;height:300px;"></div>
+<div id="gresult1" style="width: 500px;height:300px;"></div>
+<div id="gresult2" style="width: 500px;height:300px;"></div>

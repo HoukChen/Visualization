@@ -1,7 +1,8 @@
-function Balance{
-	// Class for the balance algorithm
+function Balance(){
 
 	/*
+		Class for the balance algorithm
+
 		Attributes:
 		* 
 
