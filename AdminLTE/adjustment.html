@@ -32,6 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <script src="../Scripts/ResultWriter.js"></script>
+  <script src="../Scripts/Echarts/echarts.js"></script>
+  <script src="../Scripts/Visualization/adjustment.js"></script> 
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -209,6 +213,10 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+        <button onclick="Vadjustor.globalShower()">展示全局统计图</button>
+        <div id="taskgraph" style="width: 500px;height:300px;"></div>
+        <div id="vmNgraph" style="width: 500px;height:300px;"></div>
+        <div id="vmUgraph" style="width: 500px;height:300px;"></div>
 
     </section>
     <!-- /.content -->

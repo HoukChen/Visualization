@@ -1,0 +1,9 @@
+{
+	"fluct": 0.1,
+	"sinmagn": 20,
+	"basemagn": 10,
+	"taskspan":10,
+	"endtime": 150,
+	"begintime": 100,
+	"model":"RFR"	
+}

@@ -1,3 +1,9 @@
+/*
+	ml.js - Machine learning tools in JavaScript, https://github.com/mljs/ml
+	<script src="https://www.lactame.com/lib/ml/3.3.0/ml.min.js"></script>
+*/
+
+
 function Adjsutment(){
 
 	/*
@@ -40,18 +46,18 @@ function VirtualMachine(resource){
 	}
 
 	this.removeTask =function(index){
-		this.res_avail += this.tasklist[index].taskcap;
+		this.res_avail += (this.tasklist[index]).taskcap;
 		this.tasklist.splice(index,1);
 	}
 
 	this.enlargeRes = function(resource){
-		this.res_avail = this.res_avail + (resource - self.res_total);
+		this.res_avail = this.res_avail + (resource - this.res_total);
 		this.res_total = resource;
 	}
 
 	this.narrowRes = function(resource){
-		this.res_avail = this.res_avail - (this.res_total - resouce);
-		this.res_total = resouce;
+		this.res_avail = this.res_avail - (this.res_total - resource);
+		this.res_total = resource;
 	}
 }
 
@@ -71,7 +77,7 @@ function Task(stime, etime, taskcap){
 }
 
 
-function Generator(pmean, fluct, sinmagn, basemagn, taskspan){
+function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
 	/*
 		class for task generating scheme
 
@@ -81,7 +87,7 @@ function Generator(pmean, fluct, sinmagn, basemagn, taskspan){
 		* fluct: alternative values interval of the poisson distribution
 		* sinmagn: magnitude of the sin function to simulate task number
 		* basemagn: base task number
-		* taskspan: maximum timespan of each task
+		* taskspan: maximum endtime of each task
 
 		Methods:
 		* tool_factorial: tool function, to calculate factorial
@@ -91,12 +97,12 @@ function Generator(pmean, fluct, sinmagn, basemagn, taskspan){
 
 	this.TaskList = new Array();
 	this.TaskNum = new Array();
-	
 	this.fluct = fluct;
 	this.sinmagn = sinmagn;
 	this.basemagn = basemagn;
 	this.taskspan = taskspan;
-	
+	this.endtime = endtime;
+
 	this.tool_factorial = function(num){
 		var result = 1;
 		for(var ind=1; ind<=num; ind++){
@@ -116,7 +122,7 @@ function Generator(pmean, fluct, sinmagn, basemagn, taskspan){
 		var pset = new Array();
 		var psum = 0 ;
 		var vlow = Math.ceil((1-this.fluct)*pmean);
-		var vhigh = MAth.ceil((1+this.fluct)*pmean);
+		var vhigh = Math.ceil((1+this.fluct)*pmean);
 		for (var ind=vlow; ind<vhigh; ind++){
 			vset.push(ind);
 			var possib = this.tool_poisson(pmean,ind);
@@ -144,13 +150,16 @@ function Generator(pmean, fluct, sinmagn, basemagn, taskspan){
 	}
 
 	this.generateTask = function(){
-		for (var stime=0; stime<this.timespan; stime++){
-			var sinnum = this.sinmagn*abs(Math.sin(stime*Math.PI/(12*60)));
+		for (var re=0; re<this.endtime+this.taskspan; re++){
+			this.TaskNum.push(0);
+		}
+		for (var stime=0; stime<this.endtime; stime++){
+			var sinnum = this.sinmagn*Math.abs(Math.sin(stime*Math.PI/(12*60)));
 			var taskmean = Math.ceil(sinnum+this.basemagn);
 			var tasklist = new Array();
 			var tasknum = this.poisson(taskmean);
 			for (var re=0; re<tasknum; re++){
-				var etime = stime + Math.randrom()*this.taskspan;
+				var etime = stime + Math.random()*this.taskspan;
 				var task = new Task(stime, etime, 1);
 				tasklist.push(task);
 				for (var time=stime; time<etime; time++){
@@ -193,12 +202,25 @@ function Simulator(TaskList, TaskNum){
 		small: 4
 	};
 
+	this.initialize = function(){
+		for (var re=0; re<1; re++){
+			var svm = new VirtualMachine(this.Params.small);
+			this.VMList.push(svm);
+			
+			var mvm = new VirtualMachine(this.Params.middle);
+			this.VMList.push(mvm);
+			var lvm = new VirtualMachine(this.Params.large);
+			this.VMList.push(lvm);
+		}
+	}
+
 	this.removeTask = function(time){
-		for (var vmindex=0; vmindex<VMList.lenght; vmindex++){
-			var vm = VMList[vmindex];
+
+		for (var vmindex=0; vmindex<this.VMList.length; vmindex++){
+			var vm = this.VMList[vmindex];
 			for (var ind=vm.tasklist.length-1; ind>=0; ind--){
 				if (vm.tasklist[ind].etime < time){
-					vm.removeTask(index);
+					vm.removeTask(ind);
 				}
 			}
 		}
@@ -206,21 +228,23 @@ function Simulator(TaskList, TaskNum){
 
 	this.placeTask = function(time){
 		var totalres = 0;
-		for (var vmindex=0; vmindex<VMList.length; vmindex++){
-			totalres += VMList[vmindex].res_total;
+		for (var vmindex=0; vmindex<this.VMList.length; vmindex++){
+			totalres += (this.VMList[vmindex]).res_total;
 		}
 		var cost = 0;
 		if (this.TaskNum[time] < totalres){
-			cost = (totalres - TaskNum[time]) * 5 * this.reddcost;
+			cost = (totalres - this.TaskNum[time]) * 5 * this.reddcost;
 		}
 		else{
-			cost = (TaskNum[time] - totalres) * this.srvcost * this.srvtime;
+			cost = (this.TaskNum[time] - totalres) * this.srvcost * this.srvtime;
 		}
 
 		// try to place tasks on vms
-		for (var task in this.TaskList[time]){
+		for (var ind=0; ind<(this.TaskList[time]).length; ind++){
+			var task = this.TaskList[time][ind];
 			var flag = true;
-			for (var vm in this.VMList){
+			for (var vmind=0; vmind<this.VMList.length; vmind++){
+				var vm = this.VMList[vmind];
 				if (vm.res_avail >= task.taskcap){
 					vm.addTask(task);
 					flag = false;
@@ -230,7 +254,8 @@ function Simulator(TaskList, TaskNum){
 
 			// enlarge the small vms to midlle scale
 			if (flag == true){
-				for (vm in this.VMList){
+				for (var vmind=0; vmind<this.VMList.length; vmind++){
+					var vm = this.VMList[vmind];
 					if (vm.res_total == this.Params['small']){
 						vm.enlargeRes(this.Params['middle']);
 						vm.addTask(task);
@@ -242,7 +267,8 @@ function Simulator(TaskList, TaskNum){
 
 			// enlarge the middle vms to large scale
 			if (flag == true){
-				for (vm in this.VMList){
+				for (var vmind=0; vmind<this.VMList.length; vmind++){
+					var vm = this.VMList[vmind];
 					if (vm.res_total == this.Params['middle']){
 						vm.enlargeRes(this.Params['large']);
 						vm.addTask(task);
@@ -256,7 +282,7 @@ function Simulator(TaskList, TaskNum){
 			if (flag == true){
 				vm = new VirtualMachine(this.Params['small']);
 				vm.addTask(task);
-				this.VMList.append(vm);
+				this.VMList.push(vm);
 			}
 		}
 		return cost;
@@ -273,15 +299,17 @@ function Simulator(TaskList, TaskNum){
 
 	this.enlargeVM = function(increment){
 		var totalrest = 0;
-		for (var vm in this.VMList){
+		for (var vmind=0; vmind<this.VMList.length; vmind++){
+			var vm = this.VMList[vmind];
 			totalrest += vm.res_avail;
 		}
 		if (totalrest <= increment){
 			var newRes = increment - totalrest;
 			
 			// enlarge existing vms first
-			for (var vm in this.VMList){
-				if (vm.res_avail == this.Params['small']){
+			for (var vmind=0; vmind<this.VMList.length; vmind++){
+				var vm = this.VMList[vmind];
+				if (vm.res_total == this.Params['small']){
 					vm.enlargeRes(this.Params['large']);
 					newRes -= (this.Params['large'] - this.Params['small']);
 					if (newRes <= 0){break;}
@@ -290,24 +318,24 @@ function Simulator(TaskList, TaskNum){
 			
 			// if can not be satisfied, then start more vms
 			if (newRes > 0){
-				var largenum = newRes / this.Params['large'];
-				var middlenum = (newRes%this.Params['large'])/this.Params['middle'];
-				var smallnum = ((newRes%this.Params['large'])%this.Params['middle'])/this.Params['small'];
+				var largenum = Math.floor(newRes / this.Params['large']);
+				var middlenum = Math.floor((newRes%this.Params['large'])/this.Params['middle']);
+				var smallnum = Math.floor(((newRes%this.Params['large'])%this.Params['middle'])/this.Params['small']);
 				if (((newRes%this.Params['large'])%this.Params['middle'])%this.Params['small'] != 0){
 					smallnum += 1;
 				}
 				for (var re=0; re<largenum; re++){
-					var vm = VirtualMachine(self.Params['large']);
-					self.VMList.append(vm);
+					var vm = new VirtualMachine(this.Params['large']);
+					this.VMList.push(vm);
 				}
-				for (var re=0; re<middle; re++){
-					var vm = VirtualMachine(self.Params['middle']);
-					self.VMList.append(vm);
+				for (var re=0; re<middlenum; re++){
+					var vm = new VirtualMachine(this.Params['middle']);
+					this.VMList.push(vm);
 				}
 					
-				for (var re=0; re<middle; re++){
-					var vm = VirtualMachine(self.Params['small']);
-					self.VMList.append(vm);
+				for (var re=0; re<smallnum; re++){
+					var vm = new VirtualMachine(this.Params['small']);
+					this.VMList.push(vm);
 				}
 			}
 		}
@@ -315,12 +343,13 @@ function Simulator(TaskList, TaskNum){
 	}
 
 	this.narrowVM = function(){
-		for (vm in this.VMList){
+		for (var vmind=0; vmind<this.VMList.length; vmind++){
+			var vm = this.VMList[vmind];
 			if ((vm.res_total - vm.res_avail) <= this.Params['small']){
 				vm.narrowRes(this.Params['small']);
 			}
 			else if ((vm.res_total - vm.res_avail) <= this.Params['middle']){
-				vm.narrowRes(self.Params['middle']);
+				vm.narrowRes(this.Params['middle']);
 			}
 		}
 		return true;
@@ -329,14 +358,156 @@ function Simulator(TaskList, TaskNum){
 }
 
 
-function Predictor(){
+function Predictor(TaskNum, modelname){
 	/*
 		class for task number prediction
 
 		Attributes:
 		* category: task category, user task or data task
 		* model: predicting model
-	
-	*/
 
+		Methods:
+		* tool_mean: get the mean value of an array
+		* getFeature: function for feature construction
+
+	*/
+	this.TaskNum = TaskNum;
+	this.modelname = modelname;
+
+	this.tool_mean = function(array){
+		var sum = 0;
+		for (var ind=0; ind<array.length; ind++){
+			sum += array[ind];
+		}
+		return sum/(array.length);
+	}
+	this.getFeature = function(timelist){
+		var train_X = new Array();
+		var train_Y = new Array();
+		for (var timeind=0; timeind<timelist.length; timeind++){
+			var time = timelist[timeind];
+			var feature = new Array();
+			for (var index=1; index<10; index++){
+				feature.push(this.TaskNum[time-index]);
+			}
+			var m_last10 = this.tool_mean(this.TaskNum.slice(time-10,time));
+			var m_last20 = this.tool_mean(this.TaskNum.slice(time-20,time));
+			var m_last30 = this.tool_mean(this.TaskNum.slice(time-30,time));
+			feature.push(m_last10);
+			feature.push(m_last20);
+			feature.push(m_last30);
+			feature.push(time);
+
+			train_X.push(feature);
+			train_Y.push(this.TaskNum[time]);
+		}
+		var data = {
+			features: train_X,
+			labels: train_Y
+		};
+		return data;
+	}
+
+	this.trainModel = function(time){
+		/*
+			TODO(houk): needed to be modified, (data.features, data.labels)
+		*/
+		var timelist = new Array();
+		for(var index=time-50; index<time; index++){
+			timelist.push(index);
+		}
+		var data = this.getFeature(timelist);
+		if (this.modelname == "RFR"){
+			var options = {
+				seed: 3,
+				maxFeatures: 1,
+				replacement: false,
+				nEstimators: 200
+			};
+			console.log(data);
+			var model = new ML.RandomForestRegression(options);
+			model.train(data.features, data.labels);
+			var pdata = this.getFeature([time]);
+			var predvalue = Math.round(model.predict(pdata.features));
+			console.log(predvalue);
+			var value = this.TaskNum[time-1];
+			return (predvalue-value);
+		}
+	}
 }
+
+function Adjustor(){
+	/*
+		Params = {
+			fluct: #,
+			sinmagn: #,
+			basemagn: #,
+			taskspan: #,
+			endtime: #,
+			begintime: #,
+			model: #
+		}
+	*/
+	this.COSTRES = new Array();
+	this.PDTRES = new Array();
+	this.REALNUM = new Array();
+
+	this.run = function(){
+		var Params = JSON.parse(sessionStorage.getItem("Parser"));
+		var GRT = new Generator(Params.fluct, Params.sinmagn, Params.basemagn, Params.taskspan, Params.endtime);
+		GRT.generateTask();
+
+		var SIM = new Simulator(GRT.TaskList, GRT.TaskNum);
+		SIM.initialize();
+
+		var PDT = new Predictor(GRT.TaskNum, "RFR");
+		
+		var VMREC = new Array();
+		for (var time=Params.begintime; time<Params.endtime; time++){
+			SIM.removeTask(time);
+			var cost = SIM.placeTask(time);
+			this.COSTRES.push(cost);
+			SIM.reduceVM();
+			
+			var vminfo = new Array();
+			for (var vmind=0; vmind<SIM.VMList.length; vmind++){
+				var vm = SIM.VMList[vmind];
+				var resinfo = {
+					res_used: vm.res_total-vm.res_avail,
+					res_avail: vm.res_avail
+				};
+				vminfo.push(resinfo);
+			}
+			VMREC.push(vminfo);
+
+			// var increment = PDT.trainModel(time+1);
+			increment = 3;
+			
+			this.PDTRES.push(increment+SIM.TaskNum[time]);
+			if (increment>0){
+				SIM.enlargeVM(increment);
+			}
+			else{
+				SIM.narrowVM();
+			}
+			this.REALNUM.push(SIM.TaskNum[time+1]);
+		}
+		
+		var parameters = {
+			costres: this.COSTRES,
+			pdtres: this.PDTRES,
+			realnum: this.REALNUM,
+			vmrec: VMREC
+		}
+
+		sessionStorage.setItem("Adjustor", JSON.stringify(parameters));
+		alert("Algorithm finish!");
+
+		console.log(this.COSTRES);
+		console.log(this.PDTRES);
+		console.log(this.REALNUM);
+		console.log(VMREC);
+	}	
+}
+
+Adjustor = new Adjustor();

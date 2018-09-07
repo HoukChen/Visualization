@@ -32,6 +32,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="../Scripts/FileParser.js"></script>
+  <script src="../Scripts/Algorithms/ml.min.js"></script>
+  <script src="../Scripts/Algorithms/adjustment.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -330,7 +333,7 @@ desired effect
 					</div>
 					<div class="box-body">
 						<button type="submit" class="btn btn-primary">返回修改</button>
-						<button type="button" class="btn btn-danger">开始计算</button>
+						<button type="button" class="btn btn-danger" onclick="Adjustor.run()">开始计算</button>
 					</div>
 					<div class="box-body">
 						<p> </p>
@@ -364,7 +367,7 @@ desired effect
 				  <div class="box-body">
 					<div class="form-group">
 					  <label for="exampleInputFile">File input</label>
-					  <input type="file" id="exampleInputFile">
+					  <input type="file" id="exampleInputFile" onchange="Parser.parse(this.files)">
 
 					  <p class="help-block">please upload the file.</p>
 					</div>
