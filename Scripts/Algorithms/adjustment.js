@@ -2,8 +2,6 @@
 	ml.js - Machine learning tools in JavaScript, https://github.com/mljs/ml
 	<script src="https://www.lactame.com/lib/ml/3.3.0/ml.min.js"></script>
 */
-
-
 function Adjsutment(){
 
 	/*
@@ -78,6 +76,7 @@ function Task(stime, etime, taskcap){
 
 
 function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
+
 	/*
 		class for task generating scheme
 
@@ -358,6 +357,7 @@ function Simulator(TaskList, TaskNum){
 }
 
 
+
 function Predictor(TaskNum, modelname){
 	/*
 		class for task number prediction
@@ -511,3 +511,4 @@ function Adjustor(){
 }
 
 Adjustor = new Adjustor();
+

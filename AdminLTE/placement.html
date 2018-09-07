@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-
+  <link rel="stylesheet" href="dist/css/MyCSS.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -198,7 +198,7 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
+        
         <small>Optional description</small>
       </h1>
       <ol class="breadcrumb">
@@ -213,23 +213,31 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-        <button onclick="Writer.write()">下载结果</button>
-
-
-        <select id="choice" onchange="Vplacer.pmShower()">
-          <option value ="0">物理机0</option>
-          <option value ="1">物理机1</option>
-          <option value="2">物理机2</option>
-          <option value="3">物理机3</option>
-          <option value ="4">物理机4</option>
-          <option value ="5">物理机5</option>
-          <option value="6">物理机6</option>
-          <option value="7">物理机7</option>
-        </select>
-        <button onclick="Vplacer.globalShower()">展示全局统计图</button>
-        <div id="pmresult" style="width: 500px;height:300px;"></div>
-        <div id="gresult1" style="width: 500px;height:300px;"></div>
-        <div id="gresult2" style="width: 500px;height:300px;"></div>
+		<div class="box-body">
+			<div class="row">
+				<div class="col-xs-1">
+					<button  class="btn btn-primary" onclick="Writer.write()">下载结果</button>
+				</div>
+				<div class="col-xs-2">
+					<select id="choice" class="form-control" onchange="Vplacer.pmShower()">
+					  <option value ="0">物理机0</option>
+					  <option value ="1">物理机1</option>
+					  <option value="2">物理机2</option>
+					  <option value="3">物理机3</option>
+					  <option value ="4">物理机4</option>
+					  <option value ="5">物理机5</option>
+					  <option value="6">物理机6</option>
+					  <option value="7">物理机7</option>
+					</select>
+				</div>
+				<div class="col-xs-1">
+					<button  class="btn btn-primary" onclick="Vplacer.globalShower()">展示全局统计图</button>
+				</div>
+			</div>
+		</div>
+        <div id="pmresult" class="box1" ></div>
+        <div id="gresult1" class="box2" ></div>
+        <div id="gresult2" class="box3" ></div>
 
     </section>
     <!-- /.content -->

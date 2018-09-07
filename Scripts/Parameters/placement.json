@@ -10,11 +10,24 @@
 	"BladeType": "CH121-V5",
 	"DiskArrayNum": 2,
 	"PMResource": [{
+		"Category": "E900",
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 28,
 		"vCPUOfCore": 2,
 		"MEM": 256,
-		"Storage": 2048}],
+		"Storage": 2048,
+		"PMNumber": 4},
+		{
+		"Category": "E900",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 28,
+		"vCPUOfCore": 2,
+		"MEM": 256,
+		"Storage": 2048,
+		"PMNumber": 4
+		}
+		
+	],
 	"VMResource": [{
 		"VNFType": "RANCU",
 		"VMType": "vNDPUa",

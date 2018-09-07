@@ -1,3 +1,7 @@
+function testParameter(){
+	console.log(Parser.parameters);
+}
+
 function Parser(){
 	/*
 		Class for file parsing, to process the uploaded json file and extract parameters. 
@@ -22,7 +26,6 @@ function Parser(){
 			Parser.parameters = JSON.parse(this.result);
 			var parameters = JSON.parse(this.result);
 			sessionStorage.setItem("Parser", JSON.stringify(parameters));
-
 		}
 		alert("Parameters uploaded sucessfully!");
 	}

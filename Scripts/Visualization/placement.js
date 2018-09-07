@@ -133,7 +133,7 @@ function Vplacer(){
 
 	this.numShower = function(){
 		var conf = this.globalConf();
-		var globalChart = echarts.init(document.getElementById('gresult1'), 'light');
+		var globalChart1 = echarts.init(document.getElementById('gresult1'), 'light');
 		var option = {
 			title: {text:'所有物理机上虚拟机数量图'},
 			xAxis: {
@@ -162,14 +162,14 @@ function Vplacer(){
 			]
 		};
 		var zoomSize = 8;
-		globalChart.on('click', function (params) {
-			globalChart.dispatchAction({
+		globalChart1.on('click', function (params) {
+			globalChart1.dispatchAction({
 				type: 'dataZoom',
 				startValue: conf.dataAxis[Math.max(params.dataIndex-zoomSize/2, 0)],
 				endValue: conf.dataAxis[Math.min(params.dataIndex+zoomSize/2, conf.data.length-1)]
 			});
 		});
-		globalChart.setOption(option);
+		globalChart1.setOption(option);
 	}
 
 	this.utilShower = function(){
@@ -220,3 +220,13 @@ function Vplacer(){
 } 
 
 Vplacer = new Vplacer();
+/*
+window.onresize = function(){
+	window.addEventListener("resize", function () {
+          Vplacer.pmShower.pmChart.resize();
+		  Vplacer.numShower.globalChart1.resize();
+		  Vplacer.utilShower.globalChart.resize();
+	});
+}
+*/
+
