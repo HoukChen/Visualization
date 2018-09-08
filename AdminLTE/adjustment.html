@@ -32,10 +32,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-  <script src="../Scripts/ResultWriter.js"></script>
-  <script src="../Scripts/Echarts/echarts.js"></script>
-  <script src="../Scripts/Visualization/adjustment.js"></script> 
+  
+  <script src="../Scripts/Tools/echarts.js"></script>
+  <script src="../Scripts/Adjustment/writer.js"></script>
+  <script src="../Scripts/Adjustment/uploader.js"></script>
+  <script src="../Scripts/Adjustment/visualization.js"></script> 
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -214,9 +215,15 @@ desired effect
         | Your Page Content Here |
         -------------------------->
         <button onclick="Vadjustor.globalShower()">展示全局统计图</button>
+        <input id="timerange"/>
+        <input type="button" value="展示虚拟机" onclick="Vadjustor.vmShower()">
+        <button onclick="Writer.write()">下载结果</button>
+        <input type="file" onchange="Uploader.upload(this.files)">
         <div id="taskgraph" style="width: 500px;height:300px;"></div>
         <div id="vmNgraph" style="width: 500px;height:300px;"></div>
         <div id="vmUgraph" style="width: 500px;height:300px;"></div>
+        <div id="vmgraph_0" style="width: 500px;height:300px;"></div>
+
 
     </section>
     <!-- /.content -->

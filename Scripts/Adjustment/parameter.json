@@ -1,0 +1,13 @@
+{
+	"vmscale":{
+		"large": 12,
+		"middle": 8,
+		"small": 4
+	},
+	"fluct": 0.1,
+	"sinmagn": 20,
+	"basemagn": 10,
+	"taskspan": 10,
+	"simspan": 50,
+	"model":"RFR"	
+}

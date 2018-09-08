@@ -75,7 +75,7 @@ function Task(stime, etime, taskcap){
 }
 
 
-function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
+function Generator(fluct, sinmagn, basemagn, taskspan, simspan){
 
 	/*
 		class for task generating scheme
@@ -86,7 +86,7 @@ function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
 		* fluct: alternative values interval of the poisson distribution
 		* sinmagn: magnitude of the sin function to simulate task number
 		* basemagn: base task number
-		* taskspan: maximum endtime of each task
+		* taskspan: maximum simspan of each task
 
 		Methods:
 		* tool_factorial: tool function, to calculate factorial
@@ -100,7 +100,8 @@ function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
 	this.sinmagn = sinmagn;
 	this.basemagn = basemagn;
 	this.taskspan = taskspan;
-	this.endtime = endtime;
+	this.simspan = simspan;
+	this.begintime = 50;
 
 	this.tool_factorial = function(num){
 		var result = 1;
@@ -149,10 +150,10 @@ function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
 	}
 
 	this.generateTask = function(){
-		for (var re=0; re<this.endtime+this.taskspan; re++){
+		for (var re=0; re<this.begintime+this.simspan+this.taskspan; re++){
 			this.TaskNum.push(0);
 		}
-		for (var stime=0; stime<this.endtime; stime++){
+		for (var stime=0; stime<this.begintime+this.simspan; stime++){
 			var sinnum = this.sinmagn*Math.abs(Math.sin(stime*Math.PI/(12*60)));
 			var taskmean = Math.ceil(sinnum+this.basemagn);
 			var tasklist = new Array();
@@ -171,7 +172,7 @@ function Generator(fluct, sinmagn, basemagn, taskspan, endtime){
 }
 
 
-function Simulator(TaskList, TaskNum){
+function Simulator(TaskList, TaskNum, VMParams){
 	/*
 		class for dynamic adjustment simulation
 
@@ -195,11 +196,7 @@ function Simulator(TaskList, TaskNum){
 	this.VMList = new Array();
 	this.TaskList = TaskList;
 	this.TaskNum = TaskNum;
-	this.Params = {
-		large: 12,		
-		middle: 8,
-		small: 4
-	};
+	this.Params = VMParams;
 
 	this.initialize = function(){
 		for (var re=0; re<1; re++){
@@ -437,33 +434,23 @@ function Predictor(TaskNum, modelname){
 }
 
 function Adjustor(){
-	/*
-		Params = {
-			fluct: #,
-			sinmagn: #,
-			basemagn: #,
-			taskspan: #,
-			endtime: #,
-			begintime: #,
-			model: #
-		}
-	*/
+
 	this.COSTRES = new Array();
 	this.PDTRES = new Array();
 	this.REALNUM = new Array();
 
 	this.run = function(){
-		var Params = JSON.parse(sessionStorage.getItem("Parser"));
-		var GRT = new Generator(Params.fluct, Params.sinmagn, Params.basemagn, Params.taskspan, Params.endtime);
+		var Params = JSON.parse(sessionStorage.getItem("adjustment_parameter"));
+		var GRT = new Generator(Params.fluct, Params.sinmagn, Params.basemagn, Params.taskspan, Params.simspan);
 		GRT.generateTask();
 
-		var SIM = new Simulator(GRT.TaskList, GRT.TaskNum);
+		var SIM = new Simulator(GRT.TaskList, GRT.TaskNum, Params.vmscale);
 		SIM.initialize();
 
 		var PDT = new Predictor(GRT.TaskNum, "RFR");
 		
 		var VMREC = new Array();
-		for (var time=Params.begintime; time<Params.endtime; time++){
+		for (var time=GRT.begintime; time<GRT.begintime+Params.simspan; time++){
 			SIM.removeTask(time);
 			var cost = SIM.placeTask(time);
 			this.COSTRES.push(cost);
@@ -500,7 +487,7 @@ function Adjustor(){
 			vmrec: VMREC
 		}
 
-		sessionStorage.setItem("Adjustor", JSON.stringify(parameters));
+		sessionStorage.setItem("adjustment_result", JSON.stringify(parameters));
 		alert("Algorithm finish!");
 
 		console.log(this.COSTRES);

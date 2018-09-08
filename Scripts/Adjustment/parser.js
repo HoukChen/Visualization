@@ -25,7 +25,7 @@ function Parser(){
 		reader.onload = function(){
 			Parser.parameters = JSON.parse(this.result);
 			var parameters = JSON.parse(this.result);
-			sessionStorage.setItem("Parser", JSON.stringify(parameters));
+			sessionStorage.setItem("adjustment_parameter", JSON.stringify(parameters));
 		}
 		alert("Parameters uploaded sucessfully!");
 	}

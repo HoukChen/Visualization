@@ -22,7 +22,7 @@ function Vadjustor(){
 		this.VMUTL = new Array();
 		this.COST = new Array();
 		this.VMREC = new Array();
-		var Adjustor = JSON.parse(sessionStorage.getItem("Adjustor"));
+		var Adjustor = JSON.parse(sessionStorage.getItem("adjustment_result"));
 		
 		this.VMREC = Adjustor.vmrec;
 		for (var ind=0; ind<Adjustor.realnum.length; ind++){
@@ -159,7 +159,56 @@ function Vadjustor(){
 	}
 
 	this.vmShower = function(){
+		this.initParams();
+		var content = document.getElementById("timerange").value;
+		var index = content.indexOf("-");
+		var start = parseInt(content.slice(0,index));
+		var end = parseInt(content.slice(index+1, content.length));
+		console.log(start);
+		console.log(end);
 
+		for (var time=Math.max(start, 0); time<Math.min(end, this.VMREC.length); time++){
+			
+			var divTag = document.createElement("div");
+			divTag.style.width = "500px";
+			divTag.style.height = "300px";
+			document.body.appendChild(divTag);
+			var vmChart = echarts.init(divTag, 'light');
+			var vminfo = this.VMREC[time];
+			var xAxisData = new Array();
+			var yUsed = new Array();
+			var yAvail = new Array();
+			for (var ind=0; ind<vminfo.length; ind++){
+				xAxisData.push(ind);
+				yUsed.push(vminfo[ind].res_used);
+				yAvail.push(vminfo[ind].res_avail);
+			}
+			option = {
+				title: {text:('时刻'+time.toString()+'虚拟机信息')},
+				legend: {data: ['已用资源', '空余资源']},
+	            xAxis: {
+	                type: 'category',
+	                data: xAxisData
+	            },
+	            yAxis: {
+	                type: 'value',
+	                axisTick: {show: false},
+	            },
+	            series: [{
+	                type: 'bar',
+	                name: '已用资源',
+	                stack: 'sum',
+	                data: yUsed
+	            },
+	            {
+	            	type: 'bar',
+	            	name: '空余资源',
+	            	stack: 'sum',
+	            	data: yAvail
+	            }]
+			};
+			vmChart.setOption(option);
+		}
 	}
 }
 
