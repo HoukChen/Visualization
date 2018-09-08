@@ -9,14 +9,10 @@ function Writer(){
 		* write: save the placement result as json files and download it
 	*/
 	this.write = function(){
-		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
-		var result = {
-			"vmRecord":Placer.vmRecord,
-			"pmRecord":Placer.pmRecord,
-		};
+		var result = JSON.parse(sessionStorage.getItem("adjustment_result"));
 	    var vmResult = JSON.stringify(result);
 	    var eleLink = document.createElement('a');
-	    eleLink.download = "vmResult.json";
+	    eleLink.download = "result.json";
 	    eleLink.style.display = 'none';
 	    var blob = new Blob([vmResult]);
 	    eleLink.href = URL.createObjectURL(blob);

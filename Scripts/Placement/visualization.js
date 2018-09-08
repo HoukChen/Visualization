@@ -14,8 +14,8 @@ function Vplacer(){
 	*/
 
 	this.pmConf = function(index){
-		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
-		var pm = Placer.pmRecord[index];
+		var result = JSON.parse(sessionStorage.getItem("placement_result"));
+		var pm = result.pmRecord[index];
 		var vmlist = pm['VMList'];
 		var series = new Array();
 		var legend = new Array();
@@ -49,67 +49,82 @@ function Vplacer(){
 		return echartConf;
 	}
 
+	
+
 	this.pmShower = function(){
-		var pmindex = document.getElementById("choice").value;
-		console.log(parseInt(pmindex));
-		var conf = this.pmConf(parseInt(pmindex));
-		var vmlist = conf.pm['VMList'];
-		var pm = conf.pm;
-		echarts.dispose(document.getElementById("pmresult"));
-		var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
-		var option = {
-			title: {text:'物理机资源分布图'},
-			legend: conf.legend,
-			xAxis: {
-				type: 'value',
-				axisTick: {show: false},
-				axisLine: {show: false},
-				axisLabel:{formatter:function(value){return (String(value*100)+' %')}}
-			},
-			yAxis: {
-				type: 'category', 
-				axisTick: {show: false},
-				axisLine: {show: false},
-				data: ['核心数','内存大小','存储容量']
-			},
-			tooltip: {
-				trigger: 'axis',
-				axisPointer: {type: 'shadow'},
-				formatter: function(params){
-					var content = params[0].name+'信息: <br/>';
-					var pmResource = '';
-					var pmRatio = '';
-					console.log(params);
-					for (var index=0; index<params.length; index++){
-						content += ('* ' + params[index].seriesName + ': ');
-						if (params[index].name == '核心数'){
-							content += (String(vmlist[index].VMCore) + '个 <br/>');
-							pmResource = (String(pm.PMParam.Core)+'个');
-							pmRatio = String((100*(pm.PMParam.Core-pm.RestCore)/pm.PMParam.Core).toFixed(2))+' %';
+
+		var content = document.getElementById("pmrange").value;
+		var index = content.indexOf("-");
+		var start = parseInt(content.slice(0,index));
+		var end = parseInt(content.slice(index+1, content.length));
+		var result = JSON.parse(sessionStorage.getItem("placement_result"));
+		for (var pmind=Math.max(start, 0); pmind<Math.min(end, result.pmRecord.length); pmind++){
+
+			var conf = this.pmConf(parseInt(pmind));
+			var vmlist = conf.pm['VMList'];
+			var pm = conf.pm;
+			// echarts.dispose(document.getElementById("pmresult"));
+			// var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
+			var divTag = document.createElement("div");
+			divTag.style.width = "500px";
+			divTag.style.height = "300px";
+			document.body.appendChild(divTag);
+			var pmChart = echarts.init(divTag, 'light');
+
+			var option = {
+				title: {text:'物理机资源分布图'},
+				legend: conf.legend,
+				xAxis: {
+					type: 'value',
+					axisTick: {show: false},
+					axisLine: {show: false},
+					axisLabel:{formatter:function(value){return (String(value*100)+' %')}}
+				},
+				yAxis: {
+					type: 'category', 
+					axisTick: {show: false},
+					axisLine: {show: false},
+					data: ['核心数','内存大小','存储容量']
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {type: 'shadow'},
+					formatter: this.pmFormatter = function(params){
+						var content = params[0].name+'信息: <br/>';
+						var pmResource = '';
+						var pmRatio = '';
+						console.log(params);
+						for (var index=0; index<params.length; index++){
+							content += ('* ' + params[index].seriesName + ': ');
+							if (params[index].name == '核心数'){
+								content += (String(vmlist[index].VMCore) + '个 <br/>');
+								pmResource = (String(pm.PMParam.Core)+'个');
+								pmRatio = String((100*(pm.PMParam.Core-pm.RestCore)/pm.PMParam.Core).toFixed(2))+' %';
+							}
+							else if (params[index].name == '内存大小'){
+								content += (String(vmlist[index].VMMemory)+'GB <br/>');
+								pmResource = (String(pm.PMParam.MEM)+' GB');
+								pmRatio = String((100*(pm.PMParam.MEM-pm.RestMemory)/pm.PMParam.MEM).toFixed(2))+' %';
+							}
+							else if (params[index].name == '存储容量'){
+								content += (String(vmlist[index].VMStorage)+'GB <br/>');
+								pmResource = (String(pm.PMParam.Storage)+' GB');
+								pmRatio = String((100*(pm.PMParam.Storage-pm.RestStorage)/pm.PMParam.Storage).toFixed(2))+' %';
+							}
 						}
-						else if (params[index].name == '内存大小'){
-							content += (String(vmlist[index].VMMemory)+'GB <br/>');
-							pmResource = (String(pm.PMParam.MEM)+' GB');
-							pmRatio = String((100*(pm.PMParam.MEM-pm.RestMemory)/pm.PMParam.MEM).toFixed(2))+' %';
-						}
-						else if (params[index].name == '存储容量'){
-							content += (String(vmlist[index].VMStorage)+'GB <br/>');
-							pmResource = (String(pm.PMParam.Storage)+' GB');
-							pmRatio = String((100*(pm.PMParam.Storage-pm.RestStorage)/pm.PMParam.Storage).toFixed(2))+' %';
-						}
+						content += ('物理机'+params[0].name+'总量: '+pmResource+'  利用率: ' + pmRatio);
+						return content;
 					}
-					content += ('物理机'+params[0].name+'总量: '+pmResource+'  利用率: ' + pmRatio);
-					return content;
-				}
-			},
-			series: conf.series
-		};
-		pmChart.setOption(option);
+				},
+				series: conf.series
+			};
+			pmChart.setOption(option);
+		}
 	}
 
 	this.globalConf = function(){
-		var Placer = JSON.parse(sessionStorage.getItem("Placer"));
-		var pm = Placer.pmRecord;
+		var result = JSON.parse(sessionStorage.getItem("placement_result"));
+		var pm = result.pmRecord;
 		var dataAxis = new Array();
 		var num = new Array();
 		var util = new Array();
@@ -229,3 +244,4 @@ window.onresize = function(){
 	});
 }
 */
+
