@@ -59,6 +59,18 @@
 	float:left;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
+.box6 {
+	position: relative;
+    border-radius: 5px;
+	border-top: 3px solid #00c0ef;
+    background: #ffffff;
+    margin-bottom: 20px;
+    width: 70%;
+	height: 500px;
+	margin-right: 1%;
+	float:left;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
 .wljbox{
 	position: relative;
     background: #ffffff;
