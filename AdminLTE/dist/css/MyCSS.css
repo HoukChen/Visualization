@@ -40,7 +40,6 @@
 	border-top: 3px solid #00c0ef;
     background: #ffffff;
     margin-bottom: 20px;
-	height: 500px;
     width: 70%;
 	margin-right: 1%;
 	float:left;
@@ -57,6 +56,17 @@
 	padding-right:1%;
 	height: 350px;
     width: 25%;
+	float:left;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.wljbox{
+	position: relative;
+    background: #ffffff;
+	margin-left: 2%;
+	padding-left:1%;
+    margin-bottom: 20px;
+	height: 400px;
+    width: 46%;
 	float:left;
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
