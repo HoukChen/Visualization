@@ -1,5 +1,5 @@
-function loadPage(){
-	alert("load");
+function placement_loadPage(){
+	alert("load parameters for placement");
 	console.log(Parser.parameters);
 	var para = Parser.parameters;
 	document.getElementById("rN0").value = para.CPU0OccupiedCoreNum;
@@ -136,7 +136,7 @@ function vmDeleteRow(dRow){
 
 function clearRow(){
 	document.getElementById("pmType").value = "";
-	alert("clearRow");
+	//alert("clearRow");
 }
 
 function calculate(){

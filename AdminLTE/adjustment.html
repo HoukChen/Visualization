@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-
+	<link rel="stylesheet" href="dist/css/MyCSS.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -32,11 +32,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  
+
   <script src="../Scripts/Tools/echarts.js"></script>
   <script src="../Scripts/Adjustment/writer.js"></script>
   <script src="../Scripts/Adjustment/uploader.js"></script>
-  <script src="../Scripts/Adjustment/visualization.js"></script> 
+  <script src="../Scripts/Adjustment/visualization.js"></script>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -58,7 +59,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" onload = "Vadjustor.globalShower()">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -199,13 +200,9 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        <b>动态调整算法结果显示</b>
+        <small>Adjustment result</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -214,16 +211,10 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-        <button onclick="Vadjustor.globalShower()">展示全局统计图</button>
-        <input id="timerange"/>
-        <input type="button" value="展示虚拟机" onclick="Vadjustor.vmShower()">
-        <button onclick="Writer.write()">下载结果</button>
-        <input type="file" onchange="Uploader.upload(this.files)">
-        <div id="taskgraph" style="width: 500px;height:300px;"></div>
-        <div id="vmNgraph" style="width: 500px;height:300px;"></div>
-        <div id="vmUgraph" style="width: 500px;height:300px;"></div>
-        <div id="vmgraph_0" style="width: 500px;height:300px;"></div>
 
+        <div id="taskgraph" class="box1"></div>
+        <div id="vmNgraph"  class="box2"></div>
+        <div id="vmUgraph"  class="box6"></div>
 
     </section>
     <!-- /.content -->

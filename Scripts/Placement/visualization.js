@@ -66,13 +66,16 @@ function Vplacer(){
 			// echarts.dispose(document.getElementById("pmresult"));
 			// var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
 			var divTag = document.createElement("div");
-			divTag.style.width = "500px";
+			/*
+			divTag.style.width = "40%";
 			divTag.style.height = "300px";
-			document.body.appendChild(divTag);
+			*/
+			divTag.setAttribute("class","wljbox");
+			document.getElementById("pmresult").appendChild(divTag);
 			var pmChart = echarts.init(divTag, 'light');
-
+			var ttitle = 'No.' + pmind;
 			var option = {
-				title: {text:'物理机资源分布图'},
+				title: {text:ttitle},
 				legend: conf.legend,
 				xAxis: {
 					type: 'value',
