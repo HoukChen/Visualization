@@ -18,6 +18,7 @@ function Uploader(){
 			sessionStorage.setItem("placement_result", JSON.stringify(parameters));
 		}
 		alert("Result file uploaded sucessfully!");
+		location.reload();
 	}
 }
 
