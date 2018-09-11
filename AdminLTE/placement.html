@@ -215,16 +215,6 @@ desired effect
 				<div class="col-xs-3">
 				
 					<input type="text" id = "pmrange" placeholder="请输入需要显示的物理机范围 例：1-2" class="form-control">
-					<!--select id="choice" class="form-control" onchange="Vplacer.pmShower()">
-					  <option value ="0">物理机0</option>
-					  <option value ="1">物理机1</option>
-					  <option value="2">物理机2</option>
-					  <option value="3">物理机3</option>
-					  <option value ="4">物理机4</option>
-					  <option value ="5">物理机5</option>
-					  <option value="6">物理机6</option>
-					  <option value="7">物理机7</option>
-					</select-->
 				</div>
 				<div class="col-xs-1">
 					<button  class="btn btn-primary" onclick="Vplacer.pmShower()" >展示物理机信息</button>
@@ -232,8 +222,8 @@ desired effect
 			</div>
 		</div>
         
-        <div id="gresult1" class="box1" ></div>
-        <div id="gresult2" class="box2" ></div>
+    <div id="gresult1" class="box1" ></div>
+    <div id="gresult2" class="box2" ></div>
 		<div id="pmresult" class="box4" >
 			<div class="box-header with-border">
 				<h3 class="box-title"><b>物理机资源分配图</b></h3>
@@ -252,7 +242,10 @@ desired effect
 					</div>
 					<div class="form-group">
 						<label>上传文件说明</label>
-						<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">请上传结果文件.</textarea>
+						<textarea class="form-control" rows="7" placeholder="Enter ..." disabled="">
+              1. 下载结果：点击【下载结果】按钮，可将本算法的运行结果以json格式保存到本地以备用。
+              2. 上传结果：选择需要上传的结果文件，上传后点击【上传结果并显示】可直接显示结果图。
+            </textarea>
 					</div>
 					
 					<div class="form-group">

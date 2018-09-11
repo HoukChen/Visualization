@@ -18,6 +18,7 @@ function Uploader(){
 			sessionStorage.setItem("adjustment_result", JSON.stringify(parameters));
 		}
 		alert("Result file uploaded sucessfully!");
+		location.reload();
 	}
 }
 

@@ -167,12 +167,13 @@ function Vadjustor(){
 		console.log(start);
 		console.log(end);
 
-		for (var time=Math.max(start, 0); time<Math.min(end, this.VMREC.length); time++){
+		for (var time=Math.max(start, 0); time<=Math.min(end, this.VMREC.length); time++){
 			
 			var divTag = document.createElement("div");
-			divTag.style.width = "500px";
-			divTag.style.height = "300px";
-			document.body.appendChild(divTag);
+			divTag.setAttribute("class","wljbox");
+			// divTag.style.width = "500px";
+			// divTag.style.height = "300px";
+			document.getElementById("vmsgraph").appendChild(divTag);
 			var vmChart = echarts.init(divTag, 'light');
 			var vminfo = this.VMREC[time];
 			var xAxisData = new Array();
@@ -184,7 +185,7 @@ function Vadjustor(){
 				yAvail.push(vminfo[ind].res_avail);
 			}
 			option = {
-				title: {text:('时刻'+time.toString()+'虚拟机信息')},
+				title: {text:('时刻'+time.toString())},
 				legend: {data: ['已用资源', '空余资源']},
 	            xAxis: {
 	                type: 'category',
@@ -194,6 +195,10 @@ function Vadjustor(){
 	                type: 'value',
 	                axisTick: {show: false},
 	            },
+	            tooltip: {
+					trigger: 'axis',
+					axisPointer: {type: 'shadow'}
+				},
 	            series: [{
 	                type: 'bar',
 	                name: '已用资源',

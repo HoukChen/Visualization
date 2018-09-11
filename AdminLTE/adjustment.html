@@ -211,11 +211,47 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-
-        <div id="taskgraph" class="box1"></div>
-        <div id="vmNgraph"  class="box2"></div>
-        <div id="vmUgraph"  class="box6"></div>
-
+      <div class="box-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <input type="text" id = "timerange" placeholder="请输入需要显示的时间范围 例：1-2" class="form-control">
+          </div>
+          <div class="col-xs-1">
+            <button  class="btn btn-primary" onclick="Vadjustor.vmShower()" >展示虚拟机信息</button>
+          </div>
+        </div>
+      </div>
+      <div id="taskgraph" class="box1"></div>
+      <div id="vmNgraph"  class="box2"></div>
+      <div id="vmUgraph"  class="box1"></div>
+      <div class = "box2">
+        <div class="box-header with-border">
+          <h3 class="box-title"><b>结果文件上传与下载</b></h3>
+        </div>
+        <div class = "box-body1">
+          <div class="form-group">
+            <label for="exampleInputFile">结果文件上传</label>
+            <input type="file" id = "ufile" >
+              <!--p class="help-block">请上传结果文件.</p-->
+          </div>
+          <div class="form-group">
+            <label>上传文件说明</label>
+            <textarea class="form-control" rows="5" placeholder="Enter ..." disabled="">
+            1. 下载结果：点击【下载结果】按钮，可将本算法的运行结果以json格式保存到本地以备用。
+            2. 上传结果：选择需要上传的结果文件，上传后点击【上传结果并显示】可直接显示结果图。
+            </textarea>
+          </div>
+          <div class="form-group">
+            <button  class="btn btn-success" onclick="Uploader.upload(document.getElementById('ufile').files)">上传结果并显示</button>
+            <button  class="btn btn-primary" onclick="Writer.write()">下载结果</button>
+          </div>
+        </div>
+      </div>
+      <div id="vmsgraph" class="box4" >
+        <div class="box-header with-border">
+          <h3 class="box-title"><b>不同时刻虚拟机信息图</b></h3>
+        </div>
+      </div>
     </section>
     <!-- /.content -->
   </div>

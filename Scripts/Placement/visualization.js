@@ -59,16 +59,8 @@ function Vplacer(){
 		for (var pmind=Math.max(start, 0); pmind<=Math.min(end, result.pmRecord.length); pmind++){
 
 			var conf = this.pmConf(parseInt(pmind));
-			var vmlist = conf.pm['VMList'];
-			var pm = conf.pm;
 			var PMParam = conf.pm.PMParam;
-			// echarts.dispose(document.getElementById("pmresult"));
-			// var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
 			var divTag = document.createElement("div");
-			/*
-			divTag.style.width = "40%";
-			divTag.style.height = "300px";
-			*/
 			divTag.setAttribute("class","wljbox");
 			document.getElementById("pmresult").appendChild(divTag);
 			var pmChart = echarts.init(divTag, 'light');
