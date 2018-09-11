@@ -24,7 +24,6 @@ function Vplacer(){
 						 (vmlist[vmindex].VMMemory/pm.PMParam.MEM), 
 						 (vmlist[vmindex].VMStorage/pm.PMParam.Storage)
 						];
-			console.log(data);
 
 			var element = {
 							name : '虚拟机'+String(vmindex),
@@ -39,7 +38,6 @@ function Vplacer(){
 						};
 			series.push(element);
 			legend.push('虚拟机'+String(vmindex));
-			console.log(legend);
 		}
 		var echartConf = {
 			series: series,
@@ -58,18 +56,11 @@ function Vplacer(){
 		var start = parseInt(content.slice(0,index));
 		var end = parseInt(content.slice(index+1, content.length));
 		var result = JSON.parse(sessionStorage.getItem("placement_result"));
-		for (var pmind=Math.max(start, 0); pmind<Math.min(end, result.pmRecord.length); pmind++){
+		for (var pmind=Math.max(start, 0); pmind<=Math.min(end, result.pmRecord.length); pmind++){
 
 			var conf = this.pmConf(parseInt(pmind));
-			var vmlist = conf.pm['VMList'];
-			var pm = conf.pm;
-			// echarts.dispose(document.getElementById("pmresult"));
-			// var pmChart = echarts.init(document.getElementById('pmresult'), 'light');
+			var PMParam = conf.pm.PMParam;
 			var divTag = document.createElement("div");
-			/*
-			divTag.style.width = "40%";
-			divTag.style.height = "300px";
-			*/
 			divTag.setAttribute("class","wljbox");
 			document.getElementById("pmresult").appendChild(divTag);
 			var pmChart = echarts.init(divTag, 'light');
@@ -81,41 +72,35 @@ function Vplacer(){
 					type: 'value',
 					axisTick: {show: false},
 					axisLine: {show: false},
-					axisLabel:{formatter:function(value){return (String(value*100)+' %')}}
+					axisLabel: {formatter: function(value){return (String(value*100)+' %')}}
 				},
 				yAxis: {
 					type: 'category', 
 					axisTick: {show: false},
 					axisLine: {show: false},
-					data: ['核心数','内存大小','存储容量']
+					data: ['核心数:'+PMParam.Core+' 个','内存大小:'+PMParam.MEM+' GB','存储容量:'+PMParam.Storage+' GB'],
+					axisLabel: {formatter: function(value){return (value.slice(0, value.indexOf(':')))}}
 				},
 				tooltip: {
 					trigger: 'axis',
 					axisPointer: {type: 'shadow'},
 					formatter: this.pmFormatter = function(params){
-						var content = params[0].name+'信息: <br/>';
-						var pmResource = '';
-						var pmRatio = '';
-						console.log(params);
+						var resinfo = params[0].name;
+						var rescate = resinfo.slice(0, resinfo.indexOf(':'));
+						var restotal = parseInt(resinfo.slice(resinfo.indexOf(':')+1, resinfo.indexOf(' ')));
+						var content = (rescate +'信息: <br/>');
+						var ultRatio = 0;
 						for (var index=0; index<params.length; index++){
 							content += ('* ' + params[index].seriesName + ': ');
-							if (params[index].name == '核心数'){
-								content += (String(vmlist[index].VMCore) + '个 <br/>');
-								pmResource = (String(pm.PMParam.Core)+'个');
-								pmRatio = String((100*(pm.PMParam.Core-pm.RestCore)/pm.PMParam.Core).toFixed(2))+' %';
-							}
-							else if (params[index].name == '内存大小'){
-								content += (String(vmlist[index].VMMemory)+'GB <br/>');
-								pmResource = (String(pm.PMParam.MEM)+' GB');
-								pmRatio = String((100*(pm.PMParam.MEM-pm.RestMemory)/pm.PMParam.MEM).toFixed(2))+' %';
-							}
-							else if (params[index].name == '存储容量'){
-								content += (String(vmlist[index].VMStorage)+'GB <br/>');
-								pmResource = (String(pm.PMParam.Storage)+' GB');
-								pmRatio = String((100*(pm.PMParam.Storage-pm.RestStorage)/pm.PMParam.Storage).toFixed(2))+' %';
-							}
+							var resvm = Math.round(restotal * params[index].data);
+							content += (resvm.toString()+resinfo.slice(resinfo.indexOf(' '),resinfo.length)+'<br/>');
+							ultRatio += params[index].data;
 						}
-						content += ('物理机'+params[0].name+'总量: '+pmResource+'  利用率: ' + pmRatio);
+						var ultStr = (ultRatio.toFixed(4)*100).toString();
+
+						ultStr = ultStr.slice(0,ultStr.indexOf('.')+3);
+						content += ('物理机'+rescate+'总量: '+resinfo.slice(resinfo.indexOf(':')+1, resinfo.length)+
+							'  利用率: ' + ultStr +'%');
 						return content;
 					}
 				},

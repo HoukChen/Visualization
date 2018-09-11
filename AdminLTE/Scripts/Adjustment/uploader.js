@@ -1,6 +1,6 @@
 function Uploader(){
 	/*
-		Class to upload the placement result and show the result graphs.
+		Class to upload the adjustment result and show the result graphs.
 
 		Attribute:
 		* ...
@@ -15,9 +15,10 @@ function Uploader(){
 		reader.readAsText(file);
 		reader.onload = function(){
 			var parameters = JSON.parse(this.result);
-			sessionStorage.setItem("placement_result", JSON.stringify(parameters));
+			sessionStorage.setItem("adjustment_result", JSON.stringify(parameters));
 		}
 		alert("Result file uploaded sucessfully!");
+		location.reload();
 	}
 }
 

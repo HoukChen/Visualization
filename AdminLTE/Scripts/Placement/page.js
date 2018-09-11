@@ -196,3 +196,8 @@ function calculate(){
 	
 	Placer.run();
 }
+
+function uploadAndshow(ufile){
+	Uploader.upload(ufile);
+	Vplacer.globalShower();
+}

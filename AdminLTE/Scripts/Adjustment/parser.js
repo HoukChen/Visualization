@@ -1,7 +1,3 @@
-function testParameter(){
-	console.log(Parser.parameters);
-}
-
 function Parser(){
 	/*
 		Class for file parsing, to process the uploaded json file and extract parameters. 
@@ -32,3 +28,4 @@ function Parser(){
 }
 
 Parser = new Parser();
+

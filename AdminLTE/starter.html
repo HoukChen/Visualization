@@ -60,7 +60,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="starter.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>C</b>LR</span>
       <!-- logo for regular state and mobile devices -->
@@ -192,25 +192,65 @@ desired effect
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Page Header
-        <small>Optional description</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
-    </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
-
+      <div class="logo container" style="padding:50px" align="center">
+        <img src="logos/sjtu.png" height="80" width="80" hspace="40">
+        <img src="logos/huawei.png" height="80" width="80" hspace="40">
+        <p style="color:#3c8dbc;font-size:44px; padding-top: 20px"> 无线云平台算法展示系统 </p>
+      </div>
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-
+      <div class="instruction" style="padding-left: 28%;padding-right: 28%">
+        <div class="col-md-12" style="float: none">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab">使用说明</a></li>
+                <li><a href="#tab_2" data-toggle="tab">参数格式</a></li>
+                <li><a href="#tab_3" data-toggle="tab">算法支持</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <li>参数配置</li>
+                    <ol>
+                      <li>上传参数文件: 参数文件格式需为json，待配置项参见参数格式部分。</li>
+                      <li>手动输入参数: 该页面用来手动输入参数，或调整上传的参数文件。</li>
+                    </ol>
+                  <li>结果展示
+                    <ol>
+                      <li>参数确认后，先点击【开始计算】，待计算完成后可点击【显示结果图】跳转至结果显示页面。</li>
+                      <li>结果显示页面可下载算法结果至本地备用，也可以通过上传算法结果文件来直接展示算法结果图。</li>
+                      <li>放置算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为放置方案详细信息，可通过输入物理机编号自定义显示。</li>
+                      <li>调整算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为详细历史信息，可通过输入时间范围自定义显示。</li>
+                    </ol>
+                  </li>
+                </div>
+                <div class="tab-pane" id="tab_2">
+                  <li>放置算法</li>
+                      <ol>
+                        <li>参数配置文件参见Placement目录下
+                        	<a href="Scripts/Placement/parameter.json" download="placement_param_sample.json">parameter.json</a>
+                        文件</li>
+                      </ol>
+                  <li>调整算法</li>
+                    <ol>
+                      <li>参数配置文件参见Adjustment目录下
+						<a href="Scripts/Adjustment/parameter.json" download="adjustment_param_sample.json">parameter.json</a>
+                      文件</li>
+                    </ol>
+                </div>
+                <div class="tab-pane" id="tab_3">
+                  <li>放置算法</li>
+                  <li>调整算法</li>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+        
     </section>
     <!-- /.content -->
   </div>
