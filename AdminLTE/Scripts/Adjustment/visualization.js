@@ -8,7 +8,7 @@ function Vadjustor(){
 		* TASKNUM: 1-d array, record number of tasks varying with time
 		* PDTNUM: 1-d array, record predicted number of tasks varyig with time
 		* VMREC: 2-d array, for each timepoint record the tasks infomation on each VM
-		
+		* beginDate: JS Date object, storing the simulation beginning time
 		Methods:
 		* initParam: construct attributes from the adjustment result
 		* globalShower: show the global information graphs with echart
@@ -23,22 +23,26 @@ function Vadjustor(){
 		this.COST = new Array();
 		this.VMREC = new Array();
 		var Adjustor = JSON.parse(sessionStorage.getItem("adjustment_result"));
-		
 		this.VMREC = Adjustor.vmrec;
+		this.beginDate = new Date();
+
+		var simDate = new Date();
 		for (var ind=0; ind<Adjustor.realnum.length; ind++){
-			this.TASKNUM.push([ind, Adjustor.realnum[ind]]);
-			this.PDTNUM.push([ind, Adjustor.pdtres[ind]]);
-			this.COST.push([ind, Adjustor.costres[ind]]);
+			var simNow = simDate.getTime();
+			this.TASKNUM.push([simNow, Adjustor.realnum[ind]]);
+			this.PDTNUM.push([simNow, Adjustor.pdtres[ind]]);
+			this.COST.push([simNow, Adjustor.costres[ind]]);
 
 			var vminfo = Adjustor.vmrec[ind];
-			this.VMNUM.push([ind, vminfo.length]);
+			this.VMNUM.push([simNow, vminfo.length]);
 			var totalused = 0;
 			var totalres = 0;
 			for (var vmind=0; vmind<vminfo.length; vmind++){
 				totalres += (vminfo[vmind].res_used+vminfo[vmind].res_avail);
 				totalused += vminfo[vmind].res_used;
 			}
-			this.VMUTL.push([ind, totalused/totalres]);
+			this.VMUTL.push([simNow, (totalused/totalres).toFixed(4)]);
+			simDate.setMinutes(simDate.getMinutes()+5);
 		}
 	}
 	this.globalShower = function(){
@@ -52,18 +56,17 @@ function Vadjustor(){
 			title: {text:'任务数量图'},
 			legend: {data: ['实际任务数', '预测任务数']},
             xAxis: {
-                type: 'value',
-                min: 'dataMin',
-                max: 'dataMax',
+                type: 'time',
                 axisTick: {show: false},
             },
             yAxis: {
                 type: 'value',
                 axisTick: {show: false},
-                /*min: function(value) {
-                	return Math.ceil(0.5*value.min);
-                }*/
             },
+            tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'}
+			},
             series: [{
                 type: 'line',
                 name: '实际任务数',
@@ -84,18 +87,17 @@ function Vadjustor(){
 			title: {text:'虚拟机数量图'},
 			legend: {data: ['虚拟机数量']},
             xAxis: {
-                type: 'value',
-                min: 'dataMin',
-                max: 'dataMax',
+                type: 'time',
                 axisTick: {show: false},
             },
             yAxis: {
                 type: 'value',
                 axisTick: {show: false},
-                /*min: function(value) {
-                	return Math.ceil(0.5*value.min);
-                }*/
             },
+            tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'}
+			},
             series: [{
                 type: 'line',
                 name: '虚拟机数量',
@@ -111,9 +113,10 @@ function Vadjustor(){
 			title: {text:'虚拟机资源图'},
 			legend: {data: ['虚拟机资源']},
             xAxis: {
-                type: 'value',
+                /*type: 'value',
                 min: 'dataMin',
-                max: 'dataMax',
+                max: 'dataMax',*/
+                type: 'time',
                 axisTick: {show: false},
             },
             yAxis: {
@@ -123,6 +126,10 @@ function Vadjustor(){
                 	return Math.ceil(0.5*value.min);
                 }*/
             },
+            tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'}
+			},
             series: [{
                 type: 'line',
                 name: '虚拟机资源',
@@ -160,20 +167,22 @@ function Vadjustor(){
 
 	this.vmShower = function(){
 		this.initParams();
+
+		var vmDiv = document.getElementById("vmsgraph");
+		var nodeList = vmDiv.getElementsByClassName("wljbox");
+		for (var ind=nodeList.length-1; ind>=0; ind--){
+			vmDiv.removeChild(nodeList[ind]);
+		}
 		var content = document.getElementById("timerange").value;
 		var index = content.indexOf("-");
 		var start = parseInt(content.slice(0,index));
 		var end = parseInt(content.slice(index+1, content.length));
-		console.log(start);
-		console.log(end);
 
 		for (var time=Math.max(start, 0); time<=Math.min(end, this.VMREC.length); time++){
 			
 			var divTag = document.createElement("div");
 			divTag.setAttribute("class","wljbox");
-			// divTag.style.width = "500px";
-			// divTag.style.height = "300px";
-			document.getElementById("vmsgraph").appendChild(divTag);
+			vmDiv.appendChild(divTag);
 			var vmChart = echarts.init(divTag, 'light');
 			var vminfo = this.VMREC[time];
 			var xAxisData = new Array();
@@ -184,8 +193,13 @@ function Vadjustor(){
 				yUsed.push(vminfo[ind].res_used);
 				yAvail.push(vminfo[ind].res_avail);
 			}
+
+			var gDate = new Date();
+			gDate.setTime(this.TASKNUM[time][0]);
+			var gTime = [gDate.getMonth(), gDate.getDate()].join('月')
+				+ '日 ' +[gDate.getHours(), gDate.getMinutes()].join(':')
 			option = {
-				title: {text:('时刻'+time.toString())},
+				title: {text: gTime},
 				legend: {data: ['已用资源', '空余资源']},
 	            xAxis: {
 	                type: 'category',

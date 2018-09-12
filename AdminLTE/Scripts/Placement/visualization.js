@@ -51,6 +51,12 @@ function Vplacer(){
 
 	this.pmShower = function(){
 
+		// remove the already exsting graphs
+		var pmDiv = document.getElementById("pmresult");
+		var nodeList = pmDiv.getElementsByClassName("wljbox");
+		for (var ind=nodeList.length-1; ind>=0; ind--){
+			pmDiv.removeChild(nodeList[ind]);
+		}
 		var content = document.getElementById("pmrange").value;
 		var index = content.indexOf("-");
 		var start = parseInt(content.slice(0,index));
@@ -62,7 +68,7 @@ function Vplacer(){
 			var PMParam = conf.pm.PMParam;
 			var divTag = document.createElement("div");
 			divTag.setAttribute("class","wljbox");
-			document.getElementById("pmresult").appendChild(divTag);
+			pmDiv.appendChild(divTag);
 			var pmChart = echarts.init(divTag, 'light');
 			var ttitle = 'No.' + pmind;
 			var option = {
