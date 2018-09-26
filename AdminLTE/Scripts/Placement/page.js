@@ -195,4 +195,5 @@ function calculate(){
 	}
 	
 	Placer.run();
+	window.location.href = "placement.html"
 }

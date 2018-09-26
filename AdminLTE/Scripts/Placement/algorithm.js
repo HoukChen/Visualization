@@ -52,6 +52,13 @@ function Placement(){
 
 	this.place = function(){
 		for (var cate=0; cate<this.vmParam.length; cate++){
+			// progress bar controller
+			var ratio = cate/(this.vmParam.length-1);
+			var proDiv = document.getElementById("progressbar");
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+
 			for (var re=0; re<this.vmParam[cate].VMQuantity; re++){
 				var vm = {	"VMCore":this.vmParam[cate].VMCore,
 							"VMMemory":this.vmParam[cate].VMMemory,
