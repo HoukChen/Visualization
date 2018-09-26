@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="dist/css/MyCSS.css">
-   <script src="build/js/BoxLayout.js"></script> 
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -33,10 +33,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script src="Scripts/Tools/ml.min.js"></script>
-  <script src="Scripts/Loadbalance/parser.js"></script> 
-  <script src="Scripts/Loadbalance/algorithm.js"></script>
-  <script src="Scripts/Loadbalance/page.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -214,30 +210,71 @@ desired effect
         | Your Page Content Here |
         -------------------------->
 	<ul class="nav nav-tabs">
-        <li class="active"><a href="#pg1" data-toggle="tab" aria-expanded="true">输入参数</a></li>
-        <li class=""><a href="#pg2" data-toggle="tab" aria-expanded="false">上传文件</a></li>
+        <li class="active"><a href="#fa-icons" data-toggle="tab" aria-expanded="true">输入参数</a></li>
+        <li class=""><a href="#glyphicons" data-toggle="tab" aria-expanded="false">上传文件</a></li>
     </ul>
 	<div class="tab-content">
               <!-- Font Awesome Icons -->
-        <div class="tab-pane active" id="pg1">
+        <div class="tab-pane active" id="fa-icons">
 			<h3><b>虚拟机资源参数</b></h3>
                 <div class="box box-primary">
 				<div class="box-header with-border">
 					<h3 class="box-title"><b>虚拟机个数：</b></h3>
 				</div>
-				<div class="box-body">				
+				<div class="box-body">
+					
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">用户类（User）:</h4>
+						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
-							<input type="text" id = "vmnuml" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
-							<input type="text" id = "vmnumm" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
-							<input type="text" id = "vmnums" class="form-control" >
+							<input type="text" class="form-control" >
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">小区类（Neighbor）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数据类（Data）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
+							<input type="text" class="form-control">
 						</div>
 					</div>
 					
@@ -249,17 +286,21 @@ desired effect
 				</div>
 				<div class="box-body">
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">虚拟机能力（Capacity）:</h4>
+						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
-							<input type="text" id = "vmcapl" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
-							<input type="text" id = "vmcapm" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
-							<input type="text" id = "vmcaps" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -270,17 +311,21 @@ desired effect
 				</div>
 				<div class="box-body">
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">虚拟机容量（Memory）:</h4>
+						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Large</label>
-							<input type="text" id = "vmstl" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Middle</label>
-							<input type="text" id = "vmstm" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Small</label>
-							<input type="text" id = "vmsts" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 					</div>
 				</div>
@@ -288,41 +333,116 @@ desired effect
 				</div>
                 
 			<h3><b>任务参数</b></h3>
-            <div class="box box-primary">
+                <div class="box box-primary">
 				<div class="box-header with-border">
-					<h3 class="box-title"><b>数量：</b></h3>
+					<h3 class="box-title"><b>用户类：</b></h3>
 				</div>
 				<div class="box-body">
+					
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
-							<input type="text" id = "urgnum" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
-							<input type="text" id = "normalnum" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 					</div>
-				</div>
-				<div class="box-header with-border">
-				</div>
-				<div class="box-header with-border">
-					<h3 class="box-title"><b>最大长度：</b></h3>
-				</div>
-				<div class="box-body">
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
-							<input type="text" id = "urgmaxlen" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
-							<input type="text" id = "normmaxlen" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 					</div>
+					
 				</div>
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>小区类：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>	
+				</div>
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>数据类：</b></h3>
+				</div>
+				<div class="box-body">
+					
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">数量（Number）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">最大长度（Maxlength）:</h4>
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Urgent</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="col-xs-3">
+							<label for="inputEmail3" class="col-sm-2 control-label">Normal</label>
+							<input type="text" class="form-control">
+						</div>
+					</div>
 				
 					<!-- /.box-body -->
+				</div>
                 <div class="box-header with-border">
 				</div>
 				<div class="box-header with-border">
@@ -331,8 +451,12 @@ desired effect
 				<div class="box-body">
 					
 					<div class="row">
+						<div class="col-xs-1">
+							<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+							<h4 class="mytitle1">时间限制：</h4>
+						</div>
 						<div class="col-xs-3">
-							<input type="text" id = "tlmt" class="form-control">
+							<input type="text" class="form-control">
 						</div>
 					</div>
 				</div>           
@@ -345,8 +469,12 @@ desired effect
 			</div>
 			<div class="box-body">
 				<div class="row">
+					<div class="col-xs-1">
+						<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+						<h4 class="mytitle1">均衡周期：</h4>
+					</div>
 					<div class="col-xs-3">
-						<input type="text" id = "prd" class="form-control">
+						<input type="text" class="form-control">
 					</div>
 				</div>
 			</div> 
@@ -357,24 +485,26 @@ desired effect
 			</div>
 			<div class="box-body">
 				<div class="row">
+					<div class="col-xs-1">
+						<label for="inputEmail3" class="col-sm-2 control-label"> </label>
+						<h4 class="mytitle1">阈值：</h4>
+					</div>
 					<div class="col-xs-3">
-						<input type="text" id = "thta" class="form-control">
+						<input type="text" class="form-control">
 					</div>
 				</div>
 			</div> 
 		</div>
 		<div class="box-footer">
-			<div class="next-step">
-				<a href="#pg3" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp;下一步&nbsp;</a>
-									<!--a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
-			</div>
-		</div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+				<button type="button" class="btn btn-danger">Cancel</button>
+        </div>
 	</div>
 		
               <!-- /#fa-icons -->
 
               <!-- glyphicons-->
-    <div class="tab-pane" id="pg2">
+        <div class="tab-pane" id="glyphicons">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 				  <h3 class="box-title">File input</h3>
@@ -385,7 +515,7 @@ desired effect
 				  <div class="box-body">
 					<div class="form-group">
 					  <label for="exampleInputFile">File input</label>
-					  <input type="file" id="exampleInputFile" onchange="Parser.parse(this.files)">
+					  <input type="file" id="exampleInputFile">
 
 					  <p class="help-block">please upload the file.</p>
 					</div>
@@ -397,43 +527,12 @@ desired effect
 				  <!-- /.box-body -->
 
 				  <div class="box-footer">
-					<a href = "#pg1" data-toggle="tab" aria-expanded="false">
-						<button type="button" onclick = "balance_loadPage()" class="btn btn-primary">Submit</button>
-					 </a>
+					<button type="submit" class="btn btn-primary">Submit</button>
 				  </div>
 				</form>
 			</div>
                 
-    </div>
-	<div class="tab-pane" id="pg3">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title"><b>参数设置完成</b></h3>
-			</div>
-			<div class="box-body">
-				<a href = "#pg1" data-toggle="tab" aria-expanded="false">
-					<button type="button" class="btn btn-primary" data-toggle="tab" aria-expanded="false">返回修改</button>
-				</a>
-				<button type="button" class="btn btn-danger" onclick="Balance.run()">开始计算</button>
-			</div>
-			<div class="box-body">
-				<p> </p>
-				<p> </p>
-				<h3 class="box-title">目前已经计算：</h3>
-				<p></p>
-				<div class="progress">
-					<div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-						<span class="sr-only">40% Complete (success)</span>
-					</div>
-				</div>
-			</div>
-			<div class = "box-footer">
-				<div class= "next-step">
-					<a href = "loadbalance.html" class = "a-next" >&nbsp显示结果图&nbsp</a>
-				</div>
-			</div>
-		</div>
-	</div>
+        </div>
               <!-- /#ion-icons -->
 
     </div>
