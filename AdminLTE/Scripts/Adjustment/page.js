@@ -51,4 +51,5 @@ function calculate(){
 	Parser.parameters.fluct = document.getElementById("taskFluct").value;
 	console.log(Parser.parameters);
 	Adjustor.run();
+	window.location.href = "adjustment.html"
 }

@@ -52,6 +52,7 @@ function Placement(){
 
 	this.place = function(){
 		for (var cate=0; cate<this.vmParam.length; cate++){
+			
 			// progress bar controller
 			var ratio = cate/(this.vmParam.length-1);
 			var proDiv = document.getElementById("progressbar");

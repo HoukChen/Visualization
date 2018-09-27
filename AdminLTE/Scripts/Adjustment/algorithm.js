@@ -451,6 +451,14 @@ function Adjustor(){
 		
 		var VMREC = new Array();
 		for (var time=GRT.begintime; time<GRT.begintime+Params.simspan; time++){
+
+			// progress bar controller
+			var ratio = (time-GRT.begintime)/(GRT.begintime+Params.simspan-GRT.begintime-1);
+			var proDiv = document.getElementById("progressbar");
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+
 			SIM.removeTask(time);
 			var cost = SIM.placeTask(time);
 			this.COSTRES.push(cost);
