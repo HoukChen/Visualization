@@ -1,0 +1,28 @@
+{
+	"vmnumber":{
+		"large": 10,
+		"middle": 10,
+		"small": 10
+	},
+	"vmcapacity":{
+		"large": 10,
+		"middle": 7,
+		"small": 5
+	},
+	"vmstorage":{
+		"large": 300,
+		"middle": 200,
+		"small": 100
+	},
+	"tasknumber":{
+		"urgent": 400,
+		"normal": 400
+	},
+	"taskmaxlen":{
+		"urgent": 20,
+		"normal": 100
+	},
+	"timelimit": 10,
+	"period": 6,
+	"threshold": 0.2
+}

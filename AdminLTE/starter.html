@@ -149,7 +149,7 @@ desired effect
                     <li><a href="adjustment.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
                   </ul>
             </li>
-			<li class="treeview">
+			<!-- <li class="treeview">
                   <a href="#"><i class="fa fa-circle-o"></i> 统一展示
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -159,7 +159,7 @@ desired effect
                     <li><a href="showall_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
                     <li><a href="showall.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
                   </ul>
-            </li>
+            </li> -->
           </ul>
         </li>
 		
@@ -221,30 +221,37 @@ desired effect
                     </ol>
                   <li>结果展示
                     <ol>
-                      <li>参数确认后，先点击【开始计算】，待计算完成后可点击【显示结果图】跳转至结果显示页面。</li>
-                      <li>结果显示页面可下载算法结果至本地备用，也可以通过上传算法结果文件来直接展示算法结果图。</li>
+                      <li>参数确认后点击【开始计算】，完成后自动跳转至结果显示页面，结果显示页面可下载算法结果至本地备用，也可以通过上传算法结果文件来直接展示算法结果图。</li>
                       <li>放置算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为放置方案详细信息，可通过输入物理机编号自定义显示。</li>
                       <li>调整算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为详细历史信息，可通过输入时间范围自定义显示。</li>
+                      <li>均衡算法的结果有两个方面的信息，一部分为均衡方案的动态历史信息，另一部分为算法性能的比对信息，均在跳转时自动加载。</li>
                     </ol>
                   </li>
                 </div>
                 <div class="tab-pane" id="tab_2">
                   <li>放置算法</li>
                       <ol>
-                        <li>参数配置文件参见Placement目录下
+                        <li>参考参数配置文件可从此处下载
                         	<a href="Scripts/Placement/parameter.json" download="placement_param_sample.json">parameter.json</a>
                         文件</li>
                       </ol>
                   <li>调整算法</li>
                     <ol>
-                      <li>参数配置文件参见Adjustment目录下
+                      <li>参考参数配置文件可从此处下载
 						<a href="Scripts/Adjustment/parameter.json" download="adjustment_param_sample.json">parameter.json</a>
+                      文件</li>
+                    </ol>
+                  <li>均衡算法</li>
+                    <ol>
+                      <li>参考参数配置文件可从此处下载
+            <a href="Scripts/Loadbalance/parameter.json" download="loadbalance_param_sample.json">parameter.json</a>
                       文件</li>
                     </ol>
                 </div>
                 <div class="tab-pane" id="tab_3">
                   <li>放置算法</li>
                   <li>调整算法</li>
+                  <li>均衡算法</li>
                 </div>
               </div>
             </div>

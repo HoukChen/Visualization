@@ -197,3 +197,8 @@ function calculate(){
 	Placer.run();
 	window.location.href = "placement.html"
 }
+
+function uploadAndshow(ufile){
+	Uploader.upload(ufile);
+	Vplacer.globalShower();
+}

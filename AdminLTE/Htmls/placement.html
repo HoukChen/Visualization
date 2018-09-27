@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CloudRan | Starter</title>
+  <title>CloudRan | Placement</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
-
+  <link rel="stylesheet" href="dist/css/MyCSS.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -32,6 +32,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="Scripts/Tools/echarts.js"></script>
+  <script src="Scripts/Placement/writer.js"></script>
+  <script src="Scripts/Placement/uploader.js"></script>
+  <script src="Scripts/Placement/visualization.js"></script> 
+  <script src="Scripts/Placement/page.js"></script> 
+
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -53,14 +60,14 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" onload = "Vplacer.globalShower()">
 <div class="wrapper">
 
   <!-- Main Header -->
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="starter.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>C</b>LR</span>
       <!-- logo for regular state and mobile devices -->
@@ -109,17 +116,57 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="treeview">
+                <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>CloudRANCU</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="placement_input.html">放置算法</a></li>
-            <li><a href="loadbalance_input.html">负载均衡算法</a></li>
-			<li><a href="adjustment_input.html">动态调整算法</a></li>
-			<li><a href="showall_input.html">统一展示</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 放置算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="placement_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="placement.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 负载均衡算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="loadbalance_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="loadbalance.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 动态调整算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="adjustment_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="adjustment.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
+			<!-- <li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 统一展示
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="showall_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="showall.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li> -->
           </ul>
         </li>
 		
@@ -130,7 +177,17 @@ desired effect
               </span>
           </a>
           <ul class="treeview-menu">
-			<li><a href="baseband_input.html">多模基带资源管理算法</a></li>
+			<li class="treeview">
+                  <a href="#"><i class="fa fa-circle-o"></i> 多模基带资源管理算法
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a href="baseband_input.html"><i class="fa fa-circle-o"></i>参数输入</a></li>
+                    <li><a href="baseband.html"><i class="fa fa-circle-o"></i>结果显示</a></li>
+                  </ul>
+            </li>
           </ul>
         </li>
       </ul>
@@ -144,13 +201,9 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        <b>放置算法结果显示</b>
+        <small>Placement result</small>
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
@@ -159,6 +212,51 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+		<div class="box-body">
+			<div class="row">
+				<div class="col-xs-3">
+				
+					<input type="text" id = "pmrange" placeholder="请输入需要显示的物理机范围 例：1-2" class="form-control">
+				</div>
+				<div class="col-xs-1">
+					<button  class="btn btn-primary" onclick="Vplacer.pmShower()" >展示物理机信息</button>
+				</div>
+			</div>
+		</div>
+        
+    <div id="gresult1" class="box1" ></div>
+    <div id="gresult2" class="box2" ></div>
+		<div id="pmresult" class="box4" >
+			<div class="box-header with-border">
+				<h3 class="box-title"><b>物理机资源分配图</b></h3>
+			</div>
+		</div>
+		<div class = "box5">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>结果文件上传与下载</b></h3>
+				</div>
+				<div class = "box-body1">
+				
+					<div class="form-group">
+						<label for="exampleInputFile">结果文件上传</label>
+						<input type="file" id = "ufile" >
+							<!--p class="help-block">请上传结果文件.</p-->
+					</div>
+					<div class="form-group">
+						<label>上传文件说明</label>
+						<textarea class="form-control" rows="7" placeholder="Enter ..." disabled="">
+              1. 下载结果：点击【下载结果】按钮，可将本算法的运行结果以json格式保存到本地以备用。
+              2. 上传结果：选择需要上传的结果文件，上传后点击【上传结果并显示】可直接显示结果图。
+            </textarea>
+					</div>
+					
+					<div class="form-group">
+					
+						<button  class="btn btn-success" onclick="uploadAndshow(document.getElementById('ufile').files)">上传结果并显示</button>
+						<button  class="btn btn-primary" onclick="Writer.write()">下载结果</button>
+					</div>
+				</div>
+			</div>
 
     </section>
     <!-- /.content -->
