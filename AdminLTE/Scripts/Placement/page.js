@@ -1,5 +1,5 @@
 function placement_loadPage(){
-	alert("load parameters for placement");
+	alert("Load parameters for placement");
 	console.log(Parser.parameters);
 	var para = Parser.parameters;
 	document.getElementById("rN0").value = para.CPU0OccupiedCoreNum;

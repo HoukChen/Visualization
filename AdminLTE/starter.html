@@ -225,33 +225,57 @@ desired effect
                       <li>放置算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为放置方案详细信息，可通过输入物理机编号自定义显示。</li>
                       <li>调整算法结果分两部分显示，一部分为全局统计信息，跳转时自动加载；另一部分为详细历史信息，可通过输入时间范围自定义显示。</li>
                       <li>均衡算法的结果有两个方面的信息，一部分为均衡方案的动态历史信息，另一部分为算法性能的比对信息，均在跳转时自动加载。</li>
+                      <li>多模基带算法的结果由三张图表示，分别为网络拓扑信息图，单板利用率图，和单板上各制式业务数量图，均在跳转时自动加载。</li>
                     </ol>
                   </li>
                 </div>
                 <div class="tab-pane" id="tab_2">
-                  <li>放置算法</li>
+                  <li>虚拟机放置算法</li>
                       <ol>
                         <li>参考参数配置文件可从此处下载
                         	<a href="Scripts/Placement/parameter.json" download="placement_param_sample.json">parameter.json</a>
                         文件</li>
                       </ol>
-                  <li>调整算法</li>
+                  <li>动态调整算法</li>
                     <ol>
                       <li>参考参数配置文件可从此处下载
 						<a href="Scripts/Adjustment/parameter.json" download="adjustment_param_sample.json">parameter.json</a>
                       文件</li>
                     </ol>
-                  <li>均衡算法</li>
+                  <li>负载均衡算法</li>
                     <ol>
                       <li>参考参数配置文件可从此处下载
             <a href="Scripts/Loadbalance/parameter.json" download="loadbalance_param_sample.json">parameter.json</a>
                       文件</li>
                     </ol>
+                  <li>多模基带管理算法</li>
+                    <ol>
+                      <li>参考参数配置文件可从此处下载
+            <a href="Scripts/DU/parameter.json" download="loadbalance_param_sample.json">parameter.json</a>
+                      文件</li>
+                    </ol>
                 </div>
                 <div class="tab-pane" id="tab_3">
-                  <li>放置算法</li>
-                  <li>调整算法</li>
-                  <li>均衡算法</li>
+                  <li>虚拟机放置算法
+                    <ol>
+                      <li>给定虚拟机的规格和数量，物理机的规格和数量，展示最佳的虚拟机放置方案。</li>
+                    </ol>
+                  </li>
+                  <li>动态调整算法
+                    <ol>
+                      <li>给定任务产生的方式，虚拟机的规格和数量，展示任务负载在虚拟机上的调整方式。</li>
+                    </ol>
+                  </li>
+                  <li>负载均衡算法
+                    <ol>
+                      <li>给定任务产生的方式，虚拟机的规格和数量，展示任务负载在虚拟机上的均衡结果。</li>
+                    </ol>
+                  </li>
+                  <li>多模基带算法
+                    <ol>
+                      <li>给定背板带宽流量限制，不同制式小区数量，展示小区在单板间的调度方式和利用率。</li>
+                    </ol>
+                  </li>
                 </div>
               </div>
             </div>

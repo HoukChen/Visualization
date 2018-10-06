@@ -32,6 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script src="Scripts/Tools/ml.min.js"></script>
+  <script src="Scripts/DU/parser.js"></script> 
+  <script src="Scripts/DU/algorithm.js"></script>
+  <script src="Scripts/DU/page.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -209,7 +213,271 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+      
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#pg1" data-toggle="tab" aria-expanded="true">输入参数</a></li>
+        <li class=""><a href="#pg2" data-toggle="tab" aria-expanded="false">上传文件</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="pg1">
+          <h3><b>资源块数(行)---支持不同制式小区数(列)</b></h3>
+            <div class="box box-primary">
+              <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <table class="table table-condensed">
+                    <tbody>
+                      <tr>
+                        <td>   </td>
+                        <td>制式0</td>
+                        <td>制式1</td>
+                        <td>制式2</td>
+                        <td>制式3</td>
+                      </tr>
+                      <tr>
+                        <td>  0块融合 </td>
+                        <td><input type="text" id = "rc00" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "rc01" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "rc02" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "rc03" class="form-control" placeholder="0"></td>
+                      </tr>
+                      <tr>
+                        <td> 1块融合 </td>
+                        <td><input type="text" id = "rc10" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "rc11" class="form-control" placeholder="1"></td>
+                        <td><input type="text" id = "rc12" class="form-control" placeholder="1"></td>
+                        <td><input type="text" id = "rc13" class="form-control" placeholder="1"></td>
+                      </tr>
+                      <tr>
+                        <td> 2块融合 </td>
+                        <td><input type="text" id = "rc20" class="form-control" placeholder="1"></td>
+                        <td><input type="text" id = "rc21" class="form-control" placeholder="2"></td>
+                        <td><input type="text" id = "rc22" class="form-control" placeholder="2"></td>
+                        <td><input type="text" id = "rc23" class="form-control" placeholder="2"></td>
+                      </tr>
+                      <tr>
+                        <td> 3块融合 </td>
+                        <td><input type="text" id = "rc30" class="form-control" placeholder="2"></td>
+                        <td><input type="text" id = "rc31" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "rc32" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "rc33" class="form-control" placeholder="4"></td>
+                      </tr>
+                      <tr>
+                        <td> 4块融合 </td>
+                        <td><input type="text" id = "rc40" class="form-control" placeholder="1"></td>
+                        <td><input type="text" id = "rc41" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "rc42" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "rc43" class="form-control" placeholder="3"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <h3><b>背板带宽流量信息---6*6邻接矩阵</b></h3>
+            <div class="box box-primary">
+              <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <table class="table table-condensed">
+                    <tbody>
+                      <tr>
+                        <td><div style="visibility: hidden;">背板带宽流量信息</div></td>
+                        <td>  1号位置  </td>
+                        <td>  2号位置  </td>
+                        <td>  3号位置  </td>
+                        <td>  4号位置  </td>
+                        <td>  5号位置  </td>
+                        <td>  6号位置  </td>
+                      </tr>
+                      <tr>
+                        <td>  1号位置 </td>
+                        <td><input type="text" id = "bd00" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "bd01" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd02" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd03" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd04" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd05" class="form-control" placeholder="4"></td>
+                      </tr>
+                      <tr>
+                        <td> 2号位置 </td>
+                        <td><input type="text" id = "bd10" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd11" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "bd12" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd13" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd14" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd15" class="form-control" placeholder="3"></td>
+                      </tr>
+                      <tr>
+                        <td>  3号位置 </td>
+                        <td><input type="text" id = "bd20" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd21" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd22" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "bd23" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd24" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd25" class="form-control" placeholder="4"></td>
+                      </tr>
+                      <tr>
+                        <td> 4号位置 </td>
+                        <td><input type="text" id = "bd30" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd31" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd32" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd33" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "bd34" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd35" class="form-control" placeholder="3"></td>
+                      </tr>
+                      <tr>
+                        <td> 5号位置 </td>
+                        <td><input type="text" id = "bd40" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd41" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd42" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd43" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd44" class="form-control" placeholder="0"></td>
+                        <td><input type="text" id = "bd45" class="form-control" placeholder="4"></td>
+                      </tr>
+                      <tr>
+                        <td> 6号位置 </td>
+                        <td><input type="text" id = "bd50" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd51" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd52" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd53" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "bd54" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "bd55" class="form-control" placeholder="0"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+              
+            <h3><b>不同制式小区消耗背板带宽流量</b></h3>
+            <div class="box box-primary">
+              <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <table class="table table-condensed">
+                    <tbody>
+                      <tr>
+                        <td> 制式号 </td>
+                        <td> 制式0 </td>
+                        <td> 制式1 </td>
+                        <td> 制式2 </td>
+                        <td> 制式3 </td>
+                      </tr>
+                      <tr>
+                        <td> 消耗背板流量 </td>
+                        <td><input type="text" id = "cb0" class="form-control" placeholder="4"></td>
+                        <td><input type="text" id = "cb1" class="form-control" placeholder="3"></td>
+                        <td><input type="text" id = "cb2" class="form-control" placeholder="2"></td>
+                        <td><input type="text" id = "cb3" class="form-control" placeholder="1"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
+            <h3><b>小区信息</b></h3>
+            <div class="box box-primary">
+              <table class="table table-condensed">
+                <tbody>
+                  <tr>
+                    <td width="10%">初始单板：</td>
+                    <td width="20%"><input type="text" id = "ci0" class="form-control" placeholder="3"></td>
+                    <td width="10%">制式号：</td>
+                    <td width="20%"><input type="text" id = "ci1" class="form-control" placeholder="0"></td>
+                    <td width="10%">小区数量：</td>
+                    <td width="20%"><input type="text" id = "ci2" class="form-control" placeholder="1"></td>
+                    <td width="10%"><button type="button" class="btn btn-block btn-warning" onclick="addRow()">新增</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                  <table id="pos_mode_num" class="table table-condensed">
+                    <tbody>
+                      <tr>
+                        <th>  初始单板 </th>
+                        <th>  制式号   </th>
+                        <th>  数量    </th>
+                        <th width="10%">  操作    </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class = "box-footer">
+              <div class= "next-step" align="right">
+                <a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">
+                  <button type="button" class="btn btn-block btn-primary" style="width: 10%">下一步</button>
+                </a>
+              </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="pg3">
+          <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title"><b>参数设置完成</b></h3>
+              </div>
+              <div class="box-body">
+                <a href = "#pg1" data-toggle="tab" aria-expanded="false">
+                  <button type="button" class="btn btn-primary" data-toggle="tab" aria-expanded="false">返回修改</button>
+                </a>
+                <button type="button" class="btn btn-danger" onclick="calculate()">开始计算</button>
+              </div>
+              <div class="box-body">
+                <p> </p>
+                <p> </p>
+                <h3 class="box-title">目前已经计算：</h3>
+                <p></p>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-primary progress-bar-striped" id="progressbar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                    <span class="sr-only">40% Complete (success)</span>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class = "box-footer">
+                <div class= "next-step">
+                  <a href = "adjustment.html" class = "a-next" >&nbsp显示结果图&nbsp</a>
+                </div>
+              </div> -->
+          </div>
+        </div>
+        <div class="tab-pane" id="pg2">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">File input</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+              <div class="form-group">
+                <label for="exampleInputFile">File input</label>
+                <input type="file" id="exampleInputFile" onchange="Parser.parse(this.files)">
+
+                <p class="help-block">please upload the file.</p>
+              </div>
+              <div class="form-group">
+                <label>上传文件说明</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+              </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+              <a href = "#pg1" data-toggle="tab" aria-expanded="false">
+              <button type="button" onclick = "du_loadPage()" class="btn btn-primary">Submit</button>
+              </a>
+              </div>
+            </form>
+          </div>  
+        </div>
+      </div>
     </section>
     <!-- /.content -->
   </div>

@@ -31,12 +31,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <![endif]-->
 
   <!-- Google Font -->
+   <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script src="Scripts/Tools/echarts.js"></script>
-  <script src="Scripts/DU/writer.js"></script>
-  <script src="Scripts/DU/uploader.js"></script>
-  <script src="Scripts/DU/visualization.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -58,14 +63,14 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini" onload = "VDU.globalShower()">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <!-- Main Header -->
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="starter.html" class="logo">
+    <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>C</b>LR</span>
       <!-- logo for regular state and mobile devices -->
@@ -199,8 +204,8 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        多模基带算法结果展示
-        <small>DU result</small>
+        Page Header
+        <small>Optional description</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -214,33 +219,355 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
+		<p>Test</p>
+		
 		<!--div id="container" style="position: relative; float:left;height: 500px; width : 52%"></div-->
-		<div id="net" class = "box1"></div>
-		<div id="util" class = "box2"></div>
-		<div id="num" class = "box3"></div>
-    <div class = "box2">
-        <div class="box-header with-border">
-          <h3 class="box-title"><b>结果文件上传与下载</b></h3>
-        </div>
-        <div class = "box-body1">
-          <div class="form-group">
-            <label for="exampleInputFile">结果文件上传</label>
-            <input type="file" id = "ufile" >
-              <!--p class="help-block">请上传结果文件.</p-->
-          </div>
-          <div class="form-group">
-            <label>上传文件说明</label>
-            <textarea class="form-control" rows="5" placeholder="Enter ..." disabled="">
-            1. 下载结果：点击【下载结果】按钮，可将本算法的运行结果以json格式保存到本地以备用。
-            2. 上传结果：选择需要上传的结果文件，上传后点击【上传结果并显示】可直接显示结果图。
-            </textarea>
-          </div>
-          <div class="form-group">
-            <button  class="btn btn-success" onclick="Uploader.upload(document.getElementById('ufile').files)">上传结果并显示</button>
-            <button  class="btn btn-primary" onclick="Writer.write()">下载结果</button>
-          </div>
-        </div>
-      </div>    
+		<div id="container" class = "box1"></div>
+		<div id="container2" class = "box2"></div>
+		<div id="container3" class = "box3"></div>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+
+   var  option = {
+    title: {
+        text: '网络拓扑信息',
+    },
+    tooltip:{},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series : [
+        {
+            type: 'graph',
+            layout: 'none',
+            symbolSize: 50,//图形的大小（示例中的圆的大小）
+            roam: true,//鼠标缩放及平移
+            focusNodeAdjacency:true,//是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点
+            label: {
+                normal: {
+                    show: true ,  //控制非高亮时节点名称是否显示
+                    position:'top',
+                    fontSize:20
+                }
+            },
+
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [1, 10],    //箭头的大小
+            edgeLabel: {
+                normal:{
+                    show:false
+                },
+                emphasis: {
+                    textStyle: {
+                        fontSize: 20  //边节点显示的字体大小
+                    }
+                }
+            },
+
+//节点信息
+
+    data:
+    [
+        {
+            name:'h1',
+            ip:'10.108.50.101',
+            isnode:true,
+            x:100,
+            y:300,
+            // symbol:'image://服务器-20.png',
+        },
+        {
+            name:'h2',
+            ip:'10.108.50.102',
+            isnode:true,
+            x:200,
+            y:470,
+            // symbol:'image://服务器-20.png',
+        },
+        {
+            name:'h3',
+            ip:'10.108.50.103',
+            isnode:true,
+            x:400,
+            y:470,
+            // symbol:'image://服务器-20.png',
+        },
+        {
+            name:'h4',
+            ip:'10.108.50.104',
+            isnode:true,
+            x:500,
+            y:300,
+            // symbol:'image://服务器-20.png',
+        },
+        {
+            name:'h5',
+            ip:'10.108.50.105',
+            isnode:true,
+            x:400,
+            y:130,
+            // symbol:'image://服务器-20.png',
+        },
+        {
+            name:'h6',
+            ip:'10.108.50.106',
+            isnode:true,
+            x:200,
+            y:130,
+            // symbol:'image://服务器-20.png',
+        },
+
+    ],
+
+    links:
+        [
+            {   
+                source:'h1',
+                target:'h2',
+                islink:true,
+                name:'链路1',
+                bandwith:Math.round(Math.random()*50+50)+'M',//50-100间的随机整数
+                timeout:Math.round(Math.random()*10)+1+'M',   //1-10间的整数
+                PacketLossRate:'0.0'+Math.round(Math.random()*10)+'%', //0.01%--0.09%
+            },
+            {
+                source:'h2',
+                target:'h3',
+                islink:true,
+                name:'链路2',
+                bandwith:Math.round(Math.random()*50+50)+'M',//50-100间的随机整数
+                timeout:Math.round(Math.random()*10)+1+'M',   //1-10间的整数
+                PacketLossRate:'0.0'+Math.round(Math.random()*10)+'%', //0.01%--0.09%
+            },{
+                source:'h3',
+                target:'h4',
+                islink:true,
+                name:'链路3',
+                bandwith:Math.round(Math.random()*50+50)+'M',//50-100间的随机整数
+                timeout:Math.round(Math.random()*10)+1+'M',   //1-10间的整数
+                PacketLossRate:'0.0'+Math.round(Math.random()*10)+'%', //0.01%--0.09%
+            },{
+                source:'h4',
+                target:'h5',
+                islink:true,
+                name:'链路4',
+                bandwith:Math.round(Math.random()*50+50)+'M',//50-100间的随机整数
+                timeout:Math.round(Math.random()*10)+1+'M',   //1-10间的整数
+                PacketLossRate:'0.0'+Math.round(Math.random()*10)+'%', //0.01%--0.09%
+            },{
+                source:'h5',
+                target:'h4',
+                islink:true,
+                name:'链路5',
+                bandwith:Math.round(Math.random()*50+50)+'M',//50-100间的随机整数
+                timeout:Math.round(Math.random()*10)+1+'M',   //1-10间的整数
+                PacketLossRate:'0.0'+Math.round(Math.random()*10)+'%', //0.01%--0.09%
+            },
+        ],
+            lineStyle: {
+                normal: {
+                    show:true,
+                    color:
+                    {       
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [
+                            {
+                                offset: 0, color: 'red' // 0% 处的颜色
+                            }
+                            ,{
+                                offset: 1, color: 'blue' // 100% 处的颜色
+                            }],
+                            globalCoord: false // 缺省为 false
+                        },
+                  
+                 // curveness: 0.2
+                      
+                },
+                emphasis:{
+                    color:'red',
+                    width:3,
+                    type:'dashed',//虚线
+
+                }
+            },
+           
+            tooltip:
+            {
+            position:'bottom',//悬浮时显示的位置
+            backgroundColor:'green',
+            textStyle:{fontSize:18,
+
+            },
+
+            formatter:function(params){//悬浮提示框显示的内容
+               if (params.data.islink) {return '带宽限制：&nbsp'+params.data.bandwith+'<br />'+'带宽使用：&nbsp'+params.data.timeout+'<br />'+'带宽使用率：'+params.data.PacketLossRate;}
+               else if (params.data.isnode) {return params.data.ip;}
+            }
+            },//悬浮时的提示框，不设置时是随鼠标移动
+
+        }
+    ]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+
+
+
+var dom3 = document.getElementById("container2");
+var myChart3 = echarts.init(dom3);
+
+option = {
+    title: {
+        text: '单板利用率',
+        subtext: '数据'
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['已使用', '未使用']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01]
+    },
+    yAxis: {
+        type: 'category',
+        data: ['Node0','Node1','Node2','Node3','Node4','Node5']
+    },
+    series: [
+        {
+            name: '已使用',
+            type: 'bar',
+            data: [0.2,0.3,0.4,0.5,0.6,0.7]
+        },
+        {
+            name: '未使用',
+            type: 'bar',
+            data: [0.8,0.7,0.6,0.5,0.4,0.3]
+        }
+    ]
+};
+	if (option && typeof option === "object") {
+		myChart3.setOption(option, true);
+	}
+
+
+
+
+var dom = document.getElementById("container3");
+	var myChart2 = echarts.init(dom);
+	option = {
+    title: {
+        text: '每块单板上运行模式数量一览',
+        subtext: '数据'
+    },
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    legend: {
+        data: ['Mode1', 'Mode2','Mode3','Mode4']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis:  {
+        type: 'value'
+    },
+    yAxis: {
+        type: 'category',
+        data: ['Node0','Node1','Node2','Node3','Node4','Node5']
+    },
+    series: [
+        {
+            name: 'Mode1',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [3, 3, 1, 3, 0, 2]
+        },
+        {
+            name: 'Mode2',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [1, 2, 2, 3, 4, 2]
+        },
+        {
+            name: 'Mode3',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [4, 2, 1, 2, 2, 3]
+        },
+        {
+            name: 'Mode4',
+            type: 'bar',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'insideRight'
+                }
+            },
+            data: [4, 3, 3, 4, 1, 3]
+        },
+       
+    ]
+};
+	if (option && typeof option === "object") {
+		myChart2.setOption(option, true);
+	}
+
+
+window.onresize = function(){
+	window.addEventListener("resize", function () {
+
+          myChart1.resize();
+		  myChart3.resize();
+		  myChart2.resize();
+
+    });
+    //myChart1.resize();    //若有多个图表变动，可多写
+}
+       </script>         
+		
     </section>
     <!-- /.content -->
   </div>
