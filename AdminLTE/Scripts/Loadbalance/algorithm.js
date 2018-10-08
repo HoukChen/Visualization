@@ -15,7 +15,7 @@ function Vm(vmid,max_num,capacity, load0, num0){
 	this.jobq = new Array();
 	this.finishtime = new Number(-1);
 	this.addjob = function(j){
-		console.log("addjob");
+		//console.log("addjob");
 		this.jobq.push(j);
 		this.num += j.num;
 		this.load = this.num / this.cap;
@@ -55,13 +55,13 @@ function Balance(){
 			initial vms
 		*/
 		console.log("initialstart");
-		this.para = JSON.parse(sessionStorage.getItem("balance_parameter"));
+		this.para = Parser.parameters;
 		this.Taskq.length = 0;
 		this.Vmq.length = 0;
 		this.Th = this.para.threshold;
 		
 		for(var i = 0; i < this.para.vmnumber.large ; i++ ){
-			console.log(i);
+			//console.log(i);
 			var vmid = "vml" + i;
 			this.Vmq.push(new Vm(vmid,this.para.vmstorage.large,this.para.vmcapacity.large,new Number(0),new Number(0)));
 		}
@@ -102,15 +102,17 @@ function Balance(){
 		var maxload = 0.0;
 		var minload = 1.0e9;
 		var vl = this.Vmq.length;
-		for (var tvm of this.Vmq){
+		for (var i = 0;i < this.Vmq.length; i++){
+			var tvm = this.Vmq[i];
 			sumload += tvm.load;
 			if(tvm.load > maxload){ maxload = tvm.load; }
 			if(tvm.load < minload){ minload = tvm.load; }
 		}
 		var avgload = sumload / vl;
 		var det = 0.0;
-		for (var i of this.Vmq){
-			det += (i.load - avgload)*(i.load - avgload);
+		for (var i = 0;i < this.Vmq.length; i++){
+			var ti = this.Vmq[i];
+			det += (ti.load - avgload)*(ti.load - avgload);
 		}
 		det /= vl;
 		det = Math.sqrt(det);
@@ -118,13 +120,15 @@ function Balance(){
 			var theta = Math.abs(avgload * (maxload - minload) / (2 * maxload));
 			var esub = avgload - theta;
 			var etop = avgload + theta;
-			for(var i of this.Vmq){
-				if(i.load < esub){ll_list.push(i); }
-				if(i.load > etop){ol_list.push(i); }
+			for(var i = 0; i < this.Vmq.length ; i++){
+				var j = this.Vmq[i];
+				if(j.load < esub){ll_list.push(j); }
+				if(j.load > etop){ol_list.push(j); }
 			}
 			ll_list.sort(this.sortfunc2);
 			ol_list.sort(this.sortfunc1);
-			for(var i of ol_list){
+			for(var j = 0;j < ol_list.length;j++){
+				var i = ol_list[j];
 				var tq = i.jobq;
 				var re_list = new Array();
 				while(tq.length != 0){
@@ -138,14 +142,17 @@ function Balance(){
 					i.calload();
 				}
 				i.finishtime = clk;
-				for(var tjob of re_list){
+				for(var jj = 0;jj < re_list.length ; jj++){
+					var tjob = re_list[jj];
 					i.addjob(tjob);
 				}
 			}
 			tr_list.sort(this.sortfunc2);
-			for(var i of tr_list){
+			for(var j = 0; j < tr_list.length ; j++ ){
+				var i = tr_list[j];
 				var flg = false;
-				for(var k of ll_list){
+				for(var kj = 0; kj < ll_list.length ; kj++){
+					var k = ll_list[kj];
 					if(i.num <= k.maxnum - k.num){
 						k.addjob(i);
 						flg = true;
@@ -170,57 +177,68 @@ function Balance(){
 		var pvt = 0;
 			
 		for(var j = 0 ; j < jl; j++ ){
-				console.log(j);
-				var tmpj = this.Taskq[j];
-				console.log(tmpj);
-				var tmpv = this.Vmq[pvt];
-				console.log(tmpv);
-				if(clock != tmpj.tarr || j == jl - 1){
-					this.LOAD.push(tmpj.num);
-					var tpsby = Math.round((tmpj.tarr - clock) * 10)/10;
-					console.log("tpsby");
-					console.log(tpsby);
-					clock = tmpj.tarr;
-					this.LOAD[clock * 10] += tmpj.num;
-					for(var tvm of this.Vmq){
-						console.log("*");
-						console.log(tvm);
-						tq = tvm.jobq;
-						while(tq.length > 0){
-							var thj = tq.shift();
-							if(thj.tend >= clock){
-								break;
-							}
+			console.log(j);
+			var tmpj = this.Taskq[j];
+			//console.log(tmpj);
+			var tmpv = this.Vmq[pvt];
+			//console.log(tmpv);
+			if(clock != tmpj.tarr || j == jl - 1){
+				this.LOAD.push(tmpj.num);
+				var tpsby = Math.round((tmpj.tarr - clock) * 10)/10;
+				//console.log("tpsby");
+				//console.log(tpsby);
+				clock = tmpj.tarr;
+				//console.log(clock);
+				//this.LOAD[clock * 10] += tmpj.num;
+				
+				for(var jj = 0; jj < vl; jj++ ){
+					var tvm = this.Vmq[jj];
+					//console.log("*");
+					//console.log(tvm);
+					var tq = tvm.jobq;
+					while(tq.length > 0){
+						var thj = tq.shift();
+						if(thj.tend >= clock){
+							break;
 						}
-						tvm.num -= tpsby * tvm.cap;
-						if(tvm.num < 0){
-							tvm.num = 0;
-						}
-						tvm.calload();
 					}
+					tvm.num -= tpsby * tvm.cap;
+					if(tvm.num < 0){
+						tvm.num = 0;
+					}
+					tvm.calload();
 				}
 				
-				if(mode == 2 && j % this.para.period / 2 == 0){
-					this.Taskq.sort(this.sortfunc1);
-					pvt = 0;
+			}
+				
+			if(mode == 2 && j % this.para.period / 2 == 0){
+				//this.Taskq.sort(this.sortfunc1);
+				pvt = 0;
+			}
+			var cnt = 0;
+			//console.log(tmpv);
+			while(tmpj.num > tmpv.maxnum - tmpv.num && cnt < vl ){
+				if(mode == 2){
+					pvt = (pvt + 1)%vl;
+				}else{
+					pvt = (pvt + 7)%vl;
 				}
-				while(tmpj.num > tmpv.maxnum - tmpv.num ){
-					if(mode == 2){
-						pvt = (pvt + 1)%vl;
-					}else{
-						pvt = (pvt + 71)%vl;
-					}
-					tmpv = this.Vmq[pvt];
+				tmpv = this.Vmq[pvt];
+				//console.log(tmpv);
+				cnt++;
+			}
+			if(tmpj.num <= tmpv.maxnum - tmpv.num){
+				tmpv.addjob(tmpj);
+				pvt = (pvt + 71) % vl;
+			}else{
+				console.log("overload");
+				tmpv.addjob(tmpj);
+			}
+			if(j % this.para.period == 0){
+				if(mode == 1){
+					this.loadbalance();
 				}
-				if(tmpj.num <= tmpv.maxnum - tmpv.num){
-					tmpv.addjob(tmpj);
-					pvt = (pvt + 71) % vl;
-				}
-				if(j % this.para.period == 0){
-					if(mode == 1){
-						this.loadbalance();
-					}
-				}
+			}
 		}
 		console.log("ok");
 		
@@ -233,8 +251,9 @@ function Balance(){
 		avgt1 = 0.0;
 		uunum = 0;
 		unum = 0;
-		for(var i of this.Taskq){
-			avgt += i.tend - i.tarr;
+		for(var i =0 ; i < this.Taskq.length ;i++){
+			var ti = this.Taskq[i];
+			avgt += ti.tend - ti.tarr;
 		}
 		avgt /= this.Taskq.length;
 		return avgt;
@@ -242,7 +261,6 @@ function Balance(){
 	
 	this.dobalance = function(){
 		for(var i = 0;i < 9; i++ ){
-
 			// progress bar controller
 			var ratio = i/8;
 			var proDiv = document.getElementById("progressbar");
@@ -253,16 +271,17 @@ function Balance(){
 			this.para.tasknumber.urgent = 500 * i;
 			this.para.tasknumber.normal = 500 * i;
 			for(var j = 0;j < 3; j++ ){
-				if(j!=1){ this.start(j); }	
+				//if(j == 1){continue;}
+				this.start(j); 	
 				if(j == 0){this.WRRT.push(this.calavgtime());}
 				if(j == 1){this.LBFT.push(this.calavgtime());}
 				if(j == 2){this.WLCT.push(this.calavgtime());}
 			}
 		}
+		//dobalance();
 	}
 	
 	this.run = function(){
-		// TODO(yao cheng): this.initialize() or Balance.initialize()? Remove this comment when it's fixed
 		this.initialize();
 		console.log(this.Vmq);
 		if(this.TASKS.length == 0){
@@ -274,7 +293,6 @@ function Balance(){
 				this.TASKS[itsk.tarr*10] ++ ;
 			}
 		}
-		// TODO(yao cheng): dobalance is not correctly called, remove this comment when it's fixed
 		dobalance();
 		var parameters = {
 			wrrt: this.WRRT,
@@ -288,7 +306,6 @@ function Balance(){
 		alert("balance finish!");
 	}
 	
-
 }
 
 Balance = new Balance();

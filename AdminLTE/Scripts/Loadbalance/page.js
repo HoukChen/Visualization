@@ -22,6 +22,23 @@ function balance_loadPage(){
 }
 
 function calculate(){
+	Parser.parameters.vmnumber.large = document.getElementById("vmnuml").value;
+	Parser.parameters.vmnumber.middle = document.getElementById("vmnumm").value;
+	Parser.parameters.vmnumber.small = document.getElementById("vmnums").value;
+	Parser.parameters.vmcapacity.large = document.getElementById("vmcapl").value;
+	Parser.parameters.vmcapacity.middle = document.getElementById("vmcapm").value;
+	Parser.parameters.vmcapacity.small = document.getElementById("vmcaps").value;
+	Parser.parameters.vmstorage.large = document.getElementById("vmstl").value;
+	Parser.parameters.vmstorage.middle = document.getElementById("vmstm").value;
+	Parser.parameters.vmstorage.small = document.getElementById("vmsts").value;
+	Parser.parameters.tasknumber.urgent = document.getElementById("urgnum").value;
+	Parser.parameters.tasknumber.normal = document.getElementById("normalnum").value;
+	Parser.parameters.taskmaxlen.urgent = document.getElementById("urgmaxlen").value;
+	Parser.parameters.taskmaxlen.normal = document.getElementById("normmaxlen").value;
+	Parser.parameters.timelimit = document.getElementById("tlmt").value;
+	Parser.parameters.period = document.getElementById("prd").value;
+	Parser.parameters.threshold = document.getElementById("thta").value;
+	//console.log(Parser.parameters);
 	Balance.run();
 	window.location.href = "loadbalance.html"
 }
