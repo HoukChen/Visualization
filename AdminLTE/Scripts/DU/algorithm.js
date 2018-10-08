@@ -55,7 +55,7 @@ function DU(){
 	this.User = function(user_id, start_node, mode){
 		this.user_id = user_id;
 		this.start_node = start_node;
-		this.mode = DU.mode_flow[mode];
+		this.mode = mode;
 		this.node_id = -1;
 		this.f = false;
 	}
@@ -76,10 +76,9 @@ function DU(){
 
 	this.initialize = function(){
 		var Params = JSON.parse(sessionStorage.getItem("du_parameter"));
-		console.log(Params);
-		
 		DU.p_to_p = Params.p_to_p;
 		DU.mode_flow = Params.mode_flow;
+		DU.accuracy = Params.accuracy;
 		DU.pieces_modes = [[0,0,0,0]];
 		for (var index = 0; index <Params.pieces_modes.length; index++){
 			DU.pieces_modes.push(Params.pieces_modes[index]);
@@ -88,7 +87,13 @@ function DU(){
 			for (var re=0; re<Params.users[index][2]; re++){
 				start = Params.users[index][0];
 				mode = Params.users[index][1];
-				var user = new DU.User(0, start, mode);
+				var user = {
+					"user_id": 0,
+					"start_node": start,
+					"mode": mode,
+					"node_id": -1,
+					"f": false
+				}
 				DU.users.push(user);
 				DU.users_num[start][mode] += 1;
 			}
@@ -99,8 +104,6 @@ function DU(){
 		@NOTE: 判断一个单板还能否承载一个新小区 
 	*/
 	this.can_serve = function(node, user_mode){
-		console.log(node.pieces[user_mode]);
-		console.log(DU.pieces_modes);
 		if (DU.pieces_modes[node.pieces[user_mode]][user_mode] >= node.users_num[user_mode] + 1){
 			return true;
 		}
@@ -138,8 +141,9 @@ function DU(){
 		else
 		{
 			node.pieces[max_mode] = 2;
-			nod.pieces[max_mode_2] = 2;
+			node.pieces[max_mode_2] = 2;
 		}
+		console.log(node);
 		/*根据已划分好的制式对小区进行分配*/
 		for(var index = 0; index < DU.users.length; index++){
 			var user = DU.users[index]; 
@@ -168,7 +172,12 @@ function DU(){
 	*/
 	this.divide = function(x)
 	{
-		var nodestatus = new DU.Node();
+		var nodestatus = {
+			divide_pieces: 0,
+			res_pieces: 4,
+			pieces: [0,0,0,0],
+			users_num: [0,0,0,0]
+		}
 		
 		/* (1,3)和(2,2)和(0,4) */
 		for (var i = 0; i < 4; i++){
@@ -224,9 +233,9 @@ function DU(){
 		var usage_total = 0;
 		for (var i = 0; i < 4; i++)
 		{
-			if (pieces_modes[node.pieces[i]][i] != 0)
+			if (DU.pieces_modes[node.pieces[i]][i] != 0)
 			{
-				usage = node.users_num[i] / pieces_modes[node.pieces[i]][i];
+				usage = node.users_num[i] / DU.pieces_modes[node.pieces[i]][i];
 				usage *= node.pieces[i];
 				usage_total += usage;
 			}
@@ -245,7 +254,7 @@ function DU(){
 		var vari = ((usage[0]-ave)*(usage[0]-ave) + (usage[1]-ave)*(usage[1]-ave) +
 					(usage[2]-ave)*(usage[2]-ave) +(usage[3]-ave)*(usage[3]-ave) +
 					(usage[4]-ave)*(usage[4]-ave) + (usage[5]-ave)*(usage[5]-ave))/6;
-		var std_dev = sqrt(vari);
+		var std_dev = Math.sqrt(vari);
 		return std_dev;
 	}
 
@@ -258,7 +267,7 @@ function DU(){
 			if (!DU.can_serve(node_status[i], user.mode)){
 				continue;
 			}
-			if ((i != user.start_node) && (p_to_p[user.start_node][i] < mode_flow[user.mode])){
+			if ((i != user.start_node) && (DU.p_to_p[user.start_node][i] < DU.mode_flow[user.mode])){
 				continue;
 			}
 			mix[i] = 0;
@@ -287,7 +296,7 @@ function DU(){
 		/* 计算背板带宽使用 */
 		for (var i = 0; i < 6; i++){
 			if (mix[i] == 0){
-				value2[i] = p_to_p[user.start_node][i] / mode_flow[user.mode];
+				value2[i] = DU.p_to_p[user.start_node][i] / DU.mode_flow[user.mode];
 			}
 		}
 		
@@ -304,7 +313,11 @@ function DU(){
 				}
 			}
 		}
-		var find_node_result = new Find_Node_Result();
+		var find_node_result = {
+			"node_id": 0,
+			"stad": 0,
+			"res": 0
+		};
 		find_node_result.node_id = min_node;
 		if (minres != 1000){
 			find_node_result.stad = value1[min_node];
@@ -323,11 +336,26 @@ function DU(){
 	this.traverse_divides = function(){
 		var node_status = new Array();
 		for (var re = 0;  re < 6; re++){
-			node_status.push(new DU.Node());
+			var node = {
+				divide_pieces: 0,
+				res_pieces: 4,
+				pieces: [0,0,0,0],
+				users_num: [0,0,0,0]
+			}
+			node_status.push(node);
 		}
-		var find_node_result = new DU.Find_Node_Result();
-		var traverse_divides_result = new DU.Traverse_Divides_Result()
-		var min_result = new DU.Traverse_Divides_Result();
+
+		var find_node_result = new Array();
+		var traverse_divides_result = {
+			"stad": 0,
+			"users": new Array(),
+			"nodes": new Array()
+		};
+		var min_result = {
+			"stad": 0,
+			"users": new Array(),
+			"nodes": new Array()
+		};
 
 		var minSTD = 1000;
 
@@ -340,19 +368,32 @@ function DU(){
 		var divides_node1 = new Array(); 
 		var divides_node4 = new Array();
 		var divides_node5 = new Array();
-		divide(divides_node0);
-		divide(divides_node1);
-		divide(divides_node4);
-		divide(divides_node5);
+		DU.divide(divides_node0);
+		DU.divide(divides_node1);
+		DU.divide(divides_node4);
+		DU.divide(divides_node5);
 
+		console.log(divides_node0);
 		/* 遍历所有的划分方式 */
-		for (var ind0 = 0; ind0 < divides_node0.length; ind0++){
+		for (var ind0 = 0; ind0 < divides_node0.length; ind0+=4){
+			
+			// progressbar controller
+			var ratio = ind0 / divides_node0.length-1;
+			var proDiv = document.getElementById("progressbar");
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+			console.log(ind0);
+			// progressbar end!
+
 			var node_status0 = divides_node0[ind0];
-			for (var ind1 = 0; ind1 < divides_node1.length; ind1++){
+			for (var ind1 = 0; ind1 < divides_node1.length; ind1+=4){
 				var node_status1 = divides_node1[ind1];
-				for (var ind4 = 0; ind4 < divides_node4.length; ind4++){
+				for (var ind4 = 0; ind4 < divides_node4.length; ind4+=4){
 					var node_status4 = divides_node4[ind4];
-					for (var ind5 = 0; ind5 < divides_node5[ind5]; ind5++){
+					for (var ind5 = 0; ind5 < divides_node5.length; ind5+=4){
+						var node_status5 = divides_node5[ind5];
+
 						node_status5 = divides_node5[ind5];
 						node_status[0] = node_status0;
 						node_status[1] = node_status1;
@@ -360,8 +401,8 @@ function DU(){
 						node_status[5] = node_status5;
 						for (var i = 0; i < 11; i++){
 							var f = false;
-							for (var uind = 0; uind < users.length; uind++){
-								var user = users[uind];
+							for (var uind = 0; uind < DU.users.length; uind++){
+								var user = DU.users[uind];
 								if (user.node_id == -1){
 									find_node_result = DU.find_node(user, node_status, DU.accuracy[i][0], DU.accuracy[i][1]);
 									if (find_node_result.node_id == -1){
@@ -374,8 +415,8 @@ function DU(){
 								}
 							}
 							if (f){
-								for (var uind = 0; uind < users.length; uind++){
-									var user = users[uind];
+								for (var uind = 0; uind < DU.users.length; uind++){
+									var user = DU.users[uind];
 									if (user.f){
 										user.f = false;
 										node_status[user.node_id].users_num[user.mode]--;
@@ -391,8 +432,8 @@ function DU(){
 								traverse_divides_result.stad = minSTD;
 								traverse_divides_result.users = [];
 
-								for(var uind = 0; uind < users.length; uind ++){
-									var user = users[uind];
+								for(var uind = 0; uind < DU.users.length; uind ++){
+									var user = DU.users[uind];
 									traverse_divides_result.users.push(user.node_id);
 								}
 								traverse_divides_result.nodes[0] = node_status[0];
@@ -402,8 +443,8 @@ function DU(){
 								traverse_divides_result.nodes[4] = node_status[4];
 								traverse_divides_result.nodes[5] = node_status[5];
 							}
-							for (var uind = 0; uind < users.length; uind++){
-								var user = users[uind];
+							for (var uind = 0; uind < DU.users.length; uind++){
+								var user = DU.users[uind];
 								if (user.f){
 									user.f = false;
 									node_status[user.node_id].users_num[user.mode]--;
@@ -415,38 +456,34 @@ function DU(){
 				}
 			}
 		}
+		console.log(traverse_divides_result);
 		return traverse_divides_result;
 	}
 
 	this.print_result = function(result)
 	{
-		if (result.users.empty()){
-			console.log("None");
-			return;
-		}
+		var parameters = {
+			"util": new Array(),
+			"net_limit2": [DU.p_to_p[2][0], DU.p_to_p[2][1], DU.p_to_p[2][4], DU.p_to_p[2][5]],
+			"net_limit3": [DU.p_to_p[2][0], DU.p_to_p[2][1], DU.p_to_p[2][4], DU.p_to_p[2][5]],
+			"net_node2": new Array(),
+			"net_node3": new Array(),
+			"num": new Array()
+		};
+
 		var usage = [0, 0, 0, 0, 0, 0];
 		for (var i = 0; i < 6; i++){
-			usage[i] = get_usage(result.nodes[i]);
-			console.log(i);
-			console.log(usage[i]);
+			usage[i] = DU.get_usage(result.nodes[i]);
 		}
-		var stad = get_std(usage);
-		console.log("std == ");
-		console.log(stad);
-		for (var i = 0; i < result.users.length; i++){
-			console.log("user : node"); 
-			console.log(i);
-			console.log(result.users[i]);
-		}
-		for (var i = 0; i < 6; i++){
-			console.log("node");
-			console.log(i);
-			console.log(result.nodes[i].pieces[0]);
-			console.log(result.nodes[i].pieces[1]);
-			console.log(result.nodes[i].pieces[2]);
-			console.log(result.nodes[i].pieces[3]);
-		}
-					
+		parameters.util = usage;
+
+		for (var mode = 0; mode < 4; mode++){
+			var modearray = new Array();
+			for (var i = 0; i < 6; i++){
+				modearray.push(result.nodes[i].pieces[mode])
+			}
+			parameters.num.push(modearray);
+		}	
 					
 		var flow = 
 			[
@@ -459,26 +496,24 @@ function DU(){
 			];
 		
 		for (var i = 0; i < result.users.length; i++){
-			if (result.users[i] != users[i].start_node){
-				flow[result.users[i]][users[i].start_node] += mode_flow[users[i].mode];
-				flow[users[i].start_node][result.users[i]] += mode_flow[users[i].mode];
+			if (result.users[i] != DU.users[i].start_node){
+				flow[result.users[i]][DU.users[i].start_node] += DU.mode_flow[DU.users[i].mode];
+				flow[DU.users[i].start_node][result.users[i]] += DU.mode_flow[DU.users[i].mode];
 			}
 		}
 		
-		for (var i = 0; i < 6; i++){
-			for (var j = 0; j < 6; j++){
-				console.log(flow[i][j]);
-			}
-		}	
+		parameters.net_node2 = [flow[2][0], flow[2][1], flow[2][4], flow[2][5]];
+		parameters.net_node3 = [flow[3][0], flow[3][1], flow[3][4], flow[3][5]];
+		console.log(parameters);
+		return parameters;
 	}
 
 	this.run = function(){
 	    DU.initialize();
-	    var result = new DU.Traverse_Divides_Result();
-	    result = DU.traverse_divides();
-	    print_result(result);
-	    return 0;
-	    /*var parameters = new Array();
+	    var result = DU.traverse_divides();
+	    var parameters = DU.print_result(result);
+	    stopithere();
+	    var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
 	    	"net_node3": [8, 2, 5, 6],
@@ -488,7 +523,7 @@ function DU(){
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
-	    console.log("Finished!")*/
+	    console.log("Finished!")
 	}
 }
 

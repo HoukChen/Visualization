@@ -267,7 +267,6 @@ function Balance(){
 			var progress = Number(ratio*100).toFixed(2);
 			progress += "%"
 			proDiv.style.width = progress;
-
 			this.para.tasknumber.urgent = 500 * i;
 			this.para.tasknumber.normal = 500 * i;
 			for(var j = 0;j < 3; j++ ){
@@ -300,8 +299,11 @@ function Balance(){
 			wlct: this.WLCT,
 			load: this.LOAD,
 			tasks: this.TASKS
-		}	
-		
+		}
+		console.log("houk++++++");
+		var proDiv = document.getElementById("progressbar");
+		console.log(proDiv);
+		proDiv.style.width = "10%";
 		sessionStorage.setItem("balance_result", JSON.stringify(parameters));
 		alert("balance finish!");
 	}
