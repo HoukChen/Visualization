@@ -10,9 +10,9 @@
 		"small": 5
 	},
 	"vmstorage":{
-		"large": 300,
-		"middle": 200,
-		"small": 100
+		"large": 1500,
+		"middle": 1000,
+		"small": 800
 	},
 	"tasknumber":{
 		"urgent": 400,

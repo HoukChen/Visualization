@@ -76,7 +76,7 @@ function Vbalance(){
 		option = {
 			backgroundColor:'#fff',
 			title: {
-				text: '算法与对比算法性能比较'
+				text: '算法与对比算法性能比较(平均相应时间，单位s)'
 			},
 			grid: {
 				x: 30,
