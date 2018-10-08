@@ -5,7 +5,7 @@ function DU(){
 		@ SIZE: 5 * 4
 		@ NOTE: 资源块-制式小区数表， 存放资源块数对应的可承载每个制式的小区数量
 	*/
-	this.pieces_mode = new Array()
+	this.pieces_modes = new Array()
 
 	/* 
 		@ SIZE: 6 * 6
@@ -47,15 +47,15 @@ function DU(){
 	this.Node = function(){
 		this.divide_pieces = 0;
 		this.res_pieces = 4;
-		this.pieces = [0, 0, 0, 0];
-		this.users_num = [0, 0, 0, 0]; 
+		this.pieces = [0,0,0,0];
+		this.users_num = [0,0,0,0]; 
 	}
 
 	/* @NOTE: 存放一个小区的信息 */
 	this.User = function(user_id, start_node, mode){
 		this.user_id = user_id;
 		this.start_node = start_node;
-		this.mode = mode_flow;
+		this.mode = DU.mode_flow[mode];
 		this.node_id = -1;
 		this.f = false;
 	}
@@ -77,15 +77,21 @@ function DU(){
 	this.initialize = function(){
 		var Params = JSON.parse(sessionStorage.getItem("du_parameter"));
 		console.log(Params);
-		pieces_mode = Params.pieces_mode;
-		p_to_p = Params.p_to_p;
-		mode_flow = Params.mode_flow;
+		
+		DU.p_to_p = Params.p_to_p;
+		DU.mode_flow = Params.mode_flow;
+		DU.pieces_modes = [[0,0,0,0]];
+		for (var index = 0; index <Params.pieces_modes.length; index++){
+			DU.pieces_modes.push(Params.pieces_modes[index]);
+		}
 		for (var index = 0; index < Params.users.length; index++){
-			start = Params.users[index][0];
-			mode = Params.users[index][1];
-			var user = new DU.User(0, start, mode);
-			DU.users.push(user);
-			DU.users_num[start][mode] += 1;
+			for (var re=0; re<Params.users[index][2]; re++){
+				start = Params.users[index][0];
+				mode = Params.users[index][1];
+				var user = new DU.User(0, start, mode);
+				DU.users.push(user);
+				DU.users_num[start][mode] += 1;
+			}
 		}
 	}
 
@@ -93,7 +99,9 @@ function DU(){
 		@NOTE: 判断一个单板还能否承载一个新小区 
 	*/
 	this.can_serve = function(node, user_mode){
-		if (pieces_modes[node.pieces[user_mode]][user_mode] >= node.users_num[user_mode] + 1){
+		console.log(node.pieces[user_mode]);
+		console.log(DU.pieces_modes);
+		if (DU.pieces_modes[node.pieces[user_mode]][user_mode] >= node.users_num[user_mode] + 1){
 			return true;
 		}
 		else{
@@ -103,18 +111,26 @@ function DU(){
 
 	this.fit = function(node, node_id){
 		node.res_pieces = 4;
-		var max_mode = 3;
-		var max_mode_2 = 2;
-		for(var i = 0; i < 3; i++){
-			if(DU.users_num[node_id][i] * DU.mode_flow[i] > DU.users_num[node_id][max_mode] * DU.mode_flow[max_mode]){
+		var max_mode = -1;
+		var max_mode_2 = -1;
+		var max_flow = 0;
+		var max_flow_2 = 0;
+		for(var i = 0; i < 4; i++){
+			if (DU.users_num[node_id][i] * DU.mode_flow[i] > max_flow){
+				max_flow_2 = max_flow;
+				max_flow = DU.users_num[node_id][i] * DU.mode_flow[i];
 				max_mode_2 = max_mode;
 				max_mode = i;
+			}
+			else if (DU.users_num[node_id][i] * DU.mode_flow[i] > max_flow_2){
+				max_flow_2 = DU.users_num[node_id][i] * DU.mode_flow[i];
+				max_mode_2 = i;
 			}
 		}
 		if (DU.pieces_modes[4][max_mode] <= DU.users_num[node_id][max_mode]){
 				node.pieces[max_mode] = 4;
 		}
-		else if (pieces_modes[3][max_mode] <= users_num[node_id][max_mode])
+		else if (DU.pieces_modes[3][max_mode] <= DU.users_num[node_id][max_mode])
 		{
 			node.pieces[max_mode] = 3;
 			node.pieces[max_mode_2] = 1;
@@ -125,10 +141,10 @@ function DU(){
 			nod.pieces[max_mode_2] = 2;
 		}
 		/*根据已划分好的制式对小区进行分配*/
-		for(var index = 0; index < users.length; index++){
-			var user = users[index]; 
+		for(var index = 0; index < DU.users.length; index++){
+			var user = DU.users[index]; 
 			if ((user.node_id == -1) && (user.start_node == node_id)){
-				if (can_serve(node, user.mode))
+				if (DU.can_serve(node, user.mode))
 				{
 					user.node_id = node_id;
 					node.users_num[user.mode]++;
@@ -152,7 +168,7 @@ function DU(){
 	*/
 	this.divide = function(x)
 	{
-		var nodestatus = new Node();
+		var nodestatus = new DU.Node();
 		
 		/* (1,3)和(2,2)和(0,4) */
 		for (var i = 0; i < 4; i++){
@@ -162,7 +178,7 @@ function DU(){
 				}
 				else
 				{
-					initialize_node(nodestatus);
+					DU.initialize_node(nodestatus);
 					for (var k = 0; k < 5; k++)
 					{
 						nodestatus.pieces[i] = 4 - k;
@@ -239,7 +255,7 @@ function DU(){
 		/* 列举所有可能的小区转移方式 */
 		for (var i = 0; i < 6; i++)
 		{
-			if (!can_serve(node_status[i], user.mode)){
+			if (!DU.can_serve(node_status[i], user.mode)){
 				continue;
 			}
 			if ((i != user.start_node) && (p_to_p[user.start_node][i] < mode_flow[user.mode])){
@@ -254,15 +270,15 @@ function DU(){
 
 		/* 计算标准差，负载均衡性能 */
 		for (var i = 0; i < 6; i++){
-			usage[i] = get_usage(node_status[i]);
+			usage[i] = DU.get_usage(node_status[i]);
 		}
 
 		for (var i = 0; i < 6; i++){
 			if (mix[i] == 0){
 				var usage_tmp = usage[i];
 				node_status[i].divide_pieces++;
-				usage[i] = get_usage(node_status[i]);
-				value1[i] = get_std(usage);
+				usage[i] = DU.get_usage(node_status[i]);
+				value1[i] = DU.get_std(usage);
 				node_status[i].divide_pieces--;
 				usage[i] = usage_tmp;
 			}
@@ -347,7 +363,7 @@ function DU(){
 							for (var uind = 0; uind < users.length; uind++){
 								var user = users[uind];
 								if (user.node_id == -1){
-									find_node_result = find_node(user, node_status, accuracy[i][0], accuracy[i][1]);
+									find_node_result = DU.find_node(user, node_status, DU.accuracy[i][0], DU.accuracy[i][1]);
 									if (find_node_result.node_id == -1){
 										f = true;
 										break;
@@ -457,12 +473,12 @@ function DU(){
 	}
 
 	this.run = function(){
-	    // DU.initialize();
-	    // var result = new DU.Traverse_Divides_Result();
-	    // result = DU.traverse_divides();
-	    // print_result(result);
-	    // return 0;
-	    var parameters = new Array();
+	    DU.initialize();
+	    var result = new DU.Traverse_Divides_Result();
+	    result = DU.traverse_divides();
+	    print_result(result);
+	    return 0;
+	    /*var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
 	    	"net_node3": [8, 2, 5, 6],
@@ -472,7 +488,7 @@ function DU(){
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
-	    console.log("Finished!")
+	    console.log("Finished!")*/
 	}
 }
 
