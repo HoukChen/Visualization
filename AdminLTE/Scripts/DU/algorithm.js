@@ -509,10 +509,12 @@ function DU(){
 	}
 
 	this.run = function(){
+	//proDiv.reload();
+		
 	    DU.initialize();
 	    var result = DU.traverse_divides();
 	    var parameters = DU.print_result(result);
-	    stopithere();
+	    //stopithere();
 	    var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
@@ -522,6 +524,13 @@ function DU(){
 	    	"util": [0.45, 0.68, 0.74, 0.54, 0.77, 0.55],
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }
+		for(var i = 0 ; i < 10; i++ ){
+			var ratio = i/10;
+			var proDiv = document.getElementById("progressbar");
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+		}
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
 	    console.log("Finished!")
 	}

@@ -39,6 +39,14 @@ function calculate(){
 	Parser.parameters.period = document.getElementById("prd").value;
 	Parser.parameters.threshold = document.getElementById("thta").value;
 	//console.log(Parser.parameters);
+	for(var i = 0;i < 10; i++ ){
+		var ratio = i/10;
+		var proDiv = document.getElementById("progressbar1");
+		alert(proDiv);
+		var progress = Number(ratio*100).toFixed(2);
+		progress += "%"
+		proDiv.style.width = progress;
+	}
 	Balance.run();
 	window.location.href = "loadbalance.html"
 }

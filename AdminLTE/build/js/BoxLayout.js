@@ -7,6 +7,7 @@ function dobalance(){
 	Balance.LOAD.length = 0;
 	var tvar = JSON.parse(sessionStorage.getItem("balance_parameter"));
 	console.log(tvar);
+
 	for(var i = 1;i < 10; i++ ){
 		Balance.LBFT.push(Math.round((0.1 * i + 0.05 * Math.random())*100)/100);
 		Balance.WLCT.push(Math.round((Balance.LBFT[i-1] + (0.04 + Math.random()* 0.02) * i)*100)/100);

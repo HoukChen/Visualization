@@ -29,6 +29,18 @@ function Vm(vmid,max_num,capacity, load0, num0){
 }
 
 
+function JDT(){
+	for(var i = 0;i < 10; i++ ){
+		var ratio = i/10;
+		var proDiv = document.getElementById("progressbar1");
+		var progress = Number(ratio*100).toFixed(2);
+		progress += "%"
+		proDiv.style.width = progress;
+			//alert(progress);
+			//proDiv.reload();
+	}
+}
+
 function Balance(){
 
 	/*
@@ -261,23 +273,15 @@ function Balance(){
 	
 	this.dobalance = function(){
 		for(var i = 0;i < 9; i++ ){
-			// progress bar controller
-			var ratio = i/8;
-			var proDiv = document.getElementById("progressbar");
-			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
-			proDiv.style.width = progress;
 			this.para.tasknumber.urgent = 500 * i;
 			this.para.tasknumber.normal = 500 * i;
 			for(var j = 0;j < 3; j++ ){
-				//if(j == 1){continue;}
 				this.start(j); 	
 				if(j == 0){this.WRRT.push(this.calavgtime());}
 				if(j == 1){this.LBFT.push(this.calavgtime());}
 				if(j == 2){this.WLCT.push(this.calavgtime());}
 			}
 		}
-		//dobalance();
 	}
 	
 	this.run = function(){
@@ -292,6 +296,9 @@ function Balance(){
 				this.TASKS[itsk.tarr*10] ++ ;
 			}
 		}
+		//alert("*");
+		var pgb = document.getElementById("progressbar1");
+		//alert("**");
 		dobalance();
 		var parameters = {
 			wrrt: this.WRRT,
@@ -300,10 +307,7 @@ function Balance(){
 			load: this.LOAD,
 			tasks: this.TASKS
 		}
-		console.log("houk++++++");
-		var proDiv = document.getElementById("progressbar");
-		console.log(proDiv);
-		proDiv.style.width = "10%";
+		//JDT();
 		sessionStorage.setItem("balance_result", JSON.stringify(parameters));
 		alert("balance finish!");
 	}
