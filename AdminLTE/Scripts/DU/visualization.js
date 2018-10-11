@@ -2,6 +2,7 @@ function VDU(){
 	this.params = new Array();
 	this.initParams = function(){
 		this.params = JSON.parse(sessionStorage.getItem("du_result"));
+		console.log(this.params);
 	}
 
 	this.netShower = function(){

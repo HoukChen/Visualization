@@ -13,6 +13,12 @@ function DU(){
 	*/
 	this.p_to_p = new Array()
 
+	/* 
+		@ SIZE: 6 * 6
+		@ NOTE: 单板之间当前可用的背板带宽矩阵 
+	*/
+	this.p_to_p_now = new Array()
+
 	/* 	
 		@ SIZE: 11 * 2
 		@ NOTE: 用于控制考虑负载均衡和背板带宽的权重 
@@ -80,6 +86,12 @@ function DU(){
 		DU.mode_flow = Params.mode_flow;
 		DU.accuracy = Params.accuracy;
 		DU.pieces_modes = [[0,0,0,0]];
+		for (var i = 0; i < 6; i++){
+			DU.p_to_p_now[i] = new Array();
+			for (var j = 0; j < 6; j++){
+				DU.p_to_p_now[i][j] = DU.p_to_p[i][j];
+			}
+		} 
 		for (var index = 0; index <Params.pieces_modes.length; index++){
 			DU.pieces_modes.push(Params.pieces_modes[index]);
 		}
@@ -114,8 +126,8 @@ function DU(){
 
 	this.fit = function(node, node_id){
 		node.res_pieces = 4;
-		var max_mode = -1;
-		var max_mode_2 = -1;
+		var max_mode = 2;
+		var max_mode_2 = 3;
 		var max_flow = 0;
 		var max_flow_2 = 0;
 		for(var i = 0; i < 4; i++){
@@ -178,6 +190,7 @@ function DU(){
 			pieces: [0,0,0,0],
 			users_num: [0,0,0,0]
 		}
+
 		
 		/* (1,3)和(2,2)和(0,4) */
 		for (var i = 0; i < 4; i++){
@@ -261,17 +274,54 @@ function DU(){
 	this.find_node = function(user, node_status, p1, p2)
 	{
 		var mix = [-1, -1, -1, -1, -1, -1];
+
 		/* 列举所有可能的小区转移方式 */
 		for (var i = 0; i < 6; i++)
-		{
+		{	
 			if (!DU.can_serve(node_status[i], user.mode)){
 				continue;
 			}
-			if ((i != user.start_node) && (DU.p_to_p[user.start_node][i] < DU.mode_flow[user.mode])){
+			//console.log(user.mode)
+			//console.log(DU.p_to_p[user.start_node][i])
+			//console.log(DU.mode_flow[user.mode])
+			if ((i != user.start_node) && (DU.p_to_p_now[user.start_node][i] < DU.mode_flow[user.mode])){
 				continue;
 			}
 			mix[i] = 0;
 		}
+		/*for (var i = 0; i < 3; i++)
+		{	
+			//console.log(node_status[i])
+			if (!DU.can_serve(node_status[i], user.mode)){
+				continue;
+			}
+			//console.log(user.mode)
+			//console.log(user.start_node)
+			//console.log(DU.p_to_p[user.start_node][i])
+			//console.log(DU.mode_flow[user.mode])
+			if ((i != user.start_node) && (DU.p_to_p_now[user.start_node][i] < DU.mode_flow[user.mode])){
+				continue;
+			}
+			mix[i] = 0;
+		}
+		
+		for (var i = 4; i < 6; i++)
+		{	
+			if (!DU.can_serve(node_status[i], user.mode)){
+				continue;
+			}
+			if ((i != user.start_node) && (DU.p_to_p_now[user.start_node][i] < DU.mode_flow[user.mode])){
+				continue;
+			}
+			mix[i] = 0;
+		}*/
+
+		/*for (var i = 0; i < 6; i++)
+		{	
+			if (mix[i] == 0){
+				console.log('sdf')
+			}
+		}*/
 
 		var value1 = [0, 0, 0, 0, 0, 0];
 		var usage = [0, 0, 0, 0, 0, 0];
@@ -326,6 +376,15 @@ function DU(){
 			find_node_result.stad = 1000;
 		}
 		find_node_result.res = minres;
+		if (find_node_result.node_id != -1){
+		//	console.log(1)
+		//	console.log(user.start_node)
+		//	console.log(find_node_result.node_id)
+		//	console.log(DU.p_to_p_now[user.start_node][find_node_result.node_id])
+			DU.p_to_p_now[user.start_node][find_node_result.node_id] -= DU.mode_flow[user.mode];
+		//	console.log(DU.p_to_p_now[user.start_node][find_node_result.node_id])
+		//	console.log(DU.p_to_p_now);
+		}
 		return find_node_result;
 	}
 
@@ -375,7 +434,7 @@ function DU(){
 
 		console.log(divides_node0);
 		/* 遍历所有的划分方式 */
-		for (var ind0 = 0; ind0 < divides_node0.length; ind0+=4){
+		for (var ind0 = 0; ind0 < divides_node0.length; ind0+=2){
 			
 			// progressbar controller
 			var ratio = ind0 / divides_node0.length-1;
@@ -387,20 +446,26 @@ function DU(){
 			// progressbar end!
 
 			var node_status0 = divides_node0[ind0];
-			for (var ind1 = 0; ind1 < divides_node1.length; ind1+=4){
+			for (var ind1 = 1; ind1 < divides_node1.length; ind1+=2){
 				var node_status1 = divides_node1[ind1];
-				for (var ind4 = 0; ind4 < divides_node4.length; ind4+=4){
+				for (var ind4 = 2; ind4 < divides_node4.length; ind4+=2){
 					var node_status4 = divides_node4[ind4];
-					for (var ind5 = 0; ind5 < divides_node5.length; ind5+=4){
+					for (var ind5 = 0; ind5 < divides_node5.length; ind5+=2){
 						var node_status5 = divides_node5[ind5];
 
 						node_status5 = divides_node5[ind5];
 						node_status[0] = node_status0;
-						node_status[1] = node_status1;
+						node_status[1] = node_status1;	
 						node_status[4] = node_status4;
 						node_status[5] = node_status5;
-						for (var i = 0; i < 11; i++){
+						for (var i = 0; i < 1; i++){
 							var f = false;
+							for (var k = 0; k< 6; k++){
+								for (var j = 0; j < 6; j++){
+									DU.p_to_p_now[k][j] = DU.p_to_p[k][j];
+								}
+							} 
+							//console.log(DU.p_to_p_now)
 							for (var uind = 0; uind < DU.users.length; uind++){
 								var user = DU.users[uind];
 								if (user.node_id == -1){
@@ -414,6 +479,7 @@ function DU(){
 									user.f = true;
 								}
 							}
+							//console.log(DU.p_to_p_now)
 							if (f){
 								for (var uind = 0; uind < DU.users.length; uind++){
 									var user = DU.users[uind];
@@ -470,6 +536,10 @@ function DU(){
 			"net_node3": new Array(),
 			"num": new Array()
 		};
+		if (result.nodes.length == 0){
+			console.log('Cannot find a transfer plan');
+			return -1;
+		}
 
 		var usage = [0, 0, 0, 0, 0, 0];
 		for (var i = 0; i < 6; i++){
@@ -509,18 +579,19 @@ function DU(){
 	}
 
 	this.run = function(){
-	//proDiv.reload();
-		for(var i = 0 ; i < 5; i++ ){
+	    DU.initialize();
+	    var result = DU.traverse_divides();
+	    var parameters = DU.print_result(result);
+		for(var i = 0;i < 11; i++ ){
 			var ratio = i/10;
 			var proDiv = document.getElementById("progressbar");
+			//alert(proDiv);
 			var progress = Number(ratio*100).toFixed(2);
 			progress += "%"
 			proDiv.style.width = progress;
 		}
-	    DU.initialize();
-	    var result = DU.traverse_divides();
-	    var parameters = DU.print_result(result);
-	    //stopithere();
+	   // stopithere();
+	   /*
 	    var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
@@ -530,13 +601,7 @@ function DU(){
 	    	"util": [0.45, 0.68, 0.74, 0.54, 0.77, 0.55],
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }
-		for(var i = 5 ; i < 11; i++ ){
-			var ratio = i/10;
-			var proDiv = document.getElementById("progressbar");
-			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
-			proDiv.style.width = progress;
-		}
+		*/
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
 	    console.log("Finished!")
 	}
