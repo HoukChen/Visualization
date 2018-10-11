@@ -437,12 +437,6 @@ function DU(){
 		for (var ind0 = 0; ind0 < divides_node0.length; ind0+=2){
 			
 			// progressbar controller
-			var ratio = ind0 / divides_node0.length-1;
-			var proDiv = document.getElementById("progressbar");
-			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
-			proDiv.style.width = progress;
-			console.log(ind0);
 			// progressbar end!
 
 			var node_status0 = divides_node0[ind0];
@@ -579,6 +573,14 @@ function DU(){
 	}
 
 	this.run = function(){
+		for(var i = 0;i < 5; i++ ){
+			var ratio = i/10;
+			var proDiv = document.getElementById("progressbar2");
+			//alert(proDiv);
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+		}
 	    DU.initialize();
 	    var result = DU.traverse_divides();
 	    var parameters = DU.print_result(result);
@@ -595,10 +597,18 @@ function DU(){
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }
 		*/
+		for(var i = 5;i < 11; i++ ){
+			var ratio = i/10;
+			var proDiv = document.getElementById("progressbar2");
+			//alert(proDiv);
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
+		}
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
 	    console.log("Finished!");
 		if(parameters == -1){
-			alert(“没有找到分配方案”);
+			alert("没有找到分配方案");
 		}
 		
 	}
