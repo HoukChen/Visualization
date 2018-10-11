@@ -582,14 +582,7 @@ function DU(){
 	    DU.initialize();
 	    var result = DU.traverse_divides();
 	    var parameters = DU.print_result(result);
-		for(var i = 0;i < 11; i++ ){
-			var ratio = i/10;
-			var proDiv = document.getElementById("progressbar");
-			//alert(proDiv);
-			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
-			proDiv.style.width = progress;
-		}
+		
 	   // stopithere();
 	   /*
 	    var parameters = new Array();
@@ -603,7 +596,11 @@ function DU(){
 	    }
 		*/
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
-	    console.log("Finished!")
+	    console.log("Finished!");
+		if(parameters == -1){
+			alert(“没有找到分配方案”);
+		}
+		
 	}
 }
 
