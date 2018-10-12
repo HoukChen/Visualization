@@ -42,9 +42,9 @@ function calculate(){
 	for(var i = 0;i < 11; i++ ){
 		var ratio = i/10;
 		var proDiv = document.getElementById("progressbar1");
-		//alert(proDiv);
+		//alert(proDiv);;
 		var progress = Number(ratio*100).toFixed(2);
-		progress += "%"
+		progress += "%";
 		proDiv.style.width = progress;
 	}
 	Balance.run();

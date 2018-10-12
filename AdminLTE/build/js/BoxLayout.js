@@ -35,3 +35,11 @@ function dobalance(){
 	//console.log(Balance.TASKS);
 	//console.log(Balance.LOAD);
 }
+
+function set_util(){
+	var farray = new Array();
+	for(var i = 0;i < 6; i++ ){
+		farray.push(Math.round((0.6 + 0.4 * Math.random())*85)/100);
+	}
+	return farray;
+}

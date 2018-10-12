@@ -571,7 +571,7 @@ function DU(){
 				flow[DU.users[i].start_node][result.users[i]] += DU.mode_flow[DU.users[i].mode];
 			}
 		}
-		
+		parameters.util = set_util();
 		parameters.net_node2 = [flow[2][0], flow[2][1], flow[2][4], flow[2][5]];
 		parameters.net_node3 = [flow[3][0], flow[3][1], flow[3][4], flow[3][5]];
 		console.log(parameters);
@@ -584,15 +584,14 @@ function DU(){
 			var proDiv = document.getElementById("progressbar2");
 			//alert(proDiv);
 			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
+			progress += "%";
 			proDiv.style.width = progress;
 		}
 	    DU.initialize();
 	    var result = DU.traverse_divides();
-	    var parameters = DU.print_result(result);
-		
+	    var parameters = DU.print_result(result);	
 	   // stopithere();
-
+/*
 	    var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
@@ -602,6 +601,7 @@ function DU(){
 	    	"util": [0.45, 0.68, 0.74, 0.54, 0.77, 0.55],
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
 	    }	
+		*/
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
 	    console.log("Finished!");
 		if(parameters == -1){
