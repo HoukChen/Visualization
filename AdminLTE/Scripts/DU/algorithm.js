@@ -437,8 +437,14 @@ function DU(){
 		for (var ind0 = 0; ind0 < divides_node0.length; ind0+=2){
 			
 			// progressbar controller
+			var ratio = (ind0+1)/divides_node0.length;
+			var proDiv = document.getElementById("progressbar2");
+			//alert(proDiv);
+			var progress = Number(ratio*100).toFixed(2);
+			progress += "%"
+			proDiv.style.width = progress;
 			// progressbar end!
-
+			console.log(ind0);
 			var node_status0 = divides_node0[ind0];
 			for (var ind1 = 1; ind1 < divides_node1.length; ind1+=2){
 				var node_status1 = divides_node1[ind1];
@@ -586,7 +592,7 @@ function DU(){
 	    var parameters = DU.print_result(result);
 		
 	   // stopithere();
-	   /*
+
 	    var parameters = new Array();
 	    parameters = {
 	    	"net_node2": [3, 6, 7, 4],
@@ -595,16 +601,7 @@ function DU(){
 	    	"net_limit3": [20, 20, 20, 20],
 	    	"util": [0.45, 0.68, 0.74, 0.54, 0.77, 0.55],
 	    	"num": [[2,0,3,1,3,3],[2,4,3,2,2,1],[3,2,2,1,2,4],[3,1,4,3,3,4]]
-	    }
-		*/
-		for(var i = 5;i < 11; i++ ){
-			var ratio = i/10;
-			var proDiv = document.getElementById("progressbar2");
-			//alert(proDiv);
-			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
-			proDiv.style.width = progress;
-		}
+	    }	
 	    sessionStorage.setItem("du_result", JSON.stringify(parameters));
 	    console.log("Finished!");
 		if(parameters == -1){
