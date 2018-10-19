@@ -18,7 +18,7 @@ function VDU(){
 				name:'链路1',
 				bandwith: this.params.net_limit2[re],
 				timeout: this.params.net_node2[re],
-				PacketLossRate: this.params.net_node2[re]/this.params.net_limit2[re]
+				PacketLossRate: Math.ceil(100*this.params.net_node2[re]/this.params.net_limit2[re])/100
 			});
 		}
 		for (var re=0; re<4; re++){
@@ -29,7 +29,7 @@ function VDU(){
 				name:'链路1',
 				bandwith: this.params.net_limit3[re],
 				timeout: this.params.net_node3[re],
-				PacketLossRate: this.params.net_node3[re]/this.params.net_limit3[re]
+				PacketLossRate: Math.ceil(100*this.params.net_node3[re]/this.params.net_limit3[re])/100
 			});
 		}
 		data = [
@@ -191,7 +191,7 @@ function VDU(){
 				stack: '总量',
 				label: {
 					normal: {
-						show: true,
+						show: false,
 					}
 				},
 				data: this.params.num[re-1]

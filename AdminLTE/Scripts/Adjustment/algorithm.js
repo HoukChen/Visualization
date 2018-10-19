@@ -456,7 +456,7 @@ function Adjustor(){
 			var ratio = (time-GRT.begintime)/(GRT.begintime+Params.simspan-GRT.begintime-1);
 			var proDiv = document.getElementById("progressbar");
 			var progress = Number(ratio*100).toFixed(2);
-			progress += "%"
+			progress += "%";
 			proDiv.style.width = progress;
 
 			SIM.removeTask(time);
