@@ -23,6 +23,6 @@
 		"normal": 100
 	},
 	"timelimit": 10,
-	"period": 6,
+	"period": 12,
 	"threshold": 0.2
 }

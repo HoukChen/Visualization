@@ -29,29 +29,7 @@ function Vm(vmid,max_num,capacity, load0, num0){
 }
 
 
-function JDT(){
-	for(var i = 0;i < 10; i++ ){
-		var ratio = i/10;
-		var proDiv = document.getElementById("progressbar1");
-		var progress = Number(ratio*100).toFixed(2);
-		progress += "%"
-		proDiv.style.width = progress;
-			//alert(progress);
-			//proDiv.reload();
-	}
-}
-
 function Balance(){
-
-	/*
-		Class for the balance algorithm
-
-		Attributes:
-		* 
-
-		Methods:
-		* 
-	*/
 	this.Taskq = new Array();
 	this.Vmq = new Array();
 	this.WRRT = new Array();
@@ -187,26 +165,16 @@ function Balance(){
 		var vl = this.Vmq.length;
 		clock = 0.0;
 		var pvt = 0;
-			
 		for(var j = 0 ; j < jl; j++ ){
 			console.log(j);
 			var tmpj = this.Taskq[j];
-			//console.log(tmpj);
 			var tmpv = this.Vmq[pvt];
-			//console.log(tmpv);
 			if(clock != tmpj.tarr || j == jl - 1){
-				this.LOAD.push(tmpj.num);
 				var tpsby = Math.round((tmpj.tarr - clock) * 10)/10;
-				//console.log("tpsby");
-				//console.log(tpsby);
 				clock = tmpj.tarr;
-				//console.log(clock);
-				//this.LOAD[clock * 10] += tmpj.num;
 				
 				for(var jj = 0; jj < vl; jj++ ){
 					var tvm = this.Vmq[jj];
-					//console.log("*");
-					//console.log(tvm);
 					var tq = tvm.jobq;
 					while(tq.length > 0){
 						var thj = tq.shift();
@@ -221,22 +189,18 @@ function Balance(){
 					tvm.calload();
 				}
 				
-			}
-				
+			}	
 			if(mode == 2 && j % this.para.period / 2 == 0){
-				//this.Taskq.sort(this.sortfunc1);
-				pvt = 0;
+				pvt = Math.round(Math.random() * vl);
 			}
 			var cnt = 0;
-			//console.log(tmpv);
 			while(tmpj.num > tmpv.maxnum - tmpv.num && cnt < vl ){
 				if(mode == 2){
 					pvt = (pvt + 1)%vl;
 				}else{
-					pvt = (pvt + 7)%vl;
+					pvt = (pvt + 1)%vl;
 				}
 				tmpv = this.Vmq[pvt];
-				//console.log(tmpv);
 				cnt++;
 			}
 			if(tmpj.num <= tmpv.maxnum - tmpv.num){
@@ -268,25 +232,32 @@ function Balance(){
 			avgt += ti.tend - ti.tarr;
 		}
 		avgt /= this.Taskq.length;
+		avgt = Math.round(avgt*100)/100;
 		return avgt;
 	}
 	
 	this.dobalance = function(){
-		for(var i = 0;i < 9; i++ ){
-			this.para.tasknumber.urgent = 500 * i;
-			this.para.tasknumber.normal = 500 * i;
+		for(var i = 1;i < 10; i++ ){
+			this.para.tasknumber.urgent = 150 * i;
+			this.para.tasknumber.normal = 150 * i;
 			for(var j = 0;j < 3; j++ ){
 				this.start(j); 	
-				if(j == 0){this.WRRT.push(this.calavgtime());}
+				if(j == 0){
+					//console.log(this.calavgtime());
+					this.WRRT.push(this.calavgtime());
+				}
 				if(j == 1){this.LBFT.push(this.calavgtime());}
 				if(j == 2){this.WLCT.push(this.calavgtime());}
 			}
 		}
+		console.log("***");
+		console.log(this.WRRT);
 	}
 	
 	this.run = function(){
 		this.initialize();
 		console.log(this.Vmq);
+		var tvar = JSON.parse(sessionStorage.getItem("balance_parameter"));
 		if(this.TASKS.length == 0){
 			for(var i = 0; i < this.para.timelimit * 10; i++ ){
 				this.TASKS.push(0);
@@ -296,10 +267,23 @@ function Balance(){
 				this.TASKS[itsk.tarr*10] ++ ;
 			}
 		}
-		//alert("*");
+		Balance.LOAD.push(0);
+		var bl = Balance.TASKS.length;
+		var thh = (tvar.vmstorage.large * tvar.vmnumber.large/tvar.vmcapacity.large + tvar.vmstorage.middle * tvar.vmnumber.middle/tvar.vmcapacity.middle +tvar.vmstorage.small * tvar.vmnumber.small/tvar.vmcapacity.small)/10;
+		for(var i = 0; i < bl + 5; i++ ){
+			var coin = Math.random();
+			if( Balance.LOAD[i] > thh|| coin > 0.85 || i >= bl){
+				Balance.LOAD.push(Balance.LOAD[i] * (0.8 + Math.random() * 0.1));
+			}else{
+				var cost = (Math.random()*0.2 + 0.5) * 100 * (0.7+ Math.random()*0.1);
+				Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * (0.8 + Math.random()*0.2) * 10 - cost);
+			}
+			if(Balance.LOAD[i+1] < 0){
+				Balance.LOAD[i+1] = 0;
+			}
+		}
 		var pgb = document.getElementById("progressbar1");
-		//alert("**");
-		dobalance();
+		this.dobalance();
 		var parameters = {
 			wrrt: this.WRRT,
 			lbft: this.LBFT,
@@ -307,7 +291,6 @@ function Balance(){
 			load: this.LOAD,
 			tasks: this.TASKS
 		}
-		//JDT();
 		sessionStorage.setItem("balance_result", JSON.stringify(parameters));
 		alert("balance finish!");
 	}
