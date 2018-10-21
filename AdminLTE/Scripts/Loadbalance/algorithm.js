@@ -271,15 +271,13 @@ function Balance(){
 		var bl = Balance.TASKS.length;
 		var thh = (tvar.vmstorage.large * tvar.vmnumber.large/tvar.vmcapacity.large + tvar.vmstorage.middle * tvar.vmnumber.middle/tvar.vmcapacity.middle +tvar.vmstorage.small * tvar.vmnumber.small/tvar.vmcapacity.small)/10;
 		for(var i = 0; i < bl + 5; i++ ){
-			var coin = Math.random();
-			if( Balance.LOAD[i] > thh|| coin > 0.85 || i >= bl){
-				Balance.LOAD.push(Balance.LOAD[i] * (0.8 + Math.random() * 0.1));
-			}else{
-				var cost = (Math.random()*0.2 + 0.5) * 100 * (0.7+ Math.random()*0.1);
-				Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * (0.8 + Math.random()*0.2) * 10 - cost);
-			}
+			var cost = tvar.vmcapacity.large * 3 + tvar.vmcapacity.middle * 3 + tvar.vmcapacity.small*1 ;
+			Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * 10 - cost);
 			if(Balance.LOAD[i+1] < 0){
 				Balance.LOAD[i+1] = 0;
+			}
+			if(Balance.LOAD[i+1]>thh){
+				Balance.LOAD[i+1] *= 0.9;
 			}
 		}
 		var pgb = document.getElementById("progressbar1");
