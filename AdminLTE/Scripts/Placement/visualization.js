@@ -12,9 +12,18 @@ function Vplacer(){
 		* utilShower: show the resuorce utilization of all pms by echart.
 		* globalShower: main function for [numShower] and [utilShower].
 	*/
-
+	this.optimization = "0";
 	this.pmConf = function(index){
-		var result = JSON.parse(sessionStorage.getItem("placement_result"));
+		var result = new Array();
+		if (this.optimization == "0"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MIN_PM_NUM;
+		}
+		else if (this.optimization == "1"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MAX_RES_UTIL;
+		}
+		else if (this.optimization == "2"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).BEST_BALANCE;
+		}
 		var pm = result.pmRecord[index];
 		var vmlist = pm['VMList'];
 		var series = new Array();
@@ -26,7 +35,8 @@ function Vplacer(){
 						];
 
 			var element = {
-							name : '虚拟机'+String(vmindex),
+							//name : '虚拟机'+String(vmindex),
+							name : vmlist[vmindex].VMType,
 							type :'bar', 
 							data : data, 
 							stack : 'same',
@@ -37,7 +47,8 @@ function Vplacer(){
 							emphasis: {label:{show: true}}
 						};
 			series.push(element);
-			legend.push('虚拟机'+String(vmindex));
+			// legend.push('虚拟机'+String(vmindex));
+			legend.push(vmlist[vmindex].VMType);
 		}
 		var echartConf = {
 			series: series,
@@ -61,16 +72,27 @@ function Vplacer(){
 		var index = content.indexOf("-");
 		var start = parseInt(content.slice(0,index));
 		var end = parseInt(content.slice(index+1, content.length));
-		var result = JSON.parse(sessionStorage.getItem("placement_result"));
-		for (var pmind=Math.max(start, 0); pmind<=Math.min(end, result.pmRecord.length); pmind++){
 
+		var result = new Array();
+		if (this.optimization == "0"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MIN_PM_NUM;
+		}
+		else if (this.optimization == "1"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MAX_RES_UTIL;
+		}
+		else if (this.optimization == "2"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).BEST_BALANCE;
+		}
+		
+		for (var pmind=Math.max(start, 0); pmind<=Math.min(end, result.pmRecord.length); pmind++){
 			var conf = this.pmConf(parseInt(pmind));
 			var PMParam = conf.pm.PMParam;
 			var divTag = document.createElement("div");
 			divTag.setAttribute("class","wljbox");
 			pmDiv.appendChild(divTag);
 			var pmChart = echarts.init(divTag, 'light');
-			var ttitle = 'No.' + pmind;
+			//var ttitle = 'No.' + pmind;
+			var ttitle = 'No.' + pmind + '('+PMParam.PMIndex+')';
 			var option = {
 				title: {text:ttitle},
 				legend: conf.legend,
@@ -117,13 +139,24 @@ function Vplacer(){
 	}
 
 	this.globalConf = function(){
-		var result = JSON.parse(sessionStorage.getItem("placement_result"));
+
+		var result = new Array();
+		if (this.optimization == "0"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MIN_PM_NUM;
+		}
+		else if (this.optimization == "1"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).MAX_RES_UTIL;
+		}
+		else if (this.optimization == "2"){
+			result = JSON.parse(sessionStorage.getItem("placement_result")).BEST_BALANCE;
+		}
 		var pm = result.pmRecord;
 		var dataAxis = new Array();
 		var num = new Array();
 		var util = new Array();
 		for (var pmindex=0; pmindex<pm.length; pmindex++){
-			dataAxis.push(pmindex);
+			// dataAxis.push(pmindex);
+			dataAxis.push(pm[pmindex].PMParam.PMIndex);
 			num.push(pm[pmindex]['VMList'].length);
 
 			var uCPU = 1 - pm[pmindex].RestCore/pm[pmindex].PMParam.Core;
@@ -158,7 +191,7 @@ function Vplacer(){
 				trigger: 'axis',
 				axisPointer: {type: 'shadow'},
 				formatter: function(params){
-					return params[0].data;
+					return '物理机上虚拟机数量: '+params[0].data;
 				}
 			},
 			dataZoom: [{type:'inside'}],
@@ -199,7 +232,7 @@ function Vplacer(){
 				trigger: 'axis',
 				axisPointer: {type: 'shadow'},
 				formatter: function(params){
-					var content = (String((params[0].data*100).toFixed(2))+' %');
+					var content = '物理机综合利用率: '+(String((params[0].data*100).toFixed(2))+' %');
 					return content;
 				}
 			},
@@ -223,8 +256,13 @@ function Vplacer(){
 	}
 
 	this.globalShower = function(){
+		var selectDiv = document.getElementById("optiSelect");
+		var index = parseInt(selectDiv.selectedIndex);
+		var choice = selectDiv.options[index].value;
+		this.optimization = choice;
 		this.numShower();
 		this.utilShower();
+		this.pmShower();
 	}
 } 
 

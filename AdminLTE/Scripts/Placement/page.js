@@ -194,8 +194,14 @@ function calculate(){
 		Parser.parameters.VMResource.push(tobj);
 	}
 	
-	Placer.run();
-	window.location.href = "placement.html"
+	if (Placer.run()){
+		window.location.href = "placement.html"
+	}
+	else{
+		return false;
+	}
+
+	
 }
 
 function uploadAndshow(ufile){

@@ -213,6 +213,19 @@ desired effect
 				<div class="col-xs-1">
 					<button  class="btn btn-primary" onclick="Vplacer.pmShower()" >展示物理机信息</button>
 				</div>
+        <div class="col-xs-5" ></div>
+        <div class="col-xs-1">
+          <button class="btn btn-primary" >选择优化目标</button>
+        </div>
+        <div class="col-xs-2" >
+            <div class="form-group">
+                <select id = "optiSelect" class="form-control" onchange="Vplacer.globalShower()">
+                <option value = "0" selected = "selected">最小物理机数量</option>
+                <option value = "1">最大资源利用率</option>
+                <option value = "2">负载最均衡</option>
+                </select>
+            </div>
+        </div>
 			</div>
 		</div>
         
