@@ -51,7 +51,7 @@ function Vadjustor(){
 		// task number graph
 		var taskChart = echarts.init(document.getElementById('taskgraph'), 'light');
 		var taskdata = this.TASKNUM.slice(0, Math.min(initLen, this.TASKNUM.length));
-		var pdtdata = this.PDTNUM.slice(0, Math.min(initLen, this.PDTNUM.length));
+		var pdtdata = this.PDTNUM.slice(0, Math.min(initLen+1, this.PDTNUM.length));
 		taskoption = {
 			title: {text:'任务数量图'},
 			legend: {data: ['实际任务数', '预测任务数']},
@@ -143,8 +143,11 @@ function Vadjustor(){
 	        var intervalID = setInterval(function () {
 	            taskdata.shift();
 	            taskdata.push(Vadjustor.TASKNUM[count]);
+	            // predicted num is advanced by 1 point
 	            pdtdata.shift();
-	            pdtdata.push(Vadjustor.PDTNUM[count]);
+	            if (count+1 < Vadjustor.TASKNUM.length){
+		            pdtdata.push(Vadjustor.PDTNUM[count+1]);
+	            }
 	            vmNdata.shift();
 	            vmNdata.push(Vadjustor.VMNUM[count]);
 	            vmUdata.shift();

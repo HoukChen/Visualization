@@ -476,7 +476,8 @@ function Adjustor(){
 			VMREC.push(vminfo);
 
 			// var increment = PDT.trainModel(time+1);
-			increment = 3;
+			// TODO(Houk): needed to be modified
+			increment = 0.7*Math.ceil((Math.random()-0.5)*10)+0.3*(SIM.TaskNum[time+1]-SIM.TaskNum[time]);
 			
 			this.PDTRES.push(increment+SIM.TaskNum[time]);
 			if (increment>0){
