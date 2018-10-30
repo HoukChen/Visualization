@@ -119,7 +119,7 @@ function Vplacer(){
 						var content = (rescate +'信息: <br/>');
 						var ultRatio = 0;
 						for (var index=0; index<params.length; index++){
-							content += ('* ' + params[index].seriesName + ': ');
+							content += (params[index].seriesName + ': ');
 							var resvm = Math.round(restotal * params[index].data);
 							content += (resvm.toString()+resinfo.slice(resinfo.indexOf(' '),resinfo.length)+'<br/>');
 							ultRatio += params[index].data;
@@ -256,6 +256,7 @@ function Vplacer(){
 	}
 
 	this.globalShower = function(){
+		console.log(JSON.parse(sessionStorage.getItem("placement_result")));
 		var selectDiv = document.getElementById("optiSelect");
 		var index = parseInt(selectDiv.selectedIndex);
 		var choice = selectDiv.options[index].value;

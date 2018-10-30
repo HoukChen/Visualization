@@ -22,7 +22,7 @@ function DU(){
 	this.flow_scheme = new Array();
 	this.band_scheme = new Array();
 
-	this.REPEAT = 10000;
+	this.REPEAT = 15000;
 
 	this.initParams = function(){
 		var Params = JSON.parse(sessionStorage.getItem("du_parameter"));
@@ -259,6 +259,16 @@ function DU(){
 		return baseband;
 	}
 
+	this.countFlow = function(){
+		var flow_sum = 0;
+		for (var in_node = 0; in_node < 6; in_node++){
+			for (var out_node = 0; out_node < 6; out_node++){
+				flow_sum += this.flow_scheme[in_node][out_node].used;
+			}
+		}
+		return flow_sum;
+	}
+
 	this.run = function(){
 		this.initParams();
 		this.initPerm();
@@ -267,6 +277,12 @@ function DU(){
 		var best_flow_scheme = new Array();
 		var best_band_scheme = new Array();
 		var best_baseband = new Array();
+
+		var min_flow = 100000000;
+		var min_flow_scheme = new Array();
+		var min_band_scheme = new Array();
+		var min_baseband = new Array();
+
 		for (var re = 0; re < this.REPEAT; re++){
 			// progress bar controller
 			var ratio = (re+1)/this.REPEAT;
@@ -278,6 +294,7 @@ function DU(){
 
 			this.initBaseband();
 			var min_std = -1;
+			var success = true;
 			for (var uind = 0; uind < this.users.length; uind++){
 				var user = this.users[uind];
 				var result = this.chooseNode(user);
@@ -285,28 +302,41 @@ function DU(){
 				var min_std = result.min_std;
 				if (result == false){
 					// console.log("break");
+					success = false;
 					break;
 				}
 				else {
 					this.placeUser(node_to, user);
 				}
 			}
-			if (min_std < best_std){
+			// decide the best_std scheme
+			if (success && min_std < best_std){
 				best_std = min_std;
 				best_flow_scheme = this.deepCopyFlow();
 				best_band_scheme = this.deepCopyBand();
 				best_baseband = this.deepCopyBase();
 			}
+			// decide the minimum flow scheme
+			if (success && this.countFlow() < min_flow){
+				min_flow = this.countFlow();
+				min_flow_scheme = this.deepCopyFlow();
+				min_band_scheme = this.deepCopyBand();
+				min_baseband = this.deepCopyBase();
+			}
 		}
 
 		console.log(best_band_scheme);
 		console.log(best_flow_scheme);
+		console.log(min_band_scheme);
+		console.log(min_flow_scheme);
 
 		if (best_band_scheme.length == 0){
 			alert("Cannot find a proper solution for the given data!");
+			return false
 		}
 		// stophere();
-		// construct result for visualization
+		
+		// construct best_std result for visualization
 		var net_limit2 = [
 			this.p_to_p[2][0], 
 			this.p_to_p[2][1], 
@@ -348,7 +378,7 @@ function DU(){
 				num[mode][nind] = best_band_scheme[nind][mode];
 			}
 		}
-		var parameters = {
+		var parameters_best_std = {
 			"net_node2": net_node2,
 			"net_node3": net_node3,
 			"net_limit2": net_limit2,
@@ -356,9 +386,66 @@ function DU(){
 			"util": util,
 			"num": num,
 		}
+
+		// construct best_std result for visualization
+		var net_limit2 = [
+			this.p_to_p[2][0], 
+			this.p_to_p[2][1], 
+			this.p_to_p[2][4], 
+			this.p_to_p[2][5]
+		];
+		var net_limit3 = [
+			this.p_to_p[3][0], 
+			this.p_to_p[3][1], 
+			this.p_to_p[3][4], 
+			this.p_to_p[3][5]
+		];
+		var net_node2 = [
+			min_flow_scheme[2][0].used,
+			min_flow_scheme[2][1].used,
+			min_flow_scheme[2][4].used, 
+			min_flow_scheme[2][5].used
+		];
+		var net_node3 = [
+			min_flow_scheme[3][0].used,
+			min_flow_scheme[3][1].used,
+			min_flow_scheme[3][4].used, 
+			min_flow_scheme[3][5].used
+		];
+		var util = new Array();
+		for (var nind = 0; nind < 6; nind++){
+			var nodeU = min_band_scheme[nind].slice();
+			var nodeT = min_baseband[nind].slice();
+			util.push(this.calcUtil(nodeT, nodeU).toFixed(4));
+		}
+		var num =  [
+			[0,0,0,0,0,0],
+			[0,0,0,0,0,0],
+			[0,0,0,0,0,0],
+			[0,0,0,0,0,0]
+		];
+		for (var nind = 0; nind < 6; nind++){
+			for (var mode = 0; mode < 4; mode++){
+				num[mode][nind] = min_band_scheme[nind][mode];
+			}
+		}
+		var parameters_min_flow = {
+			"net_node2": net_node2,
+			"net_node3": net_node3,
+			"net_limit2": net_limit2,
+			"net_limit3": net_limit3,
+			"util": util,
+			"num": num,
+		}
+
+		var parameters = {
+			"BEST_STD": parameters_best_std,
+			"MIN_FLOW": parameters_min_flow
+		};
 		sessionStorage.setItem("du_result", JSON.stringify(parameters));
 		console.log("Finished!")
 		alert("Finish algorithm!")
+		return true;
 	}
 }
 

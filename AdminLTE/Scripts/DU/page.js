@@ -85,6 +85,11 @@ function calculate(){
 		];
 		para.users.push(tobj);
 	}
-	DU.run();
-	window.location.href = "baseband.html"	
+	if (DU.run()){
+		window.location.href = "baseband.html";
+	}
+	else{
+		return false;
+	}
+	
 }

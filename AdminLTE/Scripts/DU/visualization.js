@@ -1,7 +1,13 @@
 function VDU(){
 	this.params = new Array();
+	this.optimization = "BEST_STD";
 	this.initParams = function(){
-		this.params = JSON.parse(sessionStorage.getItem("du_result"));
+		if (this.optimization == "0"){
+			this.params = JSON.parse(sessionStorage.getItem("du_result")).BEST_STD;
+		}
+		else if (this.optimization == "1"){
+			this.params = JSON.parse(sessionStorage.getItem("du_result")).MIN_FLOW;
+		}
 		console.log(this.params);
 	}
 
@@ -9,7 +15,7 @@ function VDU(){
 		var netChart = echarts.init(document.getElementById('net'), 'light');
 		var data = new Array();
 		var links = new Array();
-		var endp = ['单板1', '单板4', '单板5', '单板6'];
+		var endp = ['单板0', '单板1', '单板4', '单板5'];
 		for (var re=0; re<4; re++){
 			links.push({
 				source:'单板2',
@@ -74,7 +80,7 @@ function VDU(){
 						// symbol:'image://服务器-20.png',
 					},
 					{
-						name:'单板6',
+						name:'单板0',
 						ip:'10.108.50.106',
 						isnode:true,
 						x:200,
@@ -168,7 +174,7 @@ function VDU(){
 			},
 			yAxis: {
 				type: 'category',
-				data: ['单板1','单板2','单板3','单板4','单板5','单板6']
+				data: ['单板0','单板1','单板2','单板3','单板4','单板5']
 			},
 			series: [
 				{
@@ -222,7 +228,7 @@ function VDU(){
 			},
 			yAxis: {
 				type: 'category',
-				data: ['单板1','单板2','单板3','单板4','单板5','单板6']
+				data: ['单板0','单板1','单板2','单板3','单板4','单板5']
 			},
 			series: series
 		};
@@ -230,6 +236,11 @@ function VDU(){
 	}
 
 	this.globalShower = function(){
+		var selectDiv = document.getElementById("optiSelect");
+		var index = parseInt(selectDiv.selectedIndex);
+		var choice = selectDiv.options[index].value;
+		this.optimization = choice;
+
 		this.initParams();
 		this.netShower();
 		this.utilShower();

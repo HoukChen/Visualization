@@ -13,7 +13,7 @@ function Placement(){
 		* setParam: to construct [vmParam] and [pmParam] from [paramDic]
 		* placement: to place the VMs on PMs, to fill vmRecord and pmRecord
 	*/
-
+	this.REPEAT = 2000;
 
 	this.setParam = function(){
 
@@ -22,6 +22,7 @@ function Placement(){
 		this.pmParam = new Array();
 		this.vmRecord = new Array();
 		this.pmRecord = new Array();
+		
 
 		this.paramDic = JSON.parse(sessionStorage.getItem("placement_param"));
 		console.log(this.paramDic);
@@ -115,22 +116,30 @@ function Placement(){
 					var vmlist = new Array();
 					vmlist.push(vm);
 
-					var pmr = this.getAnPM();
-					if (pmr == false){
-						alert("The PMs are not enough for VMs!");
-						return false;
-					}
-					pmr.RestCore -= vm.VMCore;
-					pmr.RestMemory -= vm.VMMemory;
-					pmr.RestStorage -= vm.VMStorage;
-					pmr.VMList = vmlist;
-					/*var pmr = {	"PMParam":this.pmParam[0],
-								"RestCore":this.pmParam[0].Core-vm.VMCore,
-								"RestMemory":this.pmParam[0].MEM-vm.VMMemory,
-								"RestStorage":this.pmParam[0].Storage-vm.VMStorage,
-								"VMList":vmlist};*/
+					while (true){
+						var pmr = this.getAnPM();
+						if (pmr == false){
+							alert("The PMs are not enough for VMs!");
+							return false;
+						}
+						if (	pmr.RestCore >= vm.VMCore
+							&&	pmr.RestMemory >= vm.VMMemory
+							&& 	pmr.RestStorage >= vm.VMStorage){
 
-					this.pmRecord.push(pmr);
+							pmr.RestCore -= vm.VMCore;
+							pmr.RestMemory -= vm.VMMemory;
+							pmr.RestStorage -= vm.VMStorage;
+							pmr.VMList = vmlist;
+							/*var pmr = {	"PMParam":this.pmParam[0],
+										"RestCore":this.pmParam[0].Core-vm.VMCore,
+										"RestMemory":this.pmParam[0].MEM-vm.VMMemory,
+										"RestStorage":this.pmParam[0].Storage-vm.VMStorage,
+										"VMList":vmlist};*/
+
+							this.pmRecord.push(pmr);
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -226,7 +235,7 @@ function Placement(){
 		var bestVMRecordBala = new Array();
 		var bestPMRecordBala = new Array();
 
-		for(var re=0; re<1000; re++){
+		for(var re=0; re<this.REPEAT; re++){
 			this.setParam();
 			var sucess = this.place();
 			if (sucess == false){

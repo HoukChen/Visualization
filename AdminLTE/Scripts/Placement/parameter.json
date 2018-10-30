@@ -22,7 +22,7 @@
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 20,
 		"vCPUOfCore": 2,
-		"MEM": 196,
+		"MEM": 192,
 		"Storage": 2048,
 		"PMNumber": 10
 		},
@@ -31,7 +31,16 @@
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 10,
 		"vCPUOfCore": 2,
-		"MEM": 128,
+		"MEM": 96,
+		"Storage": 1024,
+		"PMNumber": 10
+		},
+		{
+		"Category": "E6000",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 8,
+		"vCPUOfCore": 2,
+		"MEM": 64,
 		"Storage": 1024,
 		"PMNumber": 10
 		}
@@ -72,7 +81,7 @@
 		"VMCore": 16,
 		"VMMemory": 64,
 		"VMStorage": 800,
-		"VMQuantity": 3,
+		"VMQuantity": 8,
 		"AntiAffinity": "FALSE",
 		"PolicyLevel": "host",
 		"MaxNum": 1,

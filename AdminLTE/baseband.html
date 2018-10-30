@@ -199,6 +199,19 @@ desired effect
         | Your Page Content Here |
         -------------------------->
 		<!--div id="container" style="position: relative; float:left;height: 500px; width : 52%"></div-->
+    <div class="row">
+       <div class="col-xs-1">
+          <button class="btn btn-primary" >选择优化目标</button>
+        </div>
+        <div class="col-xs-2" >
+            <div class="form-group">
+                <select id = "optiSelect" class="form-control" onchange="VDU.globalShower()">
+                <option value = "0" selected = "selected">单板负载最均衡</option>
+                <option value = "1">背板带宽最小</option>
+                </select>
+            </div>
+        </div>
+    </div>
 		<div id="net" class = "box1"></div>
 		<div id="util" class = "box2"></div>
 		<div id="num" class = "box6"></div>
