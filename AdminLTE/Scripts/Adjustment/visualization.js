@@ -58,10 +58,13 @@ function Vadjustor(){
             xAxis: {
                 type: 'time',
                 axisTick: {show: false},
+                //name: "监测点的实际时间",
+                //nameLocation: "middle",
             },
             yAxis: {
                 type: 'value',
                 axisTick: {show: false},
+                //name: "任务数量",
             },
             tooltip: {
 				trigger: 'axis',
