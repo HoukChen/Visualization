@@ -33,7 +33,59 @@ function adjustment_loadPage(){
 	}
 	
 }
+
+function Adjustment_verify(){
+	
+	this.para_v = function(){
+		var errormsg = "以下参数有误：\n";var correct = true;
+		if(Parser.parameters.vmscale.large == null ||Parser.parameters.vmscale.large == "" || isNaN(Parser.parameters.vmscale.large)){
+			errormsg += "vmscale large(large虚拟机规模)\n";
+			correct = false;
+		}
+		if(Parser.parameters.vmscale.middle == null ||Parser.parameters.vmscale.middle == "" || isNaN(Parser.parameters.vmscale.middle)){
+			errormsg += "vmscale middle(middle虚拟机规模)\n";
+			correct = false;
+		}
+		if(Parser.parameters.vmscale.small == null ||Parser.parameters.vmscale.small == "" || isNaN(Parser.parameters.vmscale.small)){
+			errormsg += "vmscale small(small虚拟机规模)\n";
+			correct = false;
+		}
+		if(Parser.parameters.fluct == null ||Parser.parameters.fluct == "" || isNaN(Parser.parameters.fluct)||Parser.parameters.fluct < 0||Parser.parameters.fluct > 1){
+			errormsg += "fluct(任务量波动范围):0-1\n";
+			correct = false;
+		}
+		if(Parser.parameters.basemagn == null ||Parser.parameters.basemagn == "" || isNaN(Parser.parameters.basemagn)){
+			errormsg += "basemag(基础任务量)\n";
+			correct = false;
+		}
+		if(Parser.parameters.sinmagn == null ||Parser.parameters.sinmagn == "" || isNaN(Parser.parameters.sinmagn)){
+			errormsg += "sinmagn(峰值任务量)\n";
+			correct = false;
+		}
+		if(Parser.parameters.simspan == null ||Parser.parameters.simspan == "" || isNaN(Parser.parameters.simspan)){
+			errormsg += "simspan(任务最大时长)\n";
+			correct = false;
+		}
+		if(Parser.parameters.taskspan == null ||Parser.parameters.taskspan == "" || isNaN(Parser.parameters.taskspan)){
+			errormsg += "taskspan(算法模拟时长)\n";
+			correct = false;
+		}
+		if(Parser.parameters.model == null ||Parser.parameters.model == "" ){
+			errormsg += "model(模型选择)\n";
+			correct = false;
+		}
+		if(correct == false){
+			errormsg += "请检查参数输入是否正确,如：输入格式不正确，有输入为空等";
+			alert(errormsg);
+			return -1;
+		}
+		return 0;
+	}
+}
+var pv = new Adjustment_verify();
+
 function calculate(){
+	Parser.parameters = JSON.parse(adjustment_para_text);
 	Parser.parameters.vmscale = {
 		large: document.getElementById("vmLarge").value,
 		middle: document.getElementById("vmMiddle").value,
@@ -50,6 +102,9 @@ function calculate(){
 	//alert(Parser.parameters.model);
 	Parser.parameters.fluct = document.getElementById("taskFluct").value;
 	console.log(Parser.parameters);
-	Adjustor.run();
-	window.location.href = "adjustment.html"
+	if(pv.para_v() == 0){
+		sessionStorage.setItem("adjustment_parameter", JSON.stringify(Parser.parameters));
+		Adjustor.run();
+		window.location.href = "adjustment.html";
+	}
 }

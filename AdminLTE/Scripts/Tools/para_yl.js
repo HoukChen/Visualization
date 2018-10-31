@@ -1,0 +1,7 @@
+var placement_para_text = '{"CPU0OccupiedCoreNum": 2,"CPU1OccupiedCoreNum": 0,"CPU0OccupiedMEM": 11,"CPU1OccupiedMEM": 4,"CloudOSOccupiedDisk": 150,"BladeRedundancyRatio": 7,"ManagerBladeNum": 3,"DiskType": "DiskArray","BladeType": "CH121-V5","DiskArrayNum": 2,"PMResource": [],"VMResource": []}';
+
+var balance_para_text = '{"vmnumber":{"large": 10,"middle": 10,"small": 10},"vmcapacity":{"large": 10,"middle": 7,"small": 5},"vmstorage":{"large": 1500,"middle": 1000,"small": 800},"tasknumber":{"urgent": 400,"normal": 400},"taskmaxlen":{"urgent": 20,"normal": 100},"timelimit": 10,"period": 12,"threshold": 0.2}';
+
+var adjustment_para_text = '{"vmscale":{"large": 12,"middle": 8,"small": 4},"fluct": 0.1,"sinmagn": 20,"basemagn": 10,"taskspan": 10,"simspan": 50,"model":"RFR"}';
+
+var du_para_text = '{"pieces_modes":[[10, 20, 30, 40],[30, 50, 70, 90],[50, 80, 110, 140],[70, 110, 150, 190]],"p_to_p":[[300, 200, 250, 100, 200, 300],[200, 180, 300, 260, 120, 100],[300, 200, 250, 100, 200, 300],[200, 180, 300, 260, 120, 100],[300, 200, 250, 100, 200, 300],[200, 180, 300, 260, 120, 100]],"accuracy":[[1, 0],[0.9, 0.1],[0.8, 0.2],[0.7, 0.3],[0.6, 0.4],[0.5, 0.5],[0.4, 0.6],[0.3, 0.7],[0.2, 0.8],[0.1, 0.9],[0, 1]],"mode_flow": [4, 3, 2, 1],"users":[[2, 0, 18],[2, 1, 48],[2, 2, 68], [2, 3, 88],[3, 0, 40],[3, 1, 45],[3, 2, 60], [3, 3, 80]]}';
