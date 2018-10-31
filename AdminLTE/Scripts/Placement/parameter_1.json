@@ -1,0 +1,120 @@
+{
+	"CPU0OccupiedCoreNum": 2,
+	"CPU1OccupiedCoreNum": 0,
+	"CPU0OccupiedMEM": 11,
+	"CPU1OccupiedMEM": 4,
+	"CloudOSOccupiedDisk": 150,
+	"BladeRedundancyRatio": 7,
+	"ManagerBladeNum": 3,
+	"DiskType": "DiskArray",
+	"BladeType": "CH121-V5",
+	"DiskArrayNum": 2,
+	"PMResource": [{
+		"Category": "E9000",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 28,
+		"vCPUOfCore": 2,
+		"MEM": 256,
+		"Storage": 2048,
+		"PMNumber": 15},
+		{
+		"Category": "E8000",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 28,
+		"vCPUOfCore": 2,
+		"MEM": 512,
+		"Storage": 4096,
+		"PMNumber": 15
+		},
+		{
+		"Category": "E7000",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 10,
+		"vCPUOfCore": 2,
+		"MEM": 96,
+		"Storage": 1024,
+		"PMNumber": 15
+		},
+		{
+		"Category": "E6000",
+		"CPUNumOfBlade": 2,
+		"CoreNumOfCPU": 8,
+		"vCPUOfCore": 2,
+		"MEM": 64,
+		"Storage": 1024,
+		"PMNumber": 20
+		}
+		
+	],
+	"VMResource": [{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUa",
+		"VMPriority": 1,
+		"VMCore": 20,
+		"VMMemory": 64,
+		"VMStorage": 800,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUb",
+		"VMPriority": 1,
+		"VMCore": 8,
+		"VMMemory": 36,
+		"VMStorage": 1024,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUc",
+		"VMPriority": 1,
+		"VMCore": 16,
+		"VMMemory": 64,
+		"VMStorage": 800,
+		"VMQuantity": 20,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUd",
+		"VMPriority": 1,
+		"VMCore": 12,
+		"VMMemory": 56,
+		"VMStorage": 600,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	},
+	{
+		"VNFType": "RANCU",
+		"VMType": "vNDPUe",
+		"VMPriority": 1,
+		"VMCore": 18,
+		"VMMemory": 72,
+		"VMStorage": 1000,
+		"VMQuantity": 5,
+		"AntiAffinity": "FALSE",
+		"PolicyLevel": "host",
+		"MaxNum": 1,
+		"AntiAffinityGroup": [],
+		"AffinityNUMA": "TRUE"
+	}
+	]
+}
