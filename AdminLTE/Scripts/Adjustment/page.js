@@ -87,15 +87,15 @@ var pv = new Adjustment_verify();
 function calculate(){
 	Parser.parameters = JSON.parse(adjustment_para_text);
 	Parser.parameters.vmscale = {
-		large: document.getElementById("vmLarge").value,
-		middle: document.getElementById("vmMiddle").value,
-		small:document.getElementById("vmSmall").value
+		large: parseInt(document.getElementById("vmLarge").value),
+		middle: parseInt(document.getElementById("vmMiddle").value),
+		small:parseInt(document.getElementById("vmSmall").value)
 	}
-	Parser.parameters.fluct = document.getElementById("taskFluct").value;
-	Parser.parameters.basemagn = document.getElementById("baseTasknum").value;
-	Parser.parameters.sinmagn = document.getElementById("maxTasknum").value;
-	Parser.parameters.simspan = document.getElementById("algoTime").value;
-	Parser.parameters.taskspan = document.getElementById("taskMaxtime").value;
+	Parser.parameters.fluct = parseFloat(document.getElementById("taskFluct").value);
+	Parser.parameters.basemagn = parseFloat(document.getElementById("baseTasknum").value);
+	Parser.parameters.sinmagn = parseFloat(document.getElementById("maxTasknum").value);
+	Parser.parameters.simspan = parseFloat(document.getElementById("algoTime").value);
+	Parser.parameters.taskspan = parseFloat(document.getElementById("taskMaxtime").value);
 	var slct = document.getElementById("algoSelect");
 	//console.log(slct.options[slct.selectedIndex]);
 	Parser.parameters.model = dic[slct.options[slct.selectedIndex].innerHTML];

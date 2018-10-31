@@ -68,80 +68,6 @@ function placement_loadPage(){
 	}
 }
 
-function addPm(){
-	//alert("addPm");
-	if(pv.addpm_v()==0){
-		var pmTab = document.getElementById("pmTable");
-		var pmRow = pmTab.insertRow(1);
-		pmRow.insertCell(0).innerHTML = document.getElementById("pmType").value;
-		var cell1 = pmRow.insertCell(1);
-		var cell2 = pmRow.insertCell(2);
-		var cell3 = pmRow.insertCell(3);
-		var cell4 = pmRow.insertCell(4);
-		var cell5 = pmRow.insertCell(5);
-		var cell6 = pmRow.insertCell(6);
-		var cell7 = pmRow.insertCell(7);
-		cell1.innerHTML = document.getElementById("pmType").value;
-		cell2.innerHTML = document.getElementById("pmNuma").value;
-		cell3.innerHTML = document.getElementById("pmKernel").value;
-		cell4.innerHTML = document.getElementById("pmThread").value;
-		cell5.innerHTML = document.getElementById("pmMemory").value;
-		cell6.innerHTML = document.getElementById("pmNum").value;
-		cell7.innerHTML = "删除";
-		cell7.setAttribute("onclick", "pmDeleteRow(this)");	
-	}
-	
-}
-function addVm(){
-	//alert("addVm");
-	if(pv.addvm_v()==0){
-		var vmTab = document.getElementById("vmTable");
-		var vmRow = vmTab.insertRow(1);
-		var cell0 = vmRow.insertCell(0);
-		var cell1 = vmRow.insertCell(1);
-		var cell2 = vmRow.insertCell(2);
-		var cell3 = vmRow.insertCell(3);
-		var cell4 = vmRow.insertCell(4);
-		var cell5 = vmRow.insertCell(5);
-		var cell6 = vmRow.insertCell(6);
-		var cell7 = vmRow.insertCell(7);
-		var cell8 = vmRow.insertCell(8);
-		var cell9 = vmRow.insertCell(9);
-		var cell10 = vmRow.insertCell(10);
-		var cell11 = vmRow.insertCell(11);
-		
-		cell0.innerHTML = document.getElementById("vnfType").value;
-		cell1.innerHTML = document.getElementById("vmType").value;
-		cell2.innerHTML = document.getElementById("vmPr").value;
-		cell3.innerHTML = document.getElementById("vCPU").value;
-		cell4.innerHTML = document.getElementById("vmRam").value;
-		cell5.innerHTML = document.getElementById("vmRom").value;
-		cell6.innerHTML = document.getElementById("vmNum").value;
-		cell7.innerHTML = document.getElementById("vmZf").value;
-		cell8.innerHTML = document.getElementById("vmCtglevel").value;
-		cell9.innerHTML = document.getElementById("vmMaxnum").value;
-		//cell10.innerHTML = document.getElementById("vmQh").value;
-		cell11.innerHTML = "删除"; 
-		cell11.setAttribute("onclick","vmDeleteRow(this)");
-	}else{
-		
-	}
-}
-
-function pmDeleteRow(dRow){
-	if(confirm("确定删除?")){
-		var di = dRow.parentNode.rowIndex;
-		document.getElementById("pmTable").deleteRow(di);
-	}
-}
-function vmDeleteRow(dRow){
-	if(confirm("确定删除?")){
-		var di = dRow.parentNode.rowIndex;
-		document.getElementById("vmTable").deleteRow(di);
-	}
-}
-
-
 function Placement_verify(){
 	this.addpm_v = function(){
 		if(document.getElementById("pmType").value == ""||document.getElementById("pmType").value == null){
@@ -215,23 +141,23 @@ function Placement_verify(){
 	}
 	this.para_v = function(){
 		var errormsg = "以下参数有误：\n";var correct = true;
-		if(Parser.parameters.CPU0OccupiedCoreNum == null ||Parser.parameters.CPU0OccupiedCoreNum == "" || isNaN(Parser.parameters.CPU0OccupiedCoreNum)){
+		if((Parser.parameters.CPU0OccupiedCoreNum != 0)&&(Parser.parameters.CPU0OccupiedCoreNum == null ||Parser.parameters.CPU0OccupiedCoreNum == "" || isNaN(Parser.parameters.CPU0OccupiedCoreNum))){
 			errormsg += "CPU0OccupiedCoreNum(预留核N0)\n";
 			correct = false;
 		}
-		if(Parser.parameters.CPU1OccupiedCoreNum == null ||Parser.parameters.CPU1OccupiedCoreNum == "" || isNaN(Parser.parameters.CPU1OccupiedCoreNum)){
+		if((Parser.parameters.CPU1OccupiedCoreNum != 0)&&(Parser.parameters.CPU1OccupiedCoreNum == null ||Parser.parameters.CPU1OccupiedCoreNum == "" || isNaN(Parser.parameters.CPU1OccupiedCoreNum))){
 			errormsg += "CPU1OccupiedCoreNum(预留核N1)\n";
 			correct = false;
 		}
-		if(Parser.parameters.CPU0OccupiedMEM == null ||Parser.parameters.CPU0OccupiedMEM == "" || isNaN(Parser.parameters.CPU0OccupiedMEM)){
+		if((Parser.parameters.CPU0OccupiedMEM != 0)&&(Parser.parameters.CPU0OccupiedMEM == null ||Parser.parameters.CPU0OccupiedMEM == "" || isNaN(Parser.parameters.CPU0OccupiedMEM))){
 			errormsg += "CPU0OccupiedMEM(预留内存N0)\n";
 			correct = false;
 		}
-		if(Parser.parameters.CPU1OccupiedMEM == null ||Parser.parameters.CPU1OccupiedMEM == "" || isNaN(Parser.parameters.CPU1OccupiedMEM)){
+		if((Parser.parameters.CPU1OccupiedMEM != 0)&&(Parser.parameters.CPU1OccupiedMEM == null ||Parser.parameters.CPU1OccupiedMEM == "" || isNaN(Parser.parameters.CPU1OccupiedMEM))){
 			errormsg += "CPU1OccupiedMEM(预留内存N1)\n";
 			correct = false;
 		}
-		if(Parser.parameters.CPU1OccupiedMEM == null ||Parser.parameters.CloudOSOccupiedDisk == "" || isNaN(Parser.parameters.CloudOSOccupiedDisk)){
+		if((Parser.parameters.CloudOSOccupiedDisk != 0)&&(Parser.parameters.CloudOSOccupiedDisk == null ||Parser.parameters.CloudOSOccupiedDisk == "" || isNaN(Parser.parameters.CloudOSOccupiedDisk))){
 			errormsg += "CloudOSOccupiedDisk(预留硬盘)\n";
 			correct = false;
 		}
@@ -272,6 +198,81 @@ function Placement_verify(){
 }
 var pv = new Placement_verify();
 
+function addPm(){
+	//alert("addPm");
+	if(pv.addpm_v()==0){
+		var pmTab = document.getElementById("pmTable");
+		var pmRow = pmTab.insertRow(1);
+		pmRow.insertCell(0).innerHTML = document.getElementById("pmType").value;
+		var cell1 = pmRow.insertCell(1);
+		var cell2 = pmRow.insertCell(2);
+		var cell3 = pmRow.insertCell(3);
+		var cell4 = pmRow.insertCell(4);
+		var cell5 = pmRow.insertCell(5);
+		var cell6 = pmRow.insertCell(6);
+		var cell7 = pmRow.insertCell(7);
+		cell1.innerHTML = document.getElementById("pmType").value;
+		cell2.innerHTML = document.getElementById("pmNuma").value;
+		cell3.innerHTML = document.getElementById("pmKernel").value;
+		cell4.innerHTML = document.getElementById("pmThread").value;
+		cell5.innerHTML = document.getElementById("pmMemory").value;
+		cell6.innerHTML = document.getElementById("pmNum").value;
+		cell7.innerHTML = "删除";
+		cell7.setAttribute("onclick", "pmDeleteRow(this)");	
+	}
+	
+}
+function addVm(){
+	//alert("addVm");
+	if(pv.addvm_v()==0){
+		var vmTab = document.getElementById("vmTable");
+		var vmRow = vmTab.insertRow(1);
+		var cell0 = vmRow.insertCell(0);
+		var cell1 = vmRow.insertCell(1);
+		var cell2 = vmRow.insertCell(2);
+		var cell3 = vmRow.insertCell(3);
+		var cell4 = vmRow.insertCell(4);
+		var cell5 = vmRow.insertCell(5);
+		var cell6 = vmRow.insertCell(6);
+		var cell7 = vmRow.insertCell(7);
+		var cell8 = vmRow.insertCell(8);
+		var cell9 = vmRow.insertCell(9);
+		var cell10 = vmRow.insertCell(10);
+		var cell11 = vmRow.insertCell(11);
+		cell0.innerHTML = document.getElementById("vnfType").value;
+		cell1.innerHTML = document.getElementById("vmType").value;
+		cell2.innerHTML = document.getElementById("vmPr").value;
+		cell3.innerHTML = document.getElementById("vCPU").value;
+		cell4.innerHTML = document.getElementById("vmRam").value;
+		cell5.innerHTML = document.getElementById("vmRom").value;
+		cell6.innerHTML = document.getElementById("vmNum").value;
+		cell7.innerHTML = document.getElementById("vmZf").value;
+		cell8.innerHTML = document.getElementById("vmCtglevel").value;
+		cell9.innerHTML = document.getElementById("vmMaxnum").value;
+		//cell10.innerHTML = document.getElementById("vmQh").value;
+		cell11.innerHTML = "删除"; 
+		cell11.setAttribute("onclick","vmDeleteRow(this)");
+	}else{
+		
+	}
+}
+
+function pmDeleteRow(dRow){
+	if(confirm("确定删除?")){
+		var di = dRow.parentNode.rowIndex;
+		document.getElementById("pmTable").deleteRow(di);
+	}
+}
+function vmDeleteRow(dRow){
+	if(confirm("确定删除?")){
+		var di = dRow.parentNode.rowIndex;
+		document.getElementById("vmTable").deleteRow(di);
+	}
+}
+
+
+
+
 function clearRow(){
 	document.getElementById("pmType").value = "";
 	document.getElementById("pmNuma").value = "";
@@ -298,15 +299,15 @@ function clearRow(){
 
 function calculate(){
 	Parser.parameters = JSON.parse(placement_para_text);
-	Parser.parameters.CPU0OccupiedCoreNum = document.getElementById("rN0").value;
-	Parser.parameters.CPU1OccupiedCoreNum = document.getElementById("rN1").value;
-	Parser.parameters.CPU0OccupiedMEM = document.getElementById("rMemn0").value;
-	Parser.parameters.CPU1OccupiedMEM = document.getElementById("rMemn1").value;
-	Parser.parameters.CloudOSOccupiedDisk = document.getElementById("rDisk").value;
-	Parser.parameters.BladeRedundancyRatio = document.getElementById("redundancy").value;
-	Parser.parameters.ManagerBladeNum = document.getElementById("bladeNum").value;
+	Parser.parameters.CPU0OccupiedCoreNum = parseInt(document.getElementById("rN0").value);
+	Parser.parameters.CPU1OccupiedCoreNum =  parseInt(document.getElementById("rN1").value);
+	Parser.parameters.CPU0OccupiedMEM =  parseInt(document.getElementById("rMemn0").value);
+	Parser.parameters.CPU1OccupiedMEM =  parseInt(document.getElementById("rMemn1").value);
+	Parser.parameters.CloudOSOccupiedDisk =  parseInt(document.getElementById("rDisk").value);
+	Parser.parameters.BladeRedundancyRatio =  parseInt(document.getElementById("redundancy").value);
+	Parser.parameters.ManagerBladeNum =  parseInt(document.getElementById("bladeNum").value);
 	Parser.parameters.DiskType = document.getElementById("stType").value;
-	Parser.parameters.DiskArrayNum = document.getElementById("mgNum").value;
+	Parser.parameters.DiskArrayNum =  parseInt(document.getElementById("mgNum").value);
 	Parser.parameters.PMResource = [];
 	Parser.parameters.VMResource = [];
 	var tpmTable = document.getElementById("pmTable");
@@ -317,12 +318,12 @@ function calculate(){
 		//alert(trow.rowIndex);
 		var tobj = {
 			Category: trow.cells.item(0).innerHTML,
-			CPUNumOfBlade: trow.cells.item(1).innerHTML,
-			CoreNumOfCPU: trow.cells.item(2).innerHTML,
-			vCPUOfCore: trow.cells.item(3).innerHTML,
-			MEM: trow.cells.item(4).innerHTML,
-			Storage: trow.cells.item(5).innerHTML,
-			PMNumber: trow.cells.item(6).innerHTML 
+			CPUNumOfBlade: parseInt(trow.cells.item(1).innerHTML),
+			CoreNumOfCPU: parseInt(trow.cells.item(2).innerHTML),
+			vCPUOfCore: parseInt(trow.cells.item(3).innerHTML),
+			MEM: parseInt(trow.cells.item(4).innerHTML),
+			Storage: parseInt(trow.cells.item(5).innerHTML),
+			PMNumber: parseInt(trow.cells.item(6).innerHTML) 
 		};
 		Parser.parameters.PMResource.push(tobj);
 	}
@@ -335,14 +336,14 @@ function calculate(){
 		var tobj = {
 			VNFType:vrow.cells.item(0).innerHTML,
 			VMType:vrow.cells.item(1).innerHTML,
-			VMPriority:vrow.cells.item(2).innerHTML,
-			VMCore:vrow.cells.item(3).innerHTML,
-			VMMemory:vrow.cells.item(4).innerHTML,
-			VMStorage:vrow.cells.item(5).innerHTML,
-			VMQuantity:vrow.cells.item(6).innerHTML,
+			VMPriority:parseInt(vrow.cells.item(2).innerHTML),
+			VMCore:parseInt(vrow.cells.item(3).innerHTML),
+			VMMemory:parseInt(vrow.cells.item(4).innerHTML),
+			VMStorage:parseInt(vrow.cells.item(5).innerHTML),
+			VMQuantity:parseInt(vrow.cells.item(6).innerHTML),
 			AntiAffinity:vrow.cells.item(7).innerHTML,
 			PolicyLevel:vrow.cells.item(8).innerHTML,
-			MaxNum:vrow.cells.item(9).innerHTML,
+			MaxNum:parseInt(vrow.cells.item(9).innerHTML),
 			AntiAffinityGroup:[],//!!!!
 			AffinityNUMA: "TRUE"
 		};
@@ -351,8 +352,12 @@ function calculate(){
 	//console.log(placement_verify);
 	//pv.para_v();
 	if(pv.para_v() == 0){
+		console.log(Parser.parameters);
 		sessionStorage.setItem("placement_param", JSON.stringify(Parser.parameters));
+		var ttv = JSON.parse(sessionStorage.getItem("placement_param"));
+		console.log(ttv);
 		//alert(Parser.parameters.VMResource.length);
+		
 		if (Placer.run()){
 			window.location.href = "placement.html"
 		}

@@ -117,18 +117,18 @@ function calculate(){
 	for (var row=0; row<Parser.parameters.pieces_modes.length; row++){
 		for (var col=0; col<Parser.parameters.pieces_modes[0].length; col++){
 			var id = "rc"+row.toString()+col.toString();
-			Parser.parameters.pieces_modes[row][col] = document.getElementById(id).value;
+			Parser.parameters.pieces_modes[row][col] = parseInt(document.getElementById(id).value);
 		}
 	}
 	for (var row=0; row<Parser.parameters.p_to_p.length; row++){
 		for (var col=0; col<Parser.parameters.p_to_p[0].length; col++){
 			var id = "bd"+row.toString()+col.toString();
-			Parser.parameters.p_to_p[row][col] = document.getElementById(id).value;
+			Parser.parameters.p_to_p[row][col] = parseInt(document.getElementById(id).value);
 		}
 	}
 	for (var col=0; col<Parser.parameters.mode_flow.length; col++){
 		var id = "cb"+col.toString();
-		Parser.parameters.mode_flow[col] = document.getElementById(id).value;
+		Parser.parameters.mode_flow[col] = parseInt(document.getElementById(id).value);
 	}
 
 	var table = document.getElementById("pos_mode_num");
@@ -138,9 +138,9 @@ function calculate(){
 	for (var i = 1; i < trows.length; i++){
 		var trow = trows.item(i);
 		var tobj = [
-			trow.cells.item(0).innerHTML,
-			trow.cells.item(1).innerHTML,
-			trow.cells.item(2).innerHTML
+			parseInt(trow.cells.item(0).innerHTML),
+			parseInt(trow.cells.item(1).innerHTML),
+			parseInt(trow.cells.item(2).innerHTML)
 		];
 		Parser.parameters.users.push(tobj);
 	}
