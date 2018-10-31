@@ -37,7 +37,7 @@ function Vbalance(){
 		var data = {
 			id: 'echarLines',
 			title: '对比算法平均响应时间对比',
-			legend: ['LBF', 'WLC', 'WRR' ],
+			legend: ['负载均衡算法', '最小连接数算法', '轮询算法' ],
 			xAxis: ['1000', '2000', '3000', '4000',
 				'5000', '6000', '7000', '8000', '9000'
 			],
@@ -81,7 +81,7 @@ function Vbalance(){
 			grid: {
 				x: 30,
 				y: 80,
-				x2: 200,
+				x2: 150,
 				y2: 60,
 			},
 			color: data.color,
@@ -134,6 +134,10 @@ function Vbalance(){
 					interval: '0',
 					color: '#687284',
 				},
+				name: "100毫秒内任务数量",
+				nameTextStyle:{
+					color: 'black',
+				}
 			},
 			yAxis: {
 				type: 'value',
@@ -153,6 +157,8 @@ function Vbalance(){
 				axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
 					show: false,
 				},
+				name: "\t\t\t\t\t平均响应时间",
+				//nameLocation: "middle"
 			},
 
 			series: seriesArr
@@ -174,6 +180,8 @@ function Vbalance(){
                 min: 'dataMin',
                 max: 'dataMax',
                 axisTick: {show: false},
+				name: '\n时间（ms）',
+				nameLocation: 'middle'
             },
             yAxis: {
                 type: 'value',
@@ -181,6 +189,7 @@ function Vbalance(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
+				name: '\t\t\t任务数（个）',
             },
             series: [{
                 type: 'line',
@@ -204,6 +213,8 @@ function Vbalance(){
                 min: 'dataMin',
                 max: 'dataMax',
                 axisTick: {show: false},
+				name: '\n时间（ms）',
+				nameLocation: 'middle'
             },
             yAxis: {
                 type: 'value',
@@ -211,6 +222,7 @@ function Vbalance(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
+				name: '\t\t\t总负载（Gb）',
             },
             series: [{
                 type: 'line',

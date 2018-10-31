@@ -215,8 +215,10 @@ desired effect
 		</ul>
 		<div class="tab-content">
 			<div class="tab-pane active" id="pg1">
-				<h3><b>虚拟机资源参数</b></h3>
-					<div class="box box-primary">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h2 class="box-title"><b><b>虚拟机参数设置：</b></b></h2>
+					</div>
 					<div class="box-header with-border">
 						<h3 class="box-title"><b>虚拟机可同时处理的任务数量：</b></h3>
 					</div>
@@ -237,14 +239,27 @@ desired effect
 							</div>
 						</div>
 					</div>
-					
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>虚拟机参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+					<p><b>虚拟机可同时处理的任务数量：</b>表示虚拟机单位时间内可处理的任务数量，其中，虚拟机可以按照规模划分为大规格虚拟机，中规格虚拟机，和小规格虚拟机，输入类型为int，单位为个/s</p>
+					</div>
+					<div class="box-footer">
+						<div class="next-step">
+							<a href="#pg4" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+							<!--a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+						</div>
+					</div>	
 					
 						<!-- /.box-body -->
-					</div>
-					
-
-				<h3><b>任务参数</b></h3>
+				</div>
+			</div>		
+			<div class="tab-pane" id="pg4">
 				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h2 class="box-title"><b><b>任务参数设置：</b></b></h2>
+					</div>
 					<div class="box-header with-border">
 						<h3 class="box-title"><b>每个监测点到来的基础任务数量（个/5min）：</b></h3>
 					</div>
@@ -291,7 +306,24 @@ desired effect
 							</div>
 						</div>
 					</div> 
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>任务参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+					<p><b>每个监测点到来的基础任务数量（个/5min）：</b>动态调整算法产生的任务数量是由泊松分布产生的，泊松分布是一种比较常见的离散概率分布，这里我们按照泊松分布产生了一系列的任务量的任务。此参数表示泊松分布产生的最少的任务量，输入类型为int，单位为个。</p>
+					<p><b>每个监测点可能到来的峰值任务数量（个/5min）：</b>为泊松分布产生的任务量的峰值，输入类型为int，单位为个。</p>
+					<p><b>任务量波动范围</b>一个任务量波动的范围，若任务量波动较小，则任务数产生的方差较小，反之方差越大。输入类型为Float,范围为0-1。</p>
+					<p><b>任务的持续的最大时长：</b>任务所经历的最大时间跨度，表示泊松分布产生的任务中时间跨度最大为多少。输入类型为int，单位为min。</p>
+					</div>
+					<div class="box-footer">
+						<div class="next-step">
+							<a href="#pg5" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+							<a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+						</div>
+					</div>	
 				</div>
+			</div>
+			<div class="tab-pane" id="pg5">
 				<h3><b>算法选择参数</b></h3>
 				<div class="box box-primary">
 					<div class="box-header with-border">
@@ -321,15 +353,28 @@ desired effect
 							</div>
 						</div>
 					</div> 
-				</div>
-				<div class="box-footer">
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>算法参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+					<p><b>算法预测模型：</b>选择算法预测需要的模型，分为最近邻回归，随机森林回归，决策树回归，线性回归四种。</p>
+					<p><b>算法简介：</b></p>
+					<p>(1)最近邻方法原理是从训练样本中找到与查询点在距离上最近的预定数量或范围的多个点，然后依据这些点来预测查询点的标签。</p>
+					<p>(2)决策树回归，决策树是一个预测模型；他代表的是对象属性与对象值之间的一种映射关系。树中每个节点表示某个对象，而每个分叉路径则代表的某个可能的属性值，而每个叶结点则对应从根节点到该叶节点所经历的路径所表示的对象的值。决策树仅有单一输出，若欲有复数输出，可以建立独立的决策树以处理不同输出。数据挖掘中决策树是一种经常要用到的技术，可以用于分析数据，同样也可以用来作预测。</p>
+					<p>(3)随机森林回归随机森林建立了多个决策树，并将它们合并在一起以获得更准确和稳定的预测。</p>
+					<p>(4)线性回归，也是一种常见的机器学习方法，通过一个线性方程拟合各自变量对于结果的影响，线性回归虽然不一定得到精确的结果，但可以大致预测数据的趋势。</p>
+					<p><b>算法模拟时长：</b>算法模拟时长：任务总模拟时长，动态调整算法也是模拟一个时间段之间内预测任务数和实际任务数之间的差异，故任务最大时长为改时间间隔大小。输入格式为int，单位为min。</p>
+					</div>
+					<div class="box-footer">
 						<div class = "box-footer">
 							<div class= "next-step">
 								<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
-									<!--a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+								<a href = "#pg4" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
 							</div>
-						</div>
+					</div>
 				</div>
+				</div>
+
 			</div>
 			<div class="tab-pane" id="pg3">
 				<div class="box box-primary">
@@ -377,7 +422,7 @@ desired effect
 						</div>
 						<div class="form-group">
 							<label>上传文件说明</label>
-							<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+							<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">上传文件格式请参照主页所给格式，上传完毕后，页面将跳转至参数检查界面，可对参数进行修改和验证。</textarea>
 						</div>
 					  </div>
 					  <!-- /.box-body -->

@@ -215,8 +215,10 @@ desired effect
 	<div class="tab-content">
               <!-- Font Awesome Icons -->
         <div class="tab-pane active" id="pg1">
-			<h3><b>虚拟机资源参数</b></h3>
-                <div class="box box-primary">
+            <div class="box box-primary">
+				<div class="box-header with-border">
+					<h2 class="box-title"><b><b>虚拟机参数设置：</b></b></h2>
+				</div>
 				<div class="box-header with-border">
 					<h3 class="box-title"><b>虚拟机个数：</b></h3>
 				</div>
@@ -279,13 +281,31 @@ desired effect
 						</div>
 					</div>
 				</div>
-					<!-- /.box-body -->
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>虚拟机参数说明：</b></h3>
 				</div>
-                
-			<h3><b>任务参数</b></h3>
+				<div class="box-body">
+					<p><b>虚拟机数量：</b>表示算法模拟创建出的虚拟机列表中不同种虚拟机数量。其中，虚拟机按照存储容量，执行能力与速度，分为大，中，小三种规格，此项参数为三个虚拟机数量，输入类型为int，单位为个。</p>
+					<p><b>虚拟机能力：</b>虚拟机能力是对于虚拟机执行速度的一个抽象定义，虚拟机的执行速度与许多因素有关比如CPU核数，CPU主频，读写速度等，这里我们将虚拟机的能力进行抽象简化，虚拟机能力表示单位时间内可以减少的负载数量，输入类型为int，单位为MB/s。</p>
+					<p><b>虚拟机容量：</b>表示虚拟机所容纳的最大任务量，即向虚拟机中添加任务时，不能超过虚拟机的最大容量，类型为int，单位为GB。</p>
+				</div>
+				<div class="box-footer">
+					<div class="next-step">
+						<a href="#pg4" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+						<!--a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+					</div>
+				</div>	
+					<!-- /.box-body -->
+			</div>
+        </div>  
+		<div class="tab-pane" id="pg4">		
+			<!--h4><b>任务参数</b></h4-->
             <div class="box box-primary">
 				<div class="box-header with-border">
-					<h3 class="box-title"><b>数量：</b></h3>
+					<h2 class="box-title"><b><b>任务参数设置：</b></b></h2>
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>任务数量：</b></h3>
 				</div>
 				<div class="box-body">
 					<div class="row">
@@ -302,7 +322,7 @@ desired effect
 				<div class="box-header with-border">
 				</div>
 				<div class="box-header with-border">
-					<h3 class="box-title"><b>最大长度(Mb)：</b></h3>
+					<h3 class="box-title"><b>任务最大长度(Mb)：</b></h3>
 				</div>
 				<div class="box-body">
 					<div class="row">
@@ -330,46 +350,73 @@ desired effect
 							<input type="text" id = "tlmt" class="form-control" placeholder="10">
 						</div>
 					</div>
-				</div>           
-			
-		</div>
-		<h3><b>系统参数</b></h3>
-        <div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title"><b>负载均衡周期(s)：</b></h3>
+				</div>  
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>任务参数说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>任务数量：</b>模拟产生的总任务数量，任务按照优先级划分可分为Urgent和Normal两种，前一种为紧急任务，在虚拟机调度时享有更高优先级，后者为普通任务。输入任务数量时，两种任务数量均可以输入，输入类型为int，单位为个。</p>
+					<p><b>任务最大长度：</b>表示任务本身number的最大长度，单位为GB，若任务最大长度为maxnum，任务产生的长度将在0-maxnum之间波动。</p>
+					<p><b>任务到来时间限制：</b>表示任务生成的时间区间，任务将在此时间区间内随机生成，输入类型为int，单位为s，人物到来时间精确度为ms。</p>
+				</div>
+				<div class="box-footer">
+					<div class="next-step">
+						<a href="#pg5" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+						<a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+					</div>
+				</div>				
 			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-xs-3">
-						<input type="text" id = "prd" class="form-control" placeholder="6">
+		</div>
+		<div class="tab-pane" id="pg5">	
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h2 class="box-title"><b><b>系统参数设置：</b></b></h2>
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>负载均衡周期(s)：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-3">
+							<input type="text" id = "prd" class="form-control" placeholder="6">
+						</div>
+					</div>
+				</div> 
+				<div class="box-header with-border">
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>均衡因子阈值：</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-3">
+							<input type="text" id = "thta" class="form-control" placeholder="0.2">
+						</div>
 					</div>
 				</div>
-			</div> 
-            <div class="box-header with-border">
-			</div>
-			<div class="box-header with-border">
-				<h3 class="box-title"><b>均衡因子阈值：</b></h3>
-			</div>
-			<div class="box-body">
-				<div class="row">
-					<div class="col-xs-3">
-						<input type="text" id = "thta" class="form-control" placeholder="0.2">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>系统参数说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>负载均衡周期：</b>负载均衡算法的实质为周期性地检测虚拟机有没有出现过载的情况，若虚拟机过载，对虚拟机进行均衡操作，故其存在一个负载均衡的周期问题，在本次模拟算法中，负载均衡周期以任务数为单位，在周期为T的情况下表示每到来T个任务执行一次负载均衡操作。输入类型为int，单位为个。</p>
+					<p><b>均衡因子阈值：</b>均衡因子大小为一个动态计算的量，可以衡量某一时刻所有虚拟机的不均衡度，计算标准为所有虚拟机负载在某一时刻的标准差。均衡因子阈值定义表示标准差的阈值，若超过定义的阈值，表示系统在这一时刻是不均衡的，需要进行负载均衡操作。输入类型为Float，范围是0-1.</p>
+				</div>				
+				
+
+				<div class="box-footer">
+					<div class="next-step">
+						<a href="#pg3" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp;下一步&nbsp;</a>
+						<a href = "#pg4" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
 					</div>
 				</div>
-			</div> 
-		</div>
-		<div class="box-footer">
-			<div class="next-step">
-				<a href="#pg3" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp;下一步&nbsp;</a>
-									<!--a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
 			</div>
 		</div>
-	</div>
+	
 		
               <!-- /#fa-icons -->
 
               <!-- glyphicons-->
-    <div class="tab-pane" id="pg2">
+		<div class="tab-pane" id="pg2">
 			<div class="box box-primary">
 				<div class="box-header with-border">
 				  <h3 class="box-title">File input</h3>
@@ -386,7 +433,7 @@ desired effect
 					</div>
 					<div class="form-group">
 						<label>上传文件说明</label>
-						<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+						<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">上传文件格式请参照主页所给格式，上传完毕后，页面将跳转至参数检查界面，可对参数进行修改和验证。</textarea>
 					</div>
 				  </div>
 				  <!-- /.box-body -->
@@ -399,40 +446,40 @@ desired effect
 				</form>
 			</div>
                 
-    </div>
-	<div class="tab-pane" id="pg3">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title"><b>参数设置完成</b></h3>
-			</div>
-			<div class="box-body">
-				<a href = "#pg1" data-toggle="tab" aria-expanded="false">
-					<button type="button" class="btn btn-primary" data-toggle="tab" aria-expanded="false">返回修改</button>
-				</a>
-				<button type="button" class="btn btn-danger" onclick="calculate()">开始计算</button>
-			</div>
-			<div class="box-body">
-				<p> </p>
-				<p> </p>
-				<h3 class="box-title">目前已经计算：</h3>
-				<p></p>
-				<div class="progress">
-					<div class="progress-bar progress-bar-primary progress-bar-striped" id="progressbar1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-						<span class="sr-only">40% Complete (success)</span>
-					</div>
-					<script>
-					
-					
-					</script>
+		</div>
+		<div class="tab-pane" id="pg3">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>参数设置完成</b></h3>
 				</div>
-			</div>
+				<div class="box-body">
+					<a href = "#pg1" data-toggle="tab" aria-expanded="false">
+						<button type="button" class="btn btn-primary" data-toggle="tab" aria-expanded="false">返回修改</button>
+					</a>
+					<button type="button" class="btn btn-danger" onclick="calculate()">开始计算</button>
+				</div>
+				<div class="box-body">
+					<p> </p>
+					<p> </p>
+					<h3 class="box-title">目前已经计算：</h3>
+					<p></p>
+					<div class="progress">
+						<div class="progress-bar progress-bar-primary progress-bar-striped" id="progressbar1" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+							<span class="sr-only">40% Complete (success)</span>
+						</div>
+						<script>
+						
+						
+						</script>
+					</div>
+				</div>
 			<!-- <div class = "box-footer">
 				<div class= "next-step">
 					<a href = "loadbalance.html" class = "a-next" >&nbsp显示结果图&nbsp</a>
 				</div>
 			</div> -->
+			</div>
 		</div>
-	</div>
               <!-- /#ion-icons -->
 
     </div>

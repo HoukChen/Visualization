@@ -58,13 +58,13 @@ function Vadjustor(){
             xAxis: {
                 type: 'time',
                 axisTick: {show: false},
-                //name: "监测点的实际时间",
-                //nameLocation: "middle",
+                name: "\n\n监测点的实际时间",
+                nameLocation: "middle",
             },
             yAxis: {
                 type: 'value',
                 axisTick: {show: false},
-                //name: "任务数量",
+                name: "任务数量",
             },
             tooltip: {
 				trigger: 'axis',
@@ -92,10 +92,13 @@ function Vadjustor(){
             xAxis: {
                 type: 'time',
                 axisTick: {show: false},
+				name: "\n\n监测点的实际时间",
+                nameLocation: "middle",
             },
             yAxis: {
                 type: 'value',
                 axisTick: {show: false},
+				name: "虚拟机数量",
             },
             tooltip: {
 				trigger: 'axis',
@@ -121,6 +124,8 @@ function Vadjustor(){
                 max: 'dataMax',*/
                 type: 'time',
                 axisTick: {show: false},
+				name: "\n\n监测点的实际时间",
+                nameLocation: "middle",
             },
             yAxis: {
                 type: 'value',
@@ -128,6 +133,7 @@ function Vadjustor(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
+				name: "利用率"
             },
             tooltip: {
 				trigger: 'axis',
@@ -209,11 +215,14 @@ function Vadjustor(){
 				legend: {data: ['已用资源', '空余资源']},
 	            xAxis: {
 	                type: 'category',
-	                data: xAxisData
+	                data: xAxisData,
+					name: "\n\n虚拟机",
+					nameLocation: "middle",
 	            },
 	            yAxis: {
 	                type: 'value',
 	                axisTick: {show: false},
+					name: "利用率"
 	            },
 	            tooltip: {
 					trigger: 'axis',

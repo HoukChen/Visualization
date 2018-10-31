@@ -21,7 +21,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="dist/css/MyCSS.css">
   <script src="build/js/BoxLayout.js"></script> 
+  
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -202,43 +204,47 @@ desired effect
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="pg1">
-          <h3><b>资源块数(行)---支持不同制式小区数(列)</b></h3>
-            <div class="box box-primary">
-           
+            <div class="box box-primary">  
                 <!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table class="table table-condensed">
-                    <tbody>
-                      <tr>
-                        <td>   </td>
-                        <td>制式0</td>
-                        <td>制式1</td>
-                        <td>制式2</td>
-                        <td>制式3</td>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>资源块数(行)---支持不同制式小区数(列)</b></h3>
+				</div>
+                <div class="box-body">
+                  <table class="table table-bordered table-hover dataTable" role="grid">
+				    <thead>
+					  <tr>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式0</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式1</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式2</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式3</th>
                       </tr>
+					</thead>
+                    <tbody>
+
                       <tr>
-                        <td> 1块融合 </td>
+                        <td class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"> <b>1块融合</b> </td>
                         <td><input type="text" id = "rc00" class="form-control" placeholder="0"></td>
                         <td><input type="text" id = "rc01" class="form-control" placeholder="1"></td>
                         <td><input type="text" id = "rc02" class="form-control" placeholder="1"></td>
                         <td><input type="text" id = "rc03" class="form-control" placeholder="1"></td>
                       </tr>
                       <tr>
-                        <td> 2块融合 </td>
+                        <td class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"> <b>2块融合</b> </td>
                         <td><input type="text" id = "rc10" class="form-control" placeholder="1"></td>
                         <td><input type="text" id = "rc11" class="form-control" placeholder="2"></td>
                         <td><input type="text" id = "rc12" class="form-control" placeholder="2"></td>
                         <td><input type="text" id = "rc13" class="form-control" placeholder="2"></td>
                       </tr>
                       <tr>
-                        <td> 3块融合 </td>
+                        <td class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"> <b>3块融合</b> </td>
                         <td><input type="text" id = "rc20" class="form-control" placeholder="2"></td>
                         <td><input type="text" id = "rc21" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "rc22" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "rc23" class="form-control" placeholder="4"></td>
                       </tr>
                       <tr>
-                        <td> 4块融合 </td>
+                        <td class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"> <b>4块融合</b> </td>
                         <td><input type="text" id = "rc30" class="form-control" placeholder="1"></td>
                         <td><input type="text" id = "rc31" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "rc32" class="form-control" placeholder="3"></td>
@@ -247,27 +253,43 @@ desired effect
                     </tbody>
                   </table>
                 </div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>资源块-制式矩阵说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>矩阵含义：</b>资源块-制式小区数表，为一个4*n的矩阵，其中n代表制式的数量，行数表示块融合数，纵轴代表制式编号，该矩阵显示了假设一块单板有四个资源块的情况下，不同制式支持的小区数量。对于资源块，制式，小区进行建模，例如：第四行第一列填写的是制式0在4块融合的情况下支持的小区数，以此类推。</p>
+				</div>
+				<div class="box-footer">
+					<div class="next-step">
+						<a href="#pg4" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+						<!--a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a-->
+					</div>
+				</div>	
 
             </div>
-            
-            <h3><b>背板带宽流量信息(Mb)---6*6邻接矩阵</b></h3>
+		</div>
+		<div class="tab-pane" id="pg4">
             <div class="box box-primary">
-
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>背板带宽流量信息(Mb)---6*6邻接矩阵</b></h3>
+				</div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                   <table class="table table-condensed">
+					<thead>
+					  <tr>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">1号位置 </th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">2号位置 </th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">3号位置 </th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">4号位置 </th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">5号位置 </th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">6号位置 </th>
+                      </tr>
+					</thead>
                     <tbody>
                       <tr>
-                        <td><div style="visibility: hidden;">背板带宽流量信息</div></td>
-                        <td>  1号位置  </td>
-                        <td>  2号位置  </td>
-                        <td>  3号位置  </td>
-                        <td>  4号位置  </td>
-                        <td>  5号位置  </td>
-                        <td>  6号位置  </td>
-                      </tr>
-                      <tr>
-                        <td>  1号位置 </td>
+                        <td>  <b>1号位置<b> </td>
                         <td><input type="text" id = "bd00" class="form-control" placeholder="0"></td>
                         <td><input type="text" id = "bd01" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd02" class="form-control" placeholder="3"></td>
@@ -276,7 +298,7 @@ desired effect
                         <td><input type="text" id = "bd05" class="form-control" placeholder="4"></td>
                       </tr>
                       <tr>
-                        <td> 2号位置 </td>
+                        <td> <b>2号位置</b> </td>
                         <td><input type="text" id = "bd10" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd11" class="form-control" placeholder="0"></td>
                         <td><input type="text" id = "bd12" class="form-control" placeholder="4"></td>
@@ -285,7 +307,7 @@ desired effect
                         <td><input type="text" id = "bd15" class="form-control" placeholder="3"></td>
                       </tr>
                       <tr>
-                        <td>  3号位置 </td>
+                        <td> <b> 3号位置</b> </td>
                         <td><input type="text" id = "bd20" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "bd21" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd22" class="form-control" placeholder="0"></td>
@@ -294,7 +316,7 @@ desired effect
                         <td><input type="text" id = "bd25" class="form-control" placeholder="4"></td>
                       </tr>
                       <tr>
-                        <td> 4号位置 </td>
+                        <td> <b>4号位置</b> </td>
                         <td><input type="text" id = "bd30" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd31" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "bd32" class="form-control" placeholder="4"></td>
@@ -303,7 +325,7 @@ desired effect
                         <td><input type="text" id = "bd35" class="form-control" placeholder="3"></td>
                       </tr>
                       <tr>
-                        <td> 5号位置 </td>
+                        <td> <b>5号位置</b> </td>
                         <td><input type="text" id = "bd40" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "bd41" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd42" class="form-control" placeholder="3"></td>
@@ -312,7 +334,7 @@ desired effect
                         <td><input type="text" id = "bd45" class="form-control" placeholder="4"></td>
                       </tr>
                       <tr>
-                        <td> 6号位置 </td>
+                        <td> <b>6号位置</b> </td>
                         <td><input type="text" id = "bd50" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "bd51" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "bd52" class="form-control" placeholder="4"></td>
@@ -323,25 +345,41 @@ desired effect
                     </tbody>
                   </table>
                 </div>
-
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>背板带宽流量信息说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>矩阵含义：</b>DU算法的要找到一块背板上很多背板之间的一个小区分配方案，小区若位于不同单板时，在单板间传输信息需要消耗一定的带宽，而总的带宽资源是一个有限的状态，故可以定义一个背板带宽矩阵，表示背板上不同单板间的带宽约束，横纵轴对应的分别为起始单板和结束单板，值为两点间的最大带宽，输入格式为int，单位为MB/s。</p>
+				</div>
+				<div class="box-footer">
+					<div class="next-step">
+						<a href="#pg5" class="a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp;</a>
+						<a href = "#pg1" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+					</div>
+				</div>
             </div>
-              
-            <h3><b>不同制式小区消耗背板带宽流量</b></h3>
+		</div>
+        <div class="tab-pane" id="pg5">     
             <div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>不同制式小区消耗背板带宽流量</b></h3>
+				</div>
 
                 <!-- /.box-header -->
                 <div class="box-body no-padding">
                   <table class="table table-condensed">
+					<thead>
+					  <tr>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式号</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式0</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式1</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式2</th>
+						<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式3</th>
+                      </tr>
+					</thead>
                     <tbody>
                       <tr>
-                        <td> 制式号 </td>
-                        <td> 制式0 </td>
-                        <td> 制式1 </td>
-                        <td> 制式2 </td>
-                        <td> 制式3 </td>
-                      </tr>
-                      <tr>
-                        <td> 消耗背板流量(Mb) </td>
+                        <td><b> 消耗背板流量(Mb)</b> </td>
                         <td><input type="text" id = "cb0" class="form-control" placeholder="4"></td>
                         <td><input type="text" id = "cb1" class="form-control" placeholder="3"></td>
                         <td><input type="text" id = "cb2" class="form-control" placeholder="2"></td>
@@ -350,48 +388,81 @@ desired effect
                     </tbody>
                   </table>
                 </div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>背板带宽流量信息说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>背板带宽权重：</b>主要对于不同制式的小区，其在执行和传输时消耗的背板带宽是不同的，该参数主要定义了不同制式的小区对于背板带宽的消耗。输入格式为int，单位为MB/s。</p>
+				</div>
+				<div class = "box-footer">
+					<div class= "next-step">
+						<a href = "#pg6" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+						<a href = "#pg4" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+					</div>
+				</div>
+			</div>
 
-            </div>
-
-            <h3><b>小区信息</b></h3>
-            <div class="box box-primary">
-              <table class="table table-condensed">
-                <tbody>
-                  <tr>
-                    <td width="10%">初始单板(2或3)：</td>
-                    <td width="20%"><input type="text" id = "ci0" class="form-control" placeholder="3"></td>
-                    <td width="10%">制式号(0-3)：</td>
-                    <td width="20%"><input type="text" id = "ci1" class="form-control" placeholder="0"></td>
-                    <td width="10%">小区数量(0-N*)：</td>
-                    <td width="20%"><input type="text" id = "ci2" class="form-control" placeholder="1"></td>
-                    <td width="10%"><button type="button" class="btn btn-block btn-warning" onclick="addRow()">新增</button></td>
-                  </tr>
-                </tbody>
-              </table>
-              
-
-                <!-- /.box-header -->
-                <div class="box-body no-padding">
-                  <table id="pos_mode_num" class="table table-condensed">
-                    <tbody>
-                      <tr>
-                        <th>  初始单板 </th>
-                        <th>  制式号   </th>
-                        <th>  小区数量    </th>
-                        <th width="10%">  操作    </th>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-            </div>
-            <div class = "box-footer">
-              <div class= "next-step" align="right">
-                <a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">
-                  <button type="button" class="btn btn-block btn-primary" style="width: 10%">下一步</button>
-                </a>
-              </div>
-            </div>
+		</div>
+		<div class="tab-pane" id="pg6">    
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>小区信息</b></h3>
+				</div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-2">
+								<label>初始单板(2或3)</label>
+								<input id="ci0" type="text" class="form-control" placeholder="3">
+						</div>
+						<div class="col-xs-2">
+								<label>制式号(0-3)</label>
+								<input id="ci1" type="text" class="form-control" placeholder="3">
+						</div>
+						<div class="col-xs-2">
+								<label>小区数量(0-N*)</label>
+								<input id="ci2" type="text" class="form-control" placeholder="3">
+						</div>
+						
+					</div>
+				</div>
+				<div class="box-body">
+					<button type="submit" class="btn btn-primary" onclick = "addRow()">添加</button>
+					<button type="button" class="btn btn-danger" onclick = "clearRow()">取消</button>
+				</div>
+				<div class="box-header with-border">
+					<h3 class="box-title"><b>小区信息说明：</b></h3>
+				</div>
+				<div class="box-body">
+					<p><b>初始单板：</b>定义了小区任务执行的初始单板，在DU算法解决的问题模型中，初始单板只能为2号和3号单板</p>
+					<p><b>制式号：</b>小区所运行的制式号，一个小区只能运行一个制式，输入类型为int,范围为0-3</p>
+					<p><b>小区数量：</b>表示需部署的该类型的小区数量</p>
+				</div>
+				<div class="box">
+					<div class="box-header">
+						<h3 class="box-title"><b>小区列表</b></h3>
+						</div>
+					<div class="box-body no-padding">
+					  <table id="pos_mode_num" class="table table-condensed">
+						<thead>
+						  <tr>
+							<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">初始单板</th>
+							<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">制式号</th>
+							<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">小区数量</th>
+							<th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">操作</th>
+						  </tr>
+						</thead>
+						<tbody>
+						</tbody>
+					  </table>
+					</div>
+					<div class = "box-footer">
+						<div class= "next-step">
+							<a href = "#pg3" class = "a-next" data-toggle="tab" aria-expanded="false">&nbsp下一步&nbsp</a>
+							<a href = "#pg5" class = "a-next" data-toggle="tab" aria-expanded="false">上一步</a>
+						</div>
+					</div>
+				</div>
+			</div>
         </div>
         <div class="tab-pane" id="pg3">
           <div class="box box-primary">
@@ -439,7 +510,7 @@ desired effect
               </div>
               <div class="form-group">
                 <label>上传文件说明</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">上传文件格式请参照主页所给格式，上传完毕后，页面将跳转至参数检查界面，可对参数进行修改和验证。</textarea>
               </div>
               </div>
               <!-- /.box-body -->

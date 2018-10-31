@@ -248,9 +248,21 @@ desired effect
 						<button type="submit" class="btn btn-primary" onclick = "addPm()">添加</button>
 						<button type="button" class="btn btn-danger" onclick = "clearRow()">取消</button>
 					</div>
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>物理机参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+						<p><b>物理机类型：</b>表示物理机的类型型号，该参数主要对于该物理机的类型型号进行记录，目前支持的物理机型号主要有E200 , E300。</p>
+						<p><b>NUMA：</b>全称Non Uniform Memory Access Architecture，是一种用于多处理器的电脑记忆体设计，内存访问时间取决于处理器的内存位置。 在NUMA下，处理器访问它自己的本地存储器的速度比非本地存储器（存储器的地方到另一个处理器之间共享的处理器或存储器）快一些。该参数表示物理机的NUMA数量，输入类型为int。</p>
+						<p><b>核心：</b>物理机的核心数，核心数可以影响CPU的性能和处理速度，输入类型为int，支持的核心数主要为2,4,8。</p>
+						<p><b>线程：</b>表示CPU支持的线程数，线程主要影响物理机的并发性能，提高线程数可以提高物理机的并发性，输入类型为int。</p>
+						<p><b>内存：</b>该参数表示物理机的内存容量，输入类型为int，单位为GB。</p>
+						<p><b>硬盘：</b>为物理机主要存储设备，物理机的硬盘容量也影响分配虚拟机的个数以及虚拟机的容量，输入类型为int，单位为GB。</p>
+						<p><b>数量：</b>表示此类型物理机数量，算法将根据此数量向物理机列表中添加特定数量的该类型的物理机。</p>
+					</div>
 					<div class="box">
 						<div class="box-header">
-						  <h3 class="box-title">物理机列表</h3>
+						  <h3 class="box-title"><b>物理机列表</b></h3>
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body">
@@ -280,37 +292,7 @@ desired effect
 										</table>
 									</div>
 								</div>
-								<!--
-								<div class="row">
-									<div class="col-sm-5">
-										<div class="dataTables_info" id="example2_info" role="status" aria-live="polite"></div>
-									</div>
-									<div class="col-sm-7">
-										<div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-											<ul class="pagination">
-												<li class="paginate_button previous disabled" id="example2_previous">
-													<a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
-												</li>
-												<li class="paginate_button active">
-													<a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
-												</li>
-												<li class="paginate_button ">
-													<a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a>
-												</li>
-												<li class="paginate_button ">
-													<a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
-												</li>
-												<li class="paginate_button ">
-													<a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
-												</li>
-												</li><li class="paginate_button next" id="example2_next">
-													<a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								-->
+
 							</div>
 						</div>
             <!-- /.box-body -->
@@ -347,7 +329,7 @@ desired effect
 						</div>
 						<div class="form-group">
 							<label>上传文件说明</label>
-							<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">...</textarea>
+							<textarea class="form-control" rows="3" placeholder="Enter ..." disabled="">上传文件格式请参照主页所给格式，上传完毕后，页面将跳转至参数检查界面，可对参数进行修改和验证。</textarea>
 						</div>
 					  </div>
 					  <!-- /.box-body -->
@@ -429,9 +411,26 @@ desired effect
 						<button type="submit" onclick="addVm()" class="btn btn-primary">添加</button>
 						<button type="button" onclick="clearRow()" class="btn btn-danger">取消</button>
 					</div>
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>虚拟机参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+						<p><b>VNF类型：</b>说明虚拟机所属的VNF类型，现支持的VNF类型分为RANCU和RANCU-M两种。</p>
+						<p><b>类型：</b>虚拟机所属的类型标识，该参数主要是对于虚拟机所属类型进行记录。</p>
+						<p><b>优先级：</b>同一VNF类型的情况下，虚拟机上线的优先级，即分配物理机资源时，优先级决定安排的先后顺序。</p>
+						<p><b>vCPU：</b>为虚拟机所需的vCPU数量，在放置算法解决的问题中，为所需物理机提供的CPU核心数。</p>
+						<p><b>内存：</b>同vCPU类似，为虚拟机所占用的内存资源，为所需物理机提供的内存容量。</p>
+						<p><b>存储：</b>同vCPU，内存，所需物理机提供的存储容量，只有当物理机有足够的资源同时满足vCPU，内存和存储的需求时，可将该虚拟机放置于物理机上，类型为int，单位为GB。</p>
+						<p><b>数量：</b>此类型虚拟机的总数，类型为int，若数值为n表示向虚拟机列表中添加n个该类型虚拟机。</p>
+						<p><b>自反亲和：</b>为一个bool类型变量，表明当前虚拟机是否具有自反亲和性。输入为‘TRUE’或‘FALSE’。</p>
+						<p><b>策略级别：</b>反亲和性策略级别，默认为host。</p>
+						<p><b>最大数量：</b>表示在同一物理机上部署该虚拟机的最大数量，输入类型为int，单位为个。</p>
+						<p><b>group：</b>输入为一个集合，表示该集合里的虚拟机均具有反亲和性，集合采用方括号表示，集合中不同元素用逗号隔开。</p>
+						<p><b>enforce：</b>bool类型变量，表明虚拟机是否强制亲和。输入为‘TRUE’或‘FALSE’。</p>
+					</div>
 					<div class="box">
 						<div class="box-header">
-						  <h3 class="box-title">虚拟机列表</h3>
+						  <h3 class="box-title"><b>虚拟机列表</b></h3>
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body">
@@ -553,6 +552,20 @@ desired effect
 								<input id="mgNum" type="text" class="form-control" placeholder="2">
 							</div>
 						</div>
+					</div>
+					<div class="box-header with-border">
+						<h3 class="box-title"><b>系统参数说明：</b></h3>
+					</div>
+					<div class="box-body">
+						<p><b>预留核N0：</b>每单板CPU0 CLOUDOS预留核数。即虚拟机部署之前，NUMA0会有多个CPU核被占用。占用数量由CloudOS及组网方式决定，输入类型为int，单位为个。</p>
+						<p><b>预留核N1：</b>每单板CPU1 CLOUDOS预留核数。即虚拟机部署之前，NUMA1会有多个CPU核被占用。占用数量由CloudOS及组网方式决定，输入类型为int，单位为个。</p>
+						<p><b>预留内存N0：</b>表示NUMA0有多少内存被占用，输入类型为int，单位为GB。</p>
+						<p><b>预留内存N1：</b>表示NUMA1有多少内存被占用，输入类型为int，单位为GB。</p>
+						<p><b>预留硬盘：</b>单板为CloudOS预留的硬盘大小，输入类型为int，单位为GB。</p>
+						<p><b>冗余比：</b>额外添加的冗余单板比例，输入类型为float，范围在0-1之间。</p>
+						<p><b>集群单板数：</b>所有单板中，分配给管理集群的单板数量。输入类型为int，单位为个。</p>
+						<p><b>存储类型：</b>磁阵还是单板本地硬盘作为存储。</p>
+						<p><b>磁阵数量：</b>使用的磁阵数量，输入类型为int，单位为个。</p>
 					</div>
 					<div class = "box-footer">
 						<div class= "next-step">

@@ -72,11 +72,11 @@ function Du_verify(){
 		return 0;
 	}
 	this.addn_v = function(){
-		if(document.getElementById("ci0").value == ""||document.getElementById("ci0").value == null||isNaN(document.getElementById("ci0").value)){
+		if(document.getElementById("ci0").value != 2 && document.getElementById("ci0").value != 3){
 			alert("初始单板数输入非法");
 			return -1;
 		}
-		if(document.getElementById("ci1").value == ""||document.getElementById("ci1").value == null||isNaN(document.getElementById("ci1").value)){
+		if(document.getElementById("ci1").value != 0 && document.getElementById("ci1").value != 1 && document.getElementById("ci1").value != 2 &&document.getElementById("ci1").value != 3 ){
 			alert("制式号输入非法");
 			return -1;
 		}
@@ -104,7 +104,11 @@ function addRow(){
 		td3.setAttribute("onclick","deleteRow(this)");
 	}
 }
-
+function clearRow(){
+	document.getElementById("ci0").value = "";
+	document.getElementById("ci1").value = "";
+	document.getElementById("ci2").value = "";
+}
 function deleteRow(dRow){
 	if(confirm("确定删除?")){
 		var di = dRow.parentNode.rowIndex;

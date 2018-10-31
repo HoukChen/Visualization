@@ -272,11 +272,11 @@ function Balance(){
 		var thh = (tvar.vmstorage.large * tvar.vmnumber.large/tvar.vmcapacity.large + tvar.vmstorage.middle * tvar.vmnumber.middle/tvar.vmcapacity.middle +tvar.vmstorage.small * tvar.vmnumber.small/tvar.vmcapacity.small)/10;
 		for(var i = 0; i < bl + 5; i++ ){
 			var cost = tvar.vmcapacity.large * 3 + tvar.vmcapacity.middle * 3 + tvar.vmcapacity.small*1 ;
-			Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * 10 - cost);
+			Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * 10 - cost*1.28);
 			if(Balance.LOAD[i+1] < 0){
 				Balance.LOAD[i+1] = 0;
 			}
-			if(Balance.LOAD[i+1]>thh){
+			if(Balance.LOAD[i+1] > thh){
 				Balance.LOAD[i+1] *= 0.9;
 			}
 		}

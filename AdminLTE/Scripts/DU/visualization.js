@@ -170,7 +170,9 @@ function VDU(){
 			},
 			xAxis: {
 				type: 'value',
-				boundaryGap: [0, 0.01]
+				boundaryGap: [0, 0.01],
+				name: "\n利用率",
+				nameLocation: "middle"
 			},
 			yAxis: {
 				type: 'category',
@@ -224,7 +226,9 @@ function VDU(){
 				containLabel: true
 			},
 			xAxis:  {
-				type: 'value'
+				type: 'value',
+				name: "\n数量",
+				nameLocation: "middle"
 			},
 			yAxis: {
 				type: 'category',

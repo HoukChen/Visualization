@@ -100,7 +100,9 @@ function Vplacer(){
 					type: 'value',
 					axisTick: {show: false},
 					axisLine: {show: false},
-					axisLabel: {formatter: function(value){return (String(value*100)+' %')}}
+					axisLabel: {formatter: function(value){return (String(value*100)+' %')}},
+					name:"利用率",
+					nameLocation: "middle"
 				},
 				yAxis: {
 					type: 'category', 
@@ -181,11 +183,14 @@ function Vplacer(){
 			xAxis: {
 				data: conf.dataAxis,
 				axisTick: {show: false},
-				axisLine: {show: false}
+				axisLine: {show: false},
+				name: "\n物理机型号",
+				nameLocation: "middle"
 			},
 			yAxis: {
 				axisTick: {show: false},
-				axisLine: {show: false}
+				axisLine: {show: false},
+				name:"数量"
 			},
 			tooltip: {
 				trigger: 'axis',
@@ -222,11 +227,14 @@ function Vplacer(){
 			xAxis: {
 				data: conf.dataAxis,
 				axisTick: {show: false},
-				axisLine: {show: false}
+				axisLine: {show: false},
+				name: "\n物理机型号",
+				nameLocation: "middle"
 			},
 			yAxis: {
 				axisTick: {show: false},
-				axisLine: {show: false}
+				axisLine: {show: false},
+				name:"利用率"
 			},
 			tooltip: {
 				trigger: 'axis',
