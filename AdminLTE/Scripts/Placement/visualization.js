@@ -101,7 +101,7 @@ function Vplacer(){
 					axisTick: {show: false},
 					axisLine: {show: false},
 					axisLabel: {formatter: function(value){return (String(value*100)+' %')}},
-					name:"利用率",
+					name:"\n利用率",
 					nameLocation: "middle"
 				},
 				yAxis: {
