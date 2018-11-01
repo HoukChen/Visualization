@@ -78,7 +78,7 @@ function Placement_verify(){
 			alert("numa输入不合法");
 			return -1;
 		}
-		if(document.getElementById("pmKernel").value == ""||document.getElementById("pmKernel").value == null|| isNaN(document.getElementById("PmKernel").value)){
+		if(document.getElementById("pmKernel").value == ""||document.getElementById("pmKernel").value == null|| isNaN(document.getElementById("pmKernel").value)){
 			alert("核心数输入不合法");
 			return -1;
 		}
