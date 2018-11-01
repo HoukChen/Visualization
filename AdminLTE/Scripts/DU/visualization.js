@@ -16,6 +16,8 @@ function VDU(){
 		var data = new Array();
 		var links = new Array();
 		var endp = ['单板0', '单板1', '单板4', '单板5'];
+		var sum_used_flow = 0;
+		var sum_total_flow = 0;
 		for (var re=0; re<4; re++){
 			links.push({
 				source:'单板2',
@@ -26,6 +28,8 @@ function VDU(){
 				timeout: this.params.net_node2[re],
 				PacketLossRate: Math.ceil(100*this.params.net_node2[re]/this.params.net_limit2[re])/100
 			});
+			sum_used_flow += this.params.net_node2[re];
+			sum_total_flow += this.params.net_limit2[re];
 		}
 		for (var re=0; re<4; re++){
 			links.push({
@@ -37,7 +41,12 @@ function VDU(){
 				timeout: this.params.net_node3[re],
 				PacketLossRate: Math.ceil(100*this.params.net_node3[re]/this.params.net_limit3[re])/100
 			});
+			sum_used_flow += this.params.net_node3[re];
+			sum_total_flow += this.params.net_limit3[re];
 		}
+
+		var globalinfo = "总带宽"+sum_total_flow.toString()+"MB    总流量"+sum_used_flow.toString()+"MB    利用率"
+					+(sum_used_flow*100/sum_total_flow).toFixed(2).toString()+"%";
 		data = [
 					{
 						name:'单板1',
@@ -89,10 +98,15 @@ function VDU(){
 					},
 				];
 		var netoption = {
-				title: { text: '网络拓扑信息图'},
-				tooltip: {},
+				title: { text: '网络拓扑信息图               '+globalinfo},
+				tooltip: {formatter: "Hello, world"},
 				animationDurationUpdate: 1500,
 				animationEasingUpdate: 'quinticInOut',
+				// xAxis: {
+				// 	name:"背板总带宽："+sum_total_flow.toString()+"背板总流量："+sum_used_flow.toString()+"带宽综合利用率："
+				// 	+(sum_used_flow*100/sum_total_flow).toFixed(2).toString()+"%",
+				// 	nameLocation: "middle"
+				// },
 				series : 
 				[
 					{
@@ -140,7 +154,7 @@ function VDU(){
 							backgroundColor:'green',
 							textStyle:{fontSize: 18},
 							formatter: function(params){
-							   if (params.data.islink) {return '带宽限制：&nbsp'+params.data.bandwith+'<br />'+'带宽使用：&nbsp'+params.data.timeout+'<br />'+'带宽使用率：'+params.data.PacketLossRate;}
+							   if (params.data.islink) {return '带宽限制：&nbsp'+params.data.bandwith+'MB<br />'+'带宽使用：&nbsp'+params.data.timeout+'MB<br />'+'带宽使用率：'+params.data.PacketLossRate;}
 							   else if (params.data.isnode) {return params.data.name;}
 							},
 						}
@@ -171,7 +185,7 @@ function VDU(){
 			xAxis: {
 				type: 'value',
 				boundaryGap: [0, 0.01],
-				name: "\n利用率",
+				name: "利用率",
 				nameLocation: "middle"
 			},
 			yAxis: {
@@ -227,7 +241,7 @@ function VDU(){
 			},
 			xAxis:  {
 				type: 'value',
-				name: "\n数量",
+				name: "数量",
 				nameLocation: "middle"
 			},
 			yAxis: {
