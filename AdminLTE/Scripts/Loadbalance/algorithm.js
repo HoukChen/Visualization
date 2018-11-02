@@ -37,6 +37,9 @@ function Balance(){
 	this.WLCT = new Array();
 	this.LOAD = new Array();
 	this.TASKS = new Array();
+	this.HLOADS = new Array();
+	this.MLOADS = new Array();
+	this.LLOADS = new Array();
 	this.para = null;
 	this.Th = 0.2;
 	this.sortfunc0 = function(a,b){ return a.tarr - b.tarr }
@@ -150,7 +153,7 @@ function Balance(){
 					}
 				}
 				if(!flg && ll_list.length > 0 ){
-					console.log("overload");
+					//console.log("overload");
 					ll_list[0].addjob(i);
 				}
 				ll_list.sort(this.sortfunc2);
@@ -161,12 +164,12 @@ function Balance(){
 	this.start = function(mode){
 		this.initialize();
 		var jl = this.Taskq.length;
-		console.log(jl);
+		//console.log(jl);
 		var vl = this.Vmq.length;
 		clock = 0.0;
 		var pvt = 0;
 		for(var j = 0 ; j < jl; j++ ){
-			console.log(j);
+			//console.log(j);
 			var tmpj = this.Taskq[j];
 			var tmpv = this.Vmq[pvt];
 			if(clock != tmpj.tarr || j == jl - 1){
@@ -207,7 +210,7 @@ function Balance(){
 				tmpv.addjob(tmpj);
 				pvt = (pvt + 71) % vl;
 			}else{
-				console.log("overload");
+				//console.log("overload");
 				tmpv.addjob(tmpj);
 			}
 			if(j % this.para.period == 0){
@@ -216,7 +219,7 @@ function Balance(){
 				}
 			}
 		}
-		console.log("ok");
+		//console.log("ok");
 		
 	}
 	
@@ -250,29 +253,128 @@ function Balance(){
 				if(j == 2){this.WLCT.push(this.calavgtime());}
 			}
 		}
-		console.log("***");
-		console.log(this.WRRT);
+		//console.log("***");
+		//console.log(this.WRRT);
 	}
 	
 	this.run = function(){
 		this.initialize();
-		console.log(this.Vmq);
+		//console.log(this.Vmq);
 		var tvar = JSON.parse(sessionStorage.getItem("balance_parameter"));
 		if(this.TASKS.length == 0){
-			for(var i = 0; i < this.para.timelimit * 10; i++ ){
-				this.TASKS.push(0);
+			for(var i = 0; i < this.para.timelimit * 10 + 1; i++ ){
+				this.TASKS.push(0);this.HLOADS.push(0);this.MLOADS.push(0);this.LLOADS.push(0);
 			}
 			for(var i = 0 ;i < this.Taskq.length; i++ ){
 				var itsk = this.Taskq[i];
-				this.TASKS[itsk.tarr*10] ++ ;
+				this.TASKS[itsk.tarr*10 + 1] += 10 ;
 			}
 		}
-		Balance.LOAD.push(0);
+		
+		var vmnumz = parseInt(this.para.vmnumber.large) + parseInt(this.para.vmnumber.middle) + parseInt(this.para.vmnumber.small);
+		this.LLOADS[0] = vmnumz;
+		var cs = 0;
+		
+		for(var i = 1; i < this.para.timelimit * 10 + 1;i++ ){
+			this.HLOADS[i] = this.HLOADS[i-1];this.MLOADS[i] = this.MLOADS[i-1];this.LLOADS[i] = this.LLOADS[i-1];
+			//alert(this.TASKS[i]);
+			if(this.TASKS[i] > 140){
+				//alert('bigya');
+				cs = 0;
+				while(this.LLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					this.LLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				if(this.TASKS[i]>180){cs++;}
+				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 3){
+					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
+				}
+			}else if(this.TASKS[i]>120){
+				cs = 0;
+				while(this.LLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					this.LLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 3){
+					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
+				}
+			}else if(this.TASKS[i]>100){
+				cs = 0;
+				while(this.LLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					//console.log('heaer');
+					//alert('gg');
+					this.LLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 2){
+					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
+				}	
+			}else if(this.TASKS[i]>80){
+				cs = 0;
+				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					//console.log('heaer');
+					//alert('gg');
+					this.HLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 2){
+					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
+				}
+			}else if(this.TASKS[i]>60){
+				cs = 0;
+				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					this.HLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 3){
+					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
+				}
+			}else{
+				cs = 0;
+				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
+					this.HLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
+				}
+				cs = 0;
+				if(this.TASKS[i] < 30){cs++;}
+				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 3){
+					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
+				}
+			}
+			if(i % this.para.period == 0){
+				var tcs = 7;
+				if(i % 3 == 0 ){tcs ++;}else{tcs--;}
+				while(this.LLOADS[i] > 0&& this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz-1 && cs < tcs && this.HLOADS[i] > 0){
+					this.LLOADS[i] -= 1;this.MLOADS[i] += 2;this.HLOADS[i] -= 1;cs++;
+				}
+			}
+		}
+		
+		console.log(this.HLOADS);
+		console.log(this.MLOADS);
+		console.log(this.LLOADS);
+		
+		
+		/*
+		Balance.LOAD.push(this.TASKS[0]);
 		var bl = Balance.TASKS.length;
 		var thh = (tvar.vmstorage.large * tvar.vmnumber.large/tvar.vmcapacity.large + tvar.vmstorage.middle * tvar.vmnumber.middle/tvar.vmcapacity.middle +tvar.vmstorage.small * tvar.vmnumber.small/tvar.vmcapacity.small)/10;
-		for(var i = 0; i < bl + 5; i++ ){
+		for(var i = 0; i < this.para.limit * 10 + 5; i++ ){
+			this.LOAD.push(0);
+		}
+		
+		
+		for(var i = 0; i < this.para.limit * 10; i++ ){
+			cost[i] = HLOADS[i] * 8 + MLOADS[i] * 5 + LLOADS[i]*2 ;
+		}
+		for(var i = 0; i < this.para.limit * 10; i++ ){
+			this.LOAD[i] += this.TASKS[i] - cost[i];
+		}
+		
+		
+		
+		for(var i = 1; i < bl + 5; i++ ){
 			var cost = tvar.vmcapacity.large * 3 + tvar.vmcapacity.middle * 3 + tvar.vmcapacity.small*1 ;
-			Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] * 10 - cost*1.28);
+			Balance.LOAD.push(Balance.LOAD[i] + Balance.TASKS[i] - cost*1.28);
 			if(Balance.LOAD[i+1] < 0){
 				Balance.LOAD[i+1] = 0;
 			}
@@ -280,13 +382,18 @@ function Balance(){
 				Balance.LOAD[i+1] *= 0.9;
 			}
 		}
+		*/
+		
 		var pgb = document.getElementById("progressbar1");
 		this.dobalance();
 		var parameters = {
 			wrrt: this.WRRT,
 			lbft: this.LBFT,
 			wlct: this.WLCT,
-			load: this.LOAD,
+			hloads: this.HLOADS,
+			mloads: this.MLOADS,
+			sloads: this.LLOADS,
+			//load: this.LOAD,
 			tasks: this.TASKS
 		}
 		sessionStorage.setItem("balance_result", JSON.stringify(parameters));

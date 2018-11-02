@@ -15,14 +15,14 @@
 		"small": 800
 	},
 	"tasknumber":{
-		"urgent": 400,
-		"normal": 400
+		"urgent": 650,
+		"normal": 500
 	},
 	"taskmaxlen":{
 		"urgent": 20,
 		"normal": 100
 	},
 	"timelimit": 10,
-	"period": 12,
+	"period": 5,
 	"threshold": 0.2
 }

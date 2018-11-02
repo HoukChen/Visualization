@@ -6,10 +6,14 @@ function Vbalance(){
 		var balancedata = JSON.parse(sessionStorage.getItem("balance_result"));
 		console.log(balancedata);
 		this.TASKS = new Array();
-		this.LOAD = new Array();
+		this.HLOAD = new Array();
+		this.MLOAD = new Array();
+		this.LLOAD = new Array();
 		for(var ind = 0; ind < balancedata.tasks.length ; ind++){
 			this.TASKS.push([ind,balancedata.tasks[ind]]);
-			this.LOAD.push([ind,balancedata.load[ind]]);
+			this.HLOAD.push([ind,balancedata.hloads[ind]]);
+			this.MLOAD.push([ind,balancedata.mloads[ind]]);
+			this.LLOAD.push([ind,balancedata.sloads[ind]]);
 		}
 		
 		/*
@@ -122,7 +126,7 @@ function Vbalance(){
 				data: data.xAxis || [],
 				axisLine: { // 坐标轴线
 					lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-						color: '#F1F3F5',
+						color: 'black',
 						type: 'solid'
 					},
 				},
@@ -141,6 +145,7 @@ function Vbalance(){
 			},
 			yAxis: {
 				type: 'value',
+				
 				axisTick: { // 坐标轴小标记
 					show: false, // 属性show控制显示与否，默认不显示
 				},
@@ -152,12 +157,16 @@ function Vbalance(){
 					},
 				},
 				axisLine: { // 坐标轴线
-					show: false, // 默认显示，属性show控制显示与否
+					lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
+						color: 'black',
+						type: 'solid'
+					},
+					show: true, // 默认显示，属性show控制显示与否
 				},
 				axisLabel: { // 坐标轴文本标签，详见axis.axisLabel
-					show: false,
+					show: true,
 				},
-				name: "\t\t\t\t\t平均响应时间",
+				name: "\t\t\t\t\t\t\t\t\t\t平均响应时间(ms)",
 				//nameLocation: "middle"
 			},
 
@@ -189,7 +198,7 @@ function Vbalance(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
-				name: '\t\t\t任务数（个）',
+				name: '\t\t\t任务总大小（Gb）',
             },
             series: [{
                 type: 'line',
@@ -202,12 +211,15 @@ function Vbalance(){
 		
 		//LoadGraph
 		var loadChart = echarts.init(document.getElementById('loadgraph'), 'light');
-		var loadarr = this.LOAD;
-		//console.log(this.TASKS);
-        var loaddata = loadarr.slice(0, Math.min(initLen, loadarr.length));
+		var hloadarr = this.HLOAD;
+        var hloaddata = hloadarr.slice(0, Math.min(initLen, hloadarr.length));
+		var mloadarr = this.MLOAD;
+        var mloaddata = mloadarr.slice(0, Math.min(initLen, mloadarr.length));
+		var lloadarr = this.LLOAD;
+        var lloaddata = lloadarr.slice(0, Math.min(initLen, lloadarr.length));
 		loadoption = {
-			title: {text:'虚拟机总负载变化时间图'},
-			legend: {data: ['负载']},
+			title: {text:'虚拟机负载情况变化图'},
+			legend: {data: ['高负载虚拟机个数','中负载虚拟机个数','低负载虚拟机个数']},
             xAxis: {
                 type: 'value',
                 min: 'dataMin',
@@ -222,13 +234,21 @@ function Vbalance(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
-				name: '\t\t\t总负载（Gb）',
+				name: '\t\t\t虚拟机个数',
             },
             series: [{
                 type: 'line',
-                name: '负载',
-                data: loaddata
-            }]
+                name: '高负载虚拟机个数',
+                data: hloaddata
+            },{
+				type: 'line',
+				name: '中负载虚拟机个数',
+				data: mloaddata
+			},{
+				type: 'line',
+				name: '低负载虚拟机个数',
+				data: lloaddata
+			}]
         };
         loadChart.setOption(loadoption);
 		
@@ -236,20 +256,30 @@ function Vbalance(){
         	count = initLen;
 	        var intervalID = setInterval(function () {
 	            taskdata.shift();
-				loaddata.shift();
+				hloaddata.shift();
+				mloaddata.shift();
+				lloaddata.shift();
 	            taskdata.push(taskarr[count]);
-				loaddata.push(loadarr[count]);
+				hloaddata.push(hloadarr[count]);
+				mloaddata.push(mloadarr[count]);
+				lloaddata.push(lloadarr[count]);
 	            count += 1;
 	            taskChart.setOption({
 	            	series: [{data: taskdata}]
 	            });
 				loadChart.setOption({
-	            	series: [{data: loaddata}]
+	            	series: [{data: hloaddata},{data: mloaddata},{data: lloaddata}]
 	            });
 		        if (count == taskarr.length){
+					taskChart.setOption({
+						series: [{data: taskarr}]
+					});
+					loadChart.setOption({
+						series: [{data: hloadarr},{data: mloadarr},{data: lloadarr}]
+					});
 					clearInterval(intervalID);
 				}
-	        }, 1500);
+	        }, 10);
         }
 	}
 	
