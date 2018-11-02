@@ -17,10 +17,12 @@ function Vadjustor(){
 	
 	this.initParams = function(){
 		this.VMNUM = new Array();
+		this.VMNUM_UNPRE = new Array();
 		this.TASKNUM = new Array();
 		this.PDTNUM = new Array();
 		this.VMUTL = new Array();
 		this.COST = new Array();
+		this.COST_UNPRE = new Array();
 		this.VMREC = new Array();
 		var Adjustor = JSON.parse(sessionStorage.getItem("adjustment_result"));
 		this.VMREC = Adjustor.vmrec;
@@ -32,14 +34,17 @@ function Vadjustor(){
 			this.TASKNUM.push([simNow, Adjustor.realnum[ind]]);
 			this.PDTNUM.push([simNow, Adjustor.pdtres[ind]]);
 			this.COST.push([simNow, Adjustor.costres[ind]]);
-
+			this.COST_UNPRE.push([simNow, Adjustor.costres_unpre[ind]]);
 			var vminfo = Adjustor.vmrec[ind];
+			var vminfo_real = Adjustor.vmrec_real[ind];
+			var vminfo_unpre = Adjustor.vmrec_unpre[ind];
 			this.VMNUM.push([simNow, vminfo.length]);
+			this.VMNUM_UNPRE.push([simNow, vminfo_unpre.length]);
 			var totalused = 0;
 			var totalres = 0;
-			for (var vmind=0; vmind<vminfo.length; vmind++){
-				totalres += (vminfo[vmind].res_used+vminfo[vmind].res_avail);
-				totalused += vminfo[vmind].res_used;
+			for (var vmind=0; vmind<vminfo_real.length; vmind++){
+				totalres += (vminfo_real[vmind].res_used+vminfo_real[vmind].res_avail);
+				totalused += vminfo_real[vmind].res_used;
 			}
 			this.VMUTL.push([simNow, (totalused/totalres).toFixed(4)]);
 			simDate.setMinutes(simDate.getMinutes()+5);
@@ -85,10 +90,11 @@ function Vadjustor(){
 
         // global vm number graph
         var vmNChart = echarts.init(document.getElementById('vmNgraph'), 'light');
-        var vmNdata = this.VMNUM.slice(0, Math.min(initLen, this.TASKNUM.length));
+        var vmNdata = this.VMNUM.slice(0, Math.min(initLen, this.VMNUM.length));
+        var vmN_unpredata = this.VMNUM_UNPRE.slice(0, Math.min(initLen, this.VMNUM_UNPRE.length));
 		vmNoption = {
 			title: {text:'虚拟机数量图'},
-			legend: {data: ['虚拟机数量']},
+			legend: {data: ['预测', '非预测']},
             xAxis: {
                 type: 'time',
                 axisTick: {show: false},
@@ -104,11 +110,18 @@ function Vadjustor(){
 				trigger: 'axis',
 				axisPointer: {type: 'shadow'}
 			},
-            series: [{
-                type: 'line',
-                name: '虚拟机数量',
-                data: vmNdata
-            }]
+            series: [
+            	{
+	                type: 'line',
+	                name: '预测',
+	                data: vmNdata
+            	},
+            	{
+	                type: 'line',
+	                name: '非预测',
+	                data: vmN_unpredata
+            	}
+            ]
         };
         vmNChart.setOption(vmNoption);
 
@@ -147,6 +160,41 @@ function Vadjustor(){
         };
         vmUChart.setOption(vmUoption);
 
+        // global cost comparison graph
+        var costChart = echarts.init(document.getElementById('costgraph'), 'light');
+        var costdata = this.COST.slice(0, Math.min(initLen, this.COST.length));
+        var cost_unpredata = this.COST_UNPRE.slice(0, Math.min(initLen, this.COST_UNPRE.length));
+		costoption = {
+			title: {text:'调整代价对比图'},
+			legend: {data: ['预测', '非预测']},
+            xAxis: {
+                type: 'time',
+                axisTick: {show: false},
+                name: "\n\n监测点的实际时间",
+                nameLocation: "middle",
+            },
+            yAxis: {
+                type: 'value',
+                axisTick: {show: false},
+                name: "代价",
+            },
+            tooltip: {
+				trigger: 'axis',
+				axisPointer: {type: 'shadow'}
+			},
+            series: [{
+                type: 'line',
+                name: '预测',
+                data: costdata
+            },
+            {
+            	type: 'line',
+            	name: '非预测',
+            	data: cost_unpredata
+            }]
+        };
+        costChart.setOption(costoption);
+
         if (this.TASKNUM.length > initLen){
         	count = initLen;
 	        var intervalID = setInterval(function () {
@@ -159,20 +207,46 @@ function Vadjustor(){
 	            }
 	            vmNdata.shift();
 	            vmNdata.push(Vadjustor.VMNUM[count]);
+	            vmN_unpredata.shift();
+	            vmN_unpredata.push(Vadjustor.VMNUM_UNPRE[count]);
+
 	            vmUdata.shift();
 	            vmUdata.push(Vadjustor.VMUTL[count]);
+
+	            costdata.shift();
+	            costdata.push(Vadjustor.COST[count]);
+	            cost_unpredata.shift();
+	            cost_unpredata.push(Vadjustor.COST_UNPRE[count]);
+
 	            count += 1;
 	            taskChart.setOption({
 	                series: [{data: taskdata}, {data: pdtdata}]
 	            });
 	            vmNChart.setOption({
-	            	series: [{data: vmNdata}]
+	            	series: [{data: vmNdata}, {data: vmN_unpredata}]
 	            });
 	            vmUChart.setOption({
 	            	series: [{data: vmUdata}]
 	            });
+	            costChart.setOption({
+	            	series: [{data: costdata}, {data: cost_unpredata}]
+	            });
 		        if (count == Vadjustor.TASKNUM.length){
-	        	clearInterval(intervalID);}
+		        	console.log(Vadjustor.TASKNUM);
+	        		taskChart.setOption({
+	                series: [{data: Vadjustor.TASKNUM}, {data: Vadjustor.PDTNUM}]
+		            });
+		            vmNChart.setOption({
+		            	series: [{data: Vadjustor.VMNUM}, {data: Vadjustor.VMNUM_UNPRE}]
+		            });
+		            vmUChart.setOption({
+		            	series: [{data: Vadjustor.VMUTL}]
+		            });
+		            costChart.setOption({
+		            	series: [{data: Vadjustor.COST}, {data: Vadjustor.COST_UNPRE}]
+		            });
+		            clearInterval(intervalID);
+	        	}
 	        }, 1000);
         }
 	}

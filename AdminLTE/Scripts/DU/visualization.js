@@ -1,12 +1,31 @@
 function VDU(){
 	this.params = new Array();
 	this.optimization = "BEST_STD";
+	this.scale = 0;
 	this.initParams = function(){
 		if (this.optimization == "0"){
 			this.params = JSON.parse(sessionStorage.getItem("du_result")).BEST_STD;
 		}
 		else if (this.optimization == "1"){
 			this.params = JSON.parse(sessionStorage.getItem("du_result")).MIN_FLOW;
+		}
+		// set flow_transfer graph scale
+		var opt1 = JSON.parse(sessionStorage.getItem("du_result")).BEST_STD;
+		var opt2 = JSON.parse(sessionStorage.getItem("du_result")).MIN_FLOW;
+
+		for (var ind = 0; ind < 4; ind++){
+			if (opt1.net_node2[ind] > this.scale){
+				this.scale = opt1.net_node2[ind];
+			}
+			if (opt1.net_node3[ind] > this.scale){
+				this.scale = opt1.net_node3[ind];
+			}
+			if (opt2.net_node2[ind] > this.scale){
+				this.scale = opt2.net_node2[ind];
+			}
+			if (opt2.net_node3[ind] > this.scale){
+				this.scale = opt2.net_node3[ind];
+			}
 		}
 		console.log(this.params);
 	}
@@ -112,7 +131,7 @@ function VDU(){
 					{
 						type: 'graph',
 						layout: 'none',
-						symbolSize: 40,							//图形的大小（示例中的圆的大小）
+						symbolSize: 30,							//图形的大小（示例中的圆的大小）
 						roam: false,							//鼠标缩放及平移
 						focusNodeAdjacency: true,				//是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点
 						edgeSymbol: ['circle', 'arrow'],
@@ -185,6 +204,7 @@ function VDU(){
 			xAxis: {
 				type: 'value',
 				boundaryGap: [0, 0.01],
+				max: 1,
 				name: "利用率",
 				nameLocation: "middle"
 			},
@@ -231,7 +251,7 @@ function VDU(){
 			},
 			legend: {
 				show: true,
-				data: ['制式1', '制式2','制式3','制式4'],
+				data: ['制式0', '制式1','制式2','制式3'],
 			},
 			grid: {
 				left: '3%',
@@ -253,6 +273,105 @@ function VDU(){
 		numChart.setOption(numoption);
 	}
 
+	this.nodeShower = function(nodeIndex){
+		var nodeChart = echarts.init(document.getElementById('node'+nodeIndex.toString()), 'light');
+		var data = new Array();
+		for (var cellind = 0; cellind < 4; cellind++){
+			data.push(this.params.num[cellind][nodeIndex]);
+		}
+		var nodeoption = {
+			title: {
+				text: '单板'+nodeIndex.toString()+'上各制式小区数量图'
+			},
+			tooltip : {
+				trigger: 'axis',
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			legend: {
+				show: true,
+				data: ['制式0', '制式1','制式2','制式3'],
+			},
+			xAxis:  {
+				type: 'category',
+				data: ['制式0', '制式1','制式2','制式3'],
+				name: "\n小区制式",
+				nameLocation: "middle"
+			},
+			yAxis: {
+				type: 'value',
+				minInterval: 1,
+				name: '小区数量'
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth: '60%',
+					data: data
+				}
+			]
+		};
+		nodeChart.setOption(nodeoption);
+	}
+
+	this.node2_flow_outShower = function(){
+		var nodeoutChart = echarts.init(document.getElementById("flow_transfer"), 'light');
+		var series = new Array();
+		
+		series.push({
+			name: '单板0',
+			type: 'bar',
+			data: [this.params.net_node2[0], this.params.net_node3[0]]
+		})
+		series.push({
+			name: '单板1',
+			type: 'bar',
+			data: [this.params.net_node2[1], this.params.net_node3[1]]
+		})
+		series.push({
+			name: '单板4',
+			type: 'bar',
+			data: [this.params.net_node2[2], this.params.net_node3[2]]
+		})
+		series.push({
+			name: '单板5',
+			type: 'bar',
+			data: [this.params.net_node2[3], this.params.net_node3[3]]
+		})
+		
+		var nodeoutoption = {
+			title: {
+				text: '流量转移信息图'
+			},
+			legend: {
+				show: true,
+				data: ['单板0', '单板1','单板4','单板5'],
+			},
+			tooltip : {
+				trigger: 'axis',
+				axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+					type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			xAxis:  {
+				type: 'category',
+				data: ['单板2','单板3'],
+				name: "\n发送小区任务的单板",
+				nameLocation: "middle"
+			},
+			yAxis: {
+				type: 'value',
+				minInterval: 1,
+				max: this.scale,
+				name: '流量大小(MB)'
+			},
+			series: series
+		};
+		nodeoutChart.setOption(nodeoutoption);
+
+	}
+
 	this.globalShower = function(){
 		var selectDiv = document.getElementById("optiSelect");
 		var index = parseInt(selectDiv.selectedIndex);
@@ -262,7 +381,11 @@ function VDU(){
 		this.initParams();
 		this.netShower();
 		this.utilShower();
-		this.numShower();
+		// this.numShower();
+		for (var nodeind = 0; nodeind < 6; nodeind++){
+			this.nodeShower(nodeind);
+		}
+		this.node2_flow_outShower();
 	}
 }
 

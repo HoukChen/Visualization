@@ -196,13 +196,30 @@ function Simulator(TaskList, TaskNum, VMParams){
 
 	this.reddcost = 1;
 	this.srvcost = 2;
-	this.srvtime = 3;
+	this.srvtime = 5;
 	this.VMList = new Array();
-	this.TaskList = TaskList;
-	this.TaskNum = TaskNum;
-	this.Params = VMParams;
+	this.TaskList = new Array();
+	this.TaskNum = new Array();
+	this.Params = {
+		"large": VMParams.large,
+		"middle": VMParams.middle,
+		"small": VMParams.small
+	};
 
 	this.initialize = function(){
+		// deep copy for TaskList, TaskNum and Params
+		for (var ind = 0; ind < TaskList.length; ind++){
+			var task_list = new Array();
+			for (var taskid = 0; taskid < TaskList[ind].length; taskid++){
+				var task = new Task(TaskList[ind][taskid].stime, TaskList[ind][taskid].etime, 1);
+				task_list.push(task);
+			}
+			this.TaskList.push(task_list);
+		}
+		for (var ind = 0; ind < TaskNum.length; ind++){
+			this.TaskNum.push(TaskNum[ind]);
+		}
+
 		for (var re=0; re<1; re++){
 			var svm = new VirtualMachine(this.Params.small);
 			this.VMList.push(svm);
@@ -342,7 +359,7 @@ function Simulator(TaskList, TaskNum, VMParams){
 		return true;
 	}
 
-	this.narrowVM = function(){
+	this.narrowVM = function(increment){
 		for (var vmind=0; vmind<this.VMList.length; vmind++){
 			var vm = this.VMList[vmind];
 			if ((vm.res_total - vm.res_avail) <= this.Params['small']){
@@ -440,6 +457,7 @@ function Predictor(TaskNum, modelname){
 function Adjustor(){
 
 	this.COSTRES = new Array();
+	this.COSTRES_UNPRE = new Array();
 	this.PDTRES = new Array();
 	this.REALNUM = new Array();
 
@@ -449,11 +467,16 @@ function Adjustor(){
 		GRT.generateTask();
 
 		var SIM = new Simulator(GRT.TaskList, GRT.TaskNum, Params.vmscale);
+		var SIM_UNPRE = new Simulator(GRT.TaskList, GRT.TaskNum, Params.vmscale);
+
 		SIM.initialize();
+		SIM_UNPRE.initialize();
 
 		var PDT = new Predictor(GRT.TaskNum, "RFR");
 		
 		var VMREC = new Array();
+		var VMREC_REAL =new Array();
+		var VMREC_UNPRE = new Array();
 		for (var time=GRT.begintime; time<GRT.begintime+Params.simspan; time++){
 
 			// progress bar controller
@@ -464,10 +487,45 @@ function Adjustor(){
 			proDiv.style.width = progress;
 
 			SIM.removeTask(time);
+			SIM_UNPRE.removeTask(time);
+
 			var cost = SIM.placeTask(time);
 			this.COSTRES.push(cost);
+			var cost_unpre = SIM_UNPRE.placeTask(time);
+			this.COSTRES_UNPRE.push(cost_unpre);
+
 			SIM.reduceVM();
+			SIM_UNPRE.reduceVM();
+
+			// record vm info
+			var vminfo_real = new Array();
+			for (var vmind=0; vmind<SIM.VMList.length; vmind++){
+				var vm = SIM.VMList[vmind];
+				var resinfo = {
+					res_used: vm.res_total-vm.res_avail,
+					res_avail: vm.res_avail
+				};
+				vminfo_real.push(resinfo);
+			}
+			VMREC_REAL.push(vminfo_real);
+
+			// var increment = PDT.trainModel(time+1);
+			// TODO(Houk): needed to be modified
+			var increment = 0.7*Math.ceil((Math.random()-0.5)*GRT.basemagn)+0.3*(SIM.TaskNum[time+1]-SIM.TaskNum[time]);
 			
+			this.PDTRES.push(increment+0.5*SIM.TaskNum[time]+0.5*SIM.TaskNum[time-1]);
+
+			var actual_incre = SIM.TaskNum[time+1]-SIM.TaskNum[time];
+			
+			if (actual_incre>0){
+				SIM.enlargeVM(actual_incre);
+			}
+			else if (actual_incre>0){
+				SIM.narrowVM();
+			}
+			this.REALNUM.push(SIM.TaskNum[time+1]);
+
+			// record vm info
 			var vminfo = new Array();
 			for (var vmind=0; vmind<SIM.VMList.length; vmind++){
 				var vm = SIM.VMList[vmind];
@@ -479,25 +537,26 @@ function Adjustor(){
 			}
 			VMREC.push(vminfo);
 
-			// var increment = PDT.trainModel(time+1);
-			// TODO(Houk): needed to be modified
-			increment = 0.7*Math.ceil((Math.random()-0.5)*GRT.basemagn)+0.3*(SIM.TaskNum[time+1]-SIM.TaskNum[time]);
-			
-			this.PDTRES.push(increment+0.5*SIM.TaskNum[time]+0.5*SIM.TaskNum[time-1]);
-			if (increment>0){
-				SIM.enlargeVM(increment);
+			var vminfo_unpre = new Array();
+			for (var vmind=0; vmind<SIM_UNPRE.VMList.length; vmind++){
+				var vm = SIM_UNPRE.VMList[vmind];
+				var resinfo = {
+					res_used: vm.res_total-vm.res_avail,
+					res_avail: vm.res_avail
+				};
+				vminfo_unpre.push(resinfo);
 			}
-			else{
-				SIM.narrowVM();
-			}
-			this.REALNUM.push(SIM.TaskNum[time+1]);
+			VMREC_UNPRE.push(vminfo_unpre);
 		}
 		
 		var parameters = {
 			costres: this.COSTRES,
+			costres_unpre: this.COSTRES_UNPRE,
 			pdtres: this.PDTRES,
 			realnum: this.REALNUM,
-			vmrec: VMREC
+			vmrec: VMREC,
+			vmrec_real: VMREC_REAL,
+			vmrec_unpre: VMREC_UNPRE
 		}
 
 		sessionStorage.setItem("adjustment_result", JSON.stringify(parameters));

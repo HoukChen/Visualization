@@ -10,7 +10,7 @@
 	"BladeType": "CH121-V5",
 	"DiskArrayNum": 2,
 	"PMResource": [{
-		"Category": "E9000",
+		"Category": "E9Ka",
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 28,
 		"vCPUOfCore": 2,
@@ -18,7 +18,7 @@
 		"Storage": 2048,
 		"PMNumber": 10},
 		{
-		"Category": "E8000",
+		"Category": "E9Kb",
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 20,
 		"vCPUOfCore": 2,
@@ -27,7 +27,7 @@
 		"PMNumber": 10
 		},
 		{
-		"Category": "E7000",
+		"Category": "E9Kc",
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 10,
 		"vCPUOfCore": 2,
@@ -36,7 +36,7 @@
 		"PMNumber": 10
 		},
 		{
-		"Category": "E6000",
+		"Category": "E9Kd",
 		"CPUNumOfBlade": 2,
 		"CoreNumOfCPU": 8,
 		"vCPUOfCore": 2,
@@ -48,7 +48,7 @@
 	],
 	"VMResource": [{
 		"VNFType": "RANCU",
-		"VMType": "vNDPUa",
+		"VMType": "vUAMU",
 		"VMPriority": 1,
 		"VMCore": 20,
 		"VMMemory": 64,
@@ -62,7 +62,7 @@
 	},
 	{
 		"VNFType": "RANCU",
-		"VMType": "vNDPUb",
+		"VMType": "vUEMU",
 		"VMPriority": 1,
 		"VMCore": 8,
 		"VMMemory": 36,
@@ -76,7 +76,7 @@
 	},
 	{
 		"VNFType": "RANCU",
-		"VMType": "vNDPUc",
+		"VMType": "vUAPU",
 		"VMPriority": 1,
 		"VMCore": 16,
 		"VMMemory": 64,
@@ -90,7 +90,7 @@
 	},
 	{
 		"VNFType": "RANCU",
-		"VMType": "vNDPUd",
+		"VMType": "vNEMU",
 		"VMPriority": 1,
 		"VMCore": 12,
 		"VMMemory": 56,
@@ -104,7 +104,7 @@
 	},
 	{
 		"VNFType": "RANCU",
-		"VMType": "vNDPUe",
+		"VMType": "vNDPU",
 		"VMPriority": 1,
 		"VMCore": 18,
 		"VMMemory": 72,

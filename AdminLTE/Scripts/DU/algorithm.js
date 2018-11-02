@@ -22,7 +22,7 @@ function DU(){
 	this.flow_scheme = new Array();
 	this.band_scheme = new Array();
 
-	this.REPEAT = 15000;
+	this.REPEAT = 20000;
 
 	this.initParams = function(){
 		var Params = JSON.parse(sessionStorage.getItem("du_parameter"));
@@ -361,6 +361,18 @@ function DU(){
 			best_flow_scheme[3][4].used, 
 			best_flow_scheme[3][5].used
 		];
+		var node2_flow_out = [
+			best_flow_scheme[2][0].mode_num,
+			best_flow_scheme[2][1].mode_num,
+			best_flow_scheme[2][4].mode_num, 
+			best_flow_scheme[2][5].mode_num
+		];
+		var node3_flow_out = [
+			best_flow_scheme[3][0].mode_num,
+			best_flow_scheme[3][1].mode_num,
+			best_flow_scheme[3][4].mode_num, 
+			best_flow_scheme[3][5].mode_num
+		];
 		var util = new Array();
 		for (var nind = 0; nind < 6; nind++){
 			var nodeU = best_band_scheme[nind].slice();
@@ -381,6 +393,8 @@ function DU(){
 		var parameters_best_std = {
 			"net_node2": net_node2,
 			"net_node3": net_node3,
+			"node2_flow_out": node2_flow_out,
+			"node3_flow_out": node3_flow_out,
 			"net_limit2": net_limit2,
 			"net_limit3": net_limit3,
 			"util": util,
@@ -412,6 +426,18 @@ function DU(){
 			min_flow_scheme[3][4].used, 
 			min_flow_scheme[3][5].used
 		];
+		var node2_flow_out = [
+			min_flow_scheme[2][0].mode_num,
+			min_flow_scheme[2][1].mode_num,
+			min_flow_scheme[2][4].mode_num, 
+			min_flow_scheme[2][5].mode_num
+		];
+		var node3_flow_out = [
+			min_flow_scheme[3][0].mode_num,
+			min_flow_scheme[3][1].mode_num,
+			min_flow_scheme[3][4].mode_num, 
+			min_flow_scheme[3][5].mode_num
+		];
 		var util = new Array();
 		for (var nind = 0; nind < 6; nind++){
 			var nodeU = min_band_scheme[nind].slice();
@@ -432,6 +458,8 @@ function DU(){
 		var parameters_min_flow = {
 			"net_node2": net_node2,
 			"net_node3": net_node3,
+			"node2_flow_out": node2_flow_out,
+			"node3_flow_out": node3_flow_out,
 			"net_limit2": net_limit2,
 			"net_limit3": net_limit3,
 			"util": util,
