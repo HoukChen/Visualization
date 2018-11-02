@@ -5,24 +5,24 @@
 		"small": 10
 	},
 	"vmcapacity":{
-		"large": 14,
-		"middle": 9,
+		"large": 12,
+		"middle": 8,
 		"small": 7
 	},
 	"vmstorage":{
-		"large": 1800,
-		"middle": 1200,
-		"small": 800
+		"large": 2000,
+		"middle": 1500,
+		"small": 1000
 	},
 	"tasknumber":{
-		"urgent": 400,
-		"normal": 300
+		"urgent": 600,
+		"normal": 400
 	},
 	"taskmaxlen":{
 		"urgent": 20,
 		"normal": 100
 	},
 	"timelimit": 10,
-	"period": 12,
+	"period": 5,
 	"threshold": 0.2
 }

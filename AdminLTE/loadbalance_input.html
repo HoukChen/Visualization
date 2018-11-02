@@ -315,7 +315,7 @@ desired effect
 						</div>
 						<div class="col-xs-3">
 							<label for="inputEmail3" class="col-sm-4 control-label">正常任务</label>
-							<input type="text" id = "normalnum" class="form-control" placeholder="400">
+							<input type="text" id = "normalnum" class="form-control" placeholder="600">
 						</div>
 					</div>
 				</div>
@@ -373,7 +373,7 @@ desired effect
 					<h2 class="box-title"><b><b>系统参数设置：</b></b></h2>
 				</div>
 				<div class="box-header with-border">
-					<h3 class="box-title"><b>负载均衡周期(s)：</b></h3>
+					<h3 class="box-title"><b>负载均衡周期(ms)：</b></h3>
 				</div>
 				<div class="box-body">
 					<div class="row">
@@ -398,7 +398,7 @@ desired effect
 					<h3 class="box-title"><b>系统参数说明：</b></h3>
 				</div>
 				<div class="box-body">
-					<p><b>负载均衡周期：</b>负载均衡算法的实质为周期性地检测虚拟机有没有出现过载的情况，若虚拟机过载，对虚拟机进行均衡操作，故其存在一个负载均衡的周期问题，在本次模拟算法中，负载均衡周期以任务数为单位，在周期为T的情况下表示每到来T个任务执行一次负载均衡操作。输入类型为int，单位为个。</p>
+					<p><b>负载均衡周期：</b>负载均衡算法的实质为周期性地检测虚拟机有没有出现过载的情况，若虚拟机过载，对虚拟机进行均衡操作，故其存在一个负载均衡的周期问题，在本次模拟算法中，负载均衡周期以时间为单位，单位为ms。</p>
 					<p><b>均衡因子阈值：</b>均衡因子大小为一个动态计算的量，可以衡量某一时刻所有虚拟机的不均衡度，计算标准为所有虚拟机负载在某一时刻的标准差。均衡因子阈值定义表示标准差的阈值，若超过定义的阈值，表示系统在这一时刻是不均衡的，需要进行负载均衡操作。输入类型为Float，范围是0-1.</p>
 				</div>				
 				
