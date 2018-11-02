@@ -285,7 +285,8 @@ function Balance(){
 					this.LLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
 				}
 				cs = 0;
-				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 4){
+				if(this.TASKS[i]>180){cs++;}
+				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
 				}
 			}else if(this.TASKS[i]>120){
@@ -334,7 +335,8 @@ function Balance(){
 					this.HLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
 				}
 				cs = 0;
-				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 4){
+				if(this.TASKS[i] < 30){cs++;}
+				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
 				}
 			}

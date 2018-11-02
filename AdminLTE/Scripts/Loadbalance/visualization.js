@@ -271,9 +271,15 @@ function Vbalance(){
 	            	series: [{data: hloaddata},{data: mloaddata},{data: lloaddata}]
 	            });
 		        if (count == taskarr.length){
+					taskChart.setOption({
+						series: [{data: taskarr}]
+					});
+					loadChart.setOption({
+						series: [{data: hloadarr},{data: mloadarr},{data: lloadarr}]
+					});
 					clearInterval(intervalID);
 				}
-	        }, 1500);
+	        }, 10);
         }
 	}
 	
