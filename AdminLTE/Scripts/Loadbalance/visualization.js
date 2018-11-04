@@ -279,7 +279,7 @@ function Vbalance(){
 					});
 					clearInterval(intervalID);
 				}
-	        }, 10);
+	        }, 1000);
         }
 	}
 	
