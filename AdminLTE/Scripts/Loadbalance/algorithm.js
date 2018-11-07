@@ -40,6 +40,7 @@ function Balance(){
 	this.HLOADS = new Array();
 	this.MLOADS = new Array();
 	this.LLOADS = new Array();
+	this.VMVAR = new Array();
 	this.para = null;
 	this.Th = 0.2;
 	this.sortfunc0 = function(a,b){ return a.tarr - b.tarr }
@@ -262,8 +263,8 @@ function Balance(){
 		//console.log(this.Vmq);
 		var tvar = JSON.parse(sessionStorage.getItem("balance_parameter"));
 		if(this.TASKS.length == 0){
-			for(var i = 0; i < this.para.timelimit * 10 + 1; i++ ){
-				this.TASKS.push(0);this.HLOADS.push(0);this.MLOADS.push(0);this.LLOADS.push(0);
+			for(var i = 0; i < this.para.timelimit * 10 * 2; i++ ){
+				this.TASKS.push(0);this.HLOADS.push(0);this.MLOADS.push(0);this.LLOADS.push(0);this.VMVAR.push(0);
 			}
 			for(var i = 0 ;i < this.Taskq.length; i++ ){
 				var itsk = this.Taskq[i];
@@ -274,9 +275,10 @@ function Balance(){
 		var vmnumz = parseInt(this.para.vmnumber.large) + parseInt(this.para.vmnumber.middle) + parseInt(this.para.vmnumber.small);
 		this.LLOADS[0] = vmnumz;
 		var cs = 0;
-		
+		this.VMVAR[0] = 0;
 		for(var i = 1; i < this.para.timelimit * 10 + 1;i++ ){
-			this.HLOADS[i] = this.HLOADS[i-1];this.MLOADS[i] = this.MLOADS[i-1];this.LLOADS[i] = this.LLOADS[i-1];
+			
+			this.HLOADS[i] = this.HLOADS[i-1];this.MLOADS[i] = this.MLOADS[i-1];this.LLOADS[i] = this.LLOADS[i-1];this.VMVAR[i] = this.VMVAR[i-1];
 			//alert(this.TASKS[i]);
 			if(this.TASKS[i] > 140){
 				//alert('bigya');
@@ -289,7 +291,11 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
 				}
+				
+				this.VMVAR[i] += this.TASKS[i] * 1.4;
+				
 			}else if(this.TASKS[i]>120){
+				
 				cs = 0;
 				while(this.LLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
 					this.LLOADS[i] -= 1;this.MLOADS[i] += 1;cs++;
@@ -298,6 +304,7 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
 				}
+				this.VMVAR[i] += this.TASKS[i] * 1.2;
 			}else if(this.TASKS[i]>100){
 				cs = 0;
 				while(this.LLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
@@ -309,6 +316,7 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.HLOADS[i] <= vmnumz && cs < 2){
 					this.MLOADS[i] -= 1;this.HLOADS[i] += 1;cs++;
 				}	
+				this.VMVAR[i] += this.TASKS[i] * 1.0;
 			}else if(this.TASKS[i]>80){
 				cs = 0;
 				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
@@ -320,6 +328,7 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 2){
 					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
 				}
+				this.VMVAR[i] += this.TASKS[i] * 0.4;
 			}else if(this.TASKS[i]>60){
 				cs = 0;
 				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
@@ -329,6 +338,8 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
 				}
+				this.VMVAR[i] += this.TASKS[i] * 0.2;
+				
 			}else{
 				cs = 0;
 				while(this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz && cs < 2){
@@ -339,13 +350,19 @@ function Balance(){
 				while(this.MLOADS[i] > 0 && this.LLOADS[i] <= vmnumz && cs < 3){
 					this.MLOADS[i] -= 1;this.LLOADS[i] += 1;cs++;
 				}
+				this.VMVAR[i] -= this.TASKS[i] * 1.5;
+				if(this.VMVAR[i]<0){
+					this.VMVAR[i] = 0;
+				}
 			}
-			if(i % this.para.period == 0){
+			if(i % this.para.period == 0){	
 				var tcs = 7;
 				if(i % 3 == 0 ){tcs ++;}else{tcs--;}
 				while(this.LLOADS[i] > 0&& this.HLOADS[i] > 0 && this.MLOADS[i] <= vmnumz-1 && cs < tcs && this.HLOADS[i] > 0){
 					this.LLOADS[i] -= 1;this.MLOADS[i] += 2;this.HLOADS[i] -= 1;cs++;
 				}
+				this.VMVAR[i] *= 0.45;
+				this.VMVAR[i] += this.TASKS[i] * 0.6;
 			}
 		}
 		
@@ -394,7 +411,8 @@ function Balance(){
 			mloads: this.MLOADS,
 			sloads: this.LLOADS,
 			//load: this.LOAD,
-			tasks: this.TASKS
+			tasks: this.TASKS,
+			vmvar: this.VMVAR
 		}
 		sessionStorage.setItem("balance_result", JSON.stringify(parameters));
 		alert("balance finish!");

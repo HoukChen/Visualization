@@ -9,11 +9,50 @@ function Vbalance(){
 		this.HLOAD = new Array();
 		this.MLOAD = new Array();
 		this.LLOAD = new Array();
+		this.VMVAR = new Array();
+		var tprd = JSON.parse(sessionStorage.getItem("balance_parameter")).period;
+		//var 
 		for(var ind = 0; ind < balancedata.tasks.length ; ind++){
 			this.TASKS.push([ind,balancedata.tasks[ind]]);
-			this.HLOAD.push([ind,balancedata.hloads[ind]]);
-			this.MLOAD.push([ind,balancedata.mloads[ind]]);
-			this.LLOAD.push([ind,balancedata.sloads[ind]]);
+
+			if(ind !=0 && ind % tprd==0){
+				this.HLOAD.push(
+				{
+					value: [ind,balancedata.hloads[ind]],
+					itemStyle: {
+						borderWidth: 4
+					}
+				});
+				this.MLOAD.push(
+				{
+					value: [ind,balancedata.mloads[ind]],
+					itemStyle: {
+						borderWidth: 4
+					}
+				});
+				this.LLOAD.push(
+				{
+					value: [ind,balancedata.sloads[ind]],
+					itemStyle: {
+						borderWidth: 4
+					}
+					
+				});	
+				
+				
+				this.VMVAR.push({
+					value: [ind,balancedata.vmvar[ind]/10],
+					itemStyle: {
+						borderWidth: 4
+					}
+				});
+			}else{
+				this.HLOAD.push([ind,balancedata.hloads[ind]]);
+				this.MLOAD.push([ind,balancedata.mloads[ind]]);
+				this.LLOAD.push([ind,balancedata.sloads[ind]]);
+				this.VMVAR.push([ind,balancedata.vmvar[ind]/10]);
+				
+			}
 		}
 		
 		/*
@@ -217,15 +256,19 @@ function Vbalance(){
         var mloaddata = mloadarr.slice(0, Math.min(initLen, mloadarr.length));
 		var lloadarr = this.LLOAD;
         var lloaddata = lloadarr.slice(0, Math.min(initLen, lloadarr.length));
+		var vloadarr = this.VMVAR;
+		var loadvdata = vloadarr.slice(0, Math.min(initLen, lloadarr.length));
 		loadoption = {
-			title: {text:'虚拟机负载情况变化图'},
-			legend: {data: ['高负载虚拟机个数','中负载虚拟机个数','低负载虚拟机个数']},
+			title: {text:'虚拟机负载方差变化图'},
+			legend: {data: [//'高负载虚拟机个数','中负载虚拟机个数','低负载虚拟机个数',
+								'虚拟机负载方差']},
             xAxis: {
                 type: 'value',
                 min: 'dataMin',
                 max: 'dataMax',
                 axisTick: {show: false},
-				name: '\n时间（ms）',
+				//axisLabel: {color: 'red'},
+				name: '\n时间（ms）Tips：实心点表示该时刻进行了均衡操作',
 				nameLocation: 'middle'
             },
             yAxis: {
@@ -234,9 +277,9 @@ function Vbalance(){
                 /*min: function(value) {
                 	return Math.ceil(0.5*value.min);
                 }*/
-				name: '\t\t\t虚拟机个数',
+				name: '\t\t\t虚拟机负载方差',
             },
-            series: [{
+            series: [/*{
                 type: 'line',
                 name: '高负载虚拟机个数',
                 data: hloaddata
@@ -248,34 +291,53 @@ function Vbalance(){
 				type: 'line',
 				name: '低负载虚拟机个数',
 				data: lloaddata
+			},
+			*/
+			{
+				type: 'line',
+				name: '虚拟机负载方差',
+				data: loadvdata
+				
 			}]
         };
         loadChart.setOption(loadoption);
-		
+		var xcolor = 'black';
+
         if (cdata.tasks.length > initLen){
         	count = initLen;
 	        var intervalID = setInterval(function () {
 	            taskdata.shift();
+				/*
 				hloaddata.shift();
 				mloaddata.shift();
 				lloaddata.shift();
+				*/
+				loadvdata.shift();
 	            taskdata.push(taskarr[count]);
+				/*
 				hloaddata.push(hloadarr[count]);
 				mloaddata.push(mloadarr[count]);
 				lloaddata.push(lloadarr[count]);
+				*/
+				loadvdata.push(vloadarr[count]);
 	            count += 1;
+
 	            taskChart.setOption({
-	            	series: [{data: taskdata}]
+	            	series: [{data: taskdata}],
 	            });
 				loadChart.setOption({
-	            	series: [{data: hloaddata},{data: mloaddata},{data: lloaddata}]
+	            	series: [//{data: hloaddata},{data: mloaddata},{data: lloaddata},
+						{data:loadvdata}]
 	            });
+				
+				
 		        if (count == taskarr.length){
 					taskChart.setOption({
 						series: [{data: taskarr}]
 					});
 					loadChart.setOption({
-						series: [{data: hloadarr},{data: mloadarr},{data: lloadarr}]
+						series: [//{data: hloadarr},{data: mloadarr},{data: lloadarr},
+						{data:vloadarr}]
 					});
 					clearInterval(intervalID);
 				}
