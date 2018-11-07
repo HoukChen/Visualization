@@ -195,7 +195,7 @@ function Simulator(TaskList, TaskNum, VMParams){
 	*/
 
 	this.reddcost = 1;
-	this.srvcost = 2;
+	this.srvcost = 4;
 	this.srvtime = 5;
 	this.VMList = new Array();
 	this.TaskList = new Array();
@@ -250,7 +250,7 @@ function Simulator(TaskList, TaskNum, VMParams){
 		}
 		var cost = 0;
 		if (this.TaskNum[time] < totalres){
-			cost = (totalres - this.TaskNum[time]) * 5 * this.reddcost;
+			cost = (totalres - this.TaskNum[time]) * this.reddcost* this.srvtime;
 		}
 		else{
 			cost = (this.TaskNum[time] - totalres) * this.srvcost * this.srvtime;
@@ -477,7 +477,7 @@ function Adjustor(){
 		var VMREC = new Array();
 		var VMREC_REAL =new Array();
 		var VMREC_UNPRE = new Array();
-		for (var time=GRT.begintime; time<GRT.begintime+Params.simspan; time++){
+		for (var time=GRT.begintime-5; time<GRT.begintime+Params.simspan; time++){
 
 			// progress bar controller
 			var ratio = (time-GRT.begintime)/(GRT.begintime+Params.simspan-GRT.begintime-1);
@@ -550,13 +550,13 @@ function Adjustor(){
 		}
 		
 		var parameters = {
-			costres: this.COSTRES,
-			costres_unpre: this.COSTRES_UNPRE,
-			pdtres: this.PDTRES,
-			realnum: this.REALNUM,
-			vmrec: VMREC,
-			vmrec_real: VMREC_REAL,
-			vmrec_unpre: VMREC_UNPRE
+			costres: this.COSTRES.slice(5),
+			costres_unpre: this.COSTRES_UNPRE.slice(5),
+			pdtres: this.PDTRES.slice(5),
+			realnum: this.REALNUM.slice(5),
+			vmrec: VMREC.slice(5),
+			vmrec_real: VMREC_REAL.slice(5),
+			vmrec_unpre: VMREC_UNPRE.slice(5)
 		}
 
 		sessionStorage.setItem("adjustment_result", JSON.stringify(parameters));

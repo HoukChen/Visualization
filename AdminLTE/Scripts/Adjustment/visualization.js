@@ -285,7 +285,7 @@ function Vadjustor(){
 			var gTime = [gDate.getMonth(), gDate.getDate()].join('月')
 				+ '日 ' +[gDate.getHours(), gDate.getMinutes()].join(':')
 			option = {
-				title: {text: gTime},
+				title: {text: '第'+time.toString()+'个监测点'},
 				legend: {data: ['已用资源', '空余资源']},
 	            xAxis: {
 	                type: 'category',
