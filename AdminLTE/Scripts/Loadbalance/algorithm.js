@@ -263,7 +263,7 @@ function Balance(){
 		//console.log(this.Vmq);
 		var tvar = JSON.parse(sessionStorage.getItem("balance_parameter"));
 		if(this.TASKS.length == 0){
-			for(var i = 0; i < this.para.timelimit * 10 * 2; i++ ){
+			for(var i = 0; i < this.para.timelimit * 10 +1; i++ ){
 				this.TASKS.push(0);this.HLOADS.push(0);this.MLOADS.push(0);this.LLOADS.push(0);this.VMVAR.push(0);
 			}
 			for(var i = 0 ;i < this.Taskq.length; i++ ){
