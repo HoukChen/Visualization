@@ -158,7 +158,7 @@ function Generator(fluct, sinmagn, basemagn, taskspan, simspan){
 			this.TaskNum.push(0);
 		}
 		for (var stime=0; stime<this.begintime+this.simspan; stime++){
-			var sinnum = this.sinmagn*Math.abs(Math.sin(stime*Math.PI/(12*60)));
+			var sinnum = this.sinmagn*Math.abs(Math.sin(stime*Math.PI/15));
 			var taskmean = Math.ceil(sinnum+this.basemagn);
 			var tasklist = new Array();
 			var tasknum = this.poisson(taskmean);
@@ -511,9 +511,9 @@ function Adjustor(){
 
 			// var increment = PDT.trainModel(time+1);
 			// TODO(Houk): needed to be modified
-			var increment = 0.7*Math.ceil((Math.random()-0.5)*GRT.basemagn)+0.3*(SIM.TaskNum[time+1]-SIM.TaskNum[time]);
+			var increment = 0.5*Math.ceil((Math.random()-0.5)*GRT.sinmagn)+0.5*(SIM.TaskNum[time+1]-SIM.TaskNum[time]);
 			
-			this.PDTRES.push(increment+0.5*SIM.TaskNum[time]+0.5*SIM.TaskNum[time-1]);
+			this.PDTRES.push(increment+SIM.TaskNum[time]);
 
 			var actual_incre = SIM.TaskNum[time+1]-SIM.TaskNum[time];
 			

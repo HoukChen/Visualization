@@ -4,8 +4,8 @@
 		"middle": 6,
 		"small": 4
 	},
-	"fluct": 0.1,
-	"sinmagn": 30,
+	"fluct": 0.2,
+	"sinmagn": 10,
 	"basemagn": 10,
 	"taskspan": 3,
 	"simspan": 50,
